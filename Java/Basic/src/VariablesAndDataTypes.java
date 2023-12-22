@@ -7,15 +7,24 @@ public class VariablesAndDataTypes {
         double height = 5.9; // Double
         char gender = 'M'; // Character
         boolean isStudent = true; // Boolean
-        // String (non-primitive data type)
-        String name = "John Doe";
+        // Non-primitive data type
+        String greeting = "Hello";
+        String name = "Israel Israeli";
+        String welcomeMessage = greeting + ", " + name + "!"; // Concatenation
 
         // Output variables
-        System.out.println("Name: " + name);
+        System.out.println(welcomeMessage);
         System.out.println("Age: " + age);
         System.out.println("Height: " + height + " meters");
         System.out.println("Gender: " + gender);
         System.out.println("Is student: " + isStudent);
+
+        // String length
+        int messageLength = welcomeMessage.length();
+        System.out.println("Length of the welcome message: " + messageLength);
+        // Substring
+        String substringExample = welcomeMessage.substring(6);
+        System.out.println("Substring example: " + substringExample);
 
         // Performing some operations
         int futureAge = age + 5;
@@ -34,6 +43,17 @@ public class VariablesAndDataTypes {
         double explicitDoubleValue = 15.75;
         int explicitIntValue = (int) explicitDoubleValue; // Explicit casting (narrowing)
         System.out.println("Int value after explicit casting: " + explicitIntValue);
+
+        // Math operations
+        System.out.println("\nMath operations examples:");
+        double squareRoot = Math.sqrt(25);
+        double power = Math.pow(2, 3);
+        double absoluteValue = Math.abs(-10.5);
+        double randomValue = Math.random();
+        System.out.println("Square root of 25: " + squareRoot);
+        System.out.println("2 raised to the power of 3: " + power);
+        System.out.println("Absolute value of -10.5: " + absoluteValue);
+        System.out.println("Random value between 0.0 and 1.0: " + randomValue);
 
         // Getting user input
         Scanner scanner = new Scanner(System.in);
