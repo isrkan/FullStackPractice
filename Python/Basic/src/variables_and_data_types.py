@@ -13,11 +13,11 @@ def variables_and_data_types():
     name = "Israel Israeli"
     welcome_message = greeting + ", " + name + "!"  # Concatenation
 
-    # Output variables
+    # Output variables + string formatting
     print(welcome_message)
-    print("Age:", age)
+    print(f"Age: {age}")
     print("Height:", height, "meters")
-    print("Gender:", gender)
+    print("Gender: {}".format(gender))
     print("Is student:", is_student)
 
     # String length
