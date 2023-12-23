@@ -12,11 +12,11 @@ public class VariablesAndDataTypes {
         String name = "Israel Israeli";
         String welcomeMessage = greeting + ", " + name + "!"; // Concatenation
 
-        // Output variables
+        // Output variables + string formatting
         System.out.println(welcomeMessage);
         System.out.println("Age: " + age);
         System.out.println("Height: " + height + " meters");
-        System.out.println("Gender: " + gender);
+        System.out.println(String.format("Gender: %s", gender));
         System.out.println("Is student: " + isStudent);
 
         // String length
@@ -38,7 +38,7 @@ public class VariablesAndDataTypes {
 
         // Implicit and explicit type casting
         int intValue = 10;
-        double doubleValue = intValue; // Implicit casting (Widening)
+        double doubleValue = intValue; // Implicit casting (widening)
         System.out.println("Double value after implicit casting: " + doubleValue);
         double explicitDoubleValue = 15.75;
         int explicitIntValue = (int) explicitDoubleValue; // Explicit casting (narrowing)
