@@ -24,7 +24,7 @@ class FoodProduct extends Product {
         return isOrganic;
     }
 
-    public void setPerishable(boolean organic) {
+    public void setOrganic(boolean organic) {
         isOrganic = organic;
     }
 
