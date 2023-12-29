@@ -1,6 +1,13 @@
 import java.time.LocalDateTime;
 
 public class Main {
+    // Polymorphic method calling method on each product
+    public static void displayProductInformation(Product[] products) {
+        for (Product product : products) {
+            product.displayInfo();
+        }
+    }
+
     public static void main(String[] args) {
         // Creating objects of the subclasses
         LocalDateTime expirationDate = LocalDateTime.of(2023, 12, 31, 12, 0); // Example expiration date
@@ -17,5 +24,10 @@ public class Main {
 
         System.out.println("\nClothing product information:");
         shirt.displayInfo();
+
+        // Calling the polymorphic method to display information
+        Product[] products = {pasta, laptop, shirt};
+        System.out.println();
+        displayProductInformation(products);
     }
 }
