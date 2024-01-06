@@ -1,5 +1,6 @@
 import java.util.Collections;
 import java.util.List;
+import java.util.Iterator;
 
 public class ArrayList {
     public static void main(String[] args) {
@@ -12,7 +13,9 @@ public class ArrayList {
         productNames.add("Smartphone");
         productNames.add("Headphones");
         productNames.add("Tablet");
-        // Displaying all products by Iterating through the ArrayList
+        productNames.add("Camera");
+        productNames.add("Speaker");
+        // Displaying all products by iterating through the ArrayList
         System.out.println("\nCurrent products:");
         for (String product : productNames) {
             System.out.println("- " + product);
@@ -79,6 +82,39 @@ public class ArrayList {
         java.util.ArrayList<String> checkList = new java.util.ArrayList<>(List.of("Watch", "Tablet"));
         if (productNames.containsAll(checkList)) {
             System.out.println("\nThe ArrayList contains all elements in the checkList.");
+        }
+
+
+        ///// Java iterators /////
+        // Replace an element using iterators
+        Iterator<String> iterator = productNames.iterator();
+        while (iterator.hasNext()) {
+            String currentProduct = iterator.next();
+            if (currentProduct.equals("Watch")) {
+                iterator.remove();
+                productNames.add("Smartwatch");
+                break;
+            }
+        }
+        // Delete products using iterators
+        iterator = productNames.iterator();
+        int deletedCount = 0;
+        while (iterator.hasNext()) {
+            String currentProduct = iterator.next();
+            if (currentProduct.equals("Camera") || currentProduct.equals("Speaker")) {
+                iterator.remove();
+                deletedCount++;
+                if (deletedCount == 2) {
+                    break; // Break out of the loop once two products are deleted
+                }
+            }
+        }
+        // Displaying the modified products with iterator
+        System.out.println("\nModified products list:");
+        iterator = productNames.iterator();
+        while (iterator.hasNext()) {
+            String product = iterator.next();
+            System.out.println("- " + product);
         }
     }
 }
