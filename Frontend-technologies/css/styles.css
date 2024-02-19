@@ -1,0 +1,293 @@
+/* Base styles */
+body { /* Element selector: Selects elements based on their HTML tag name */
+    font-family: Arial, sans-serif; /* Sets the font family for the entire document */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+    background-color: #f5f5f5; /* Sets background color */
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff; /* Sets text color */
+    padding: 20px; /* Adds padding around the content of the header */
+    text-align: center; /* Centers the text */
+}
+
+/* Navigation styles */
+nav {
+    background-color: #555;
+    padding: 10px;
+    text-align: center;
+}
+
+nav > ul { /* Child selector: Selects only the immediate children of the specified element. It is represented by '>' between two selectors */
+    list-style-type: none; /* Removes default list bullet points */
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav ul li { /* Descendant selector: Selects an element that is a descendant of another specified element. It is represented by a space between two selectors */
+    display: inline; /* Displays list items horizontally */
+    margin-right: 20px; /* Adds right margin between list items */
+}
+
+nav ul li a { /* Styling for the navigation links */
+    text-decoration: none; /* Removes underline from anchor links */
+    color: #fff;
+}
+
+nav ul li a:hover { /* Pseudo-class selector: Selects elements based on their state or position. Pseudo-classes start with a colon ':'. Styles anchor links when hovered over */
+    text-decoration: underline; /* Adds underline on hover */
+}
+
+nav a { /* Styling for the navigation links */
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+/* Product section styles */
+.product { /* Class selector: Selects elements based on their class attribute. It is denoted by "." followed by the class name. */
+    margin-bottom: 20px; /* Adds bottom margin between product sections */
+}
+
+/* Article styles */
+article {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+/* Image styles */
+article img {
+    max-width: 100%; /* Sets maximum width for images */
+    height: auto; /* Maintains aspect ratio of images */
+    display: block; /* Makes images block-level elements */
+    float: right; /* Floats images to the right */
+    margin-left: 20px; /* Adds left margin to images */
+    width: 150px; /* Sets width of images */
+}
+
+/* Heading styles */
+h2 {
+    color: #333;
+}
+
+h2 ~ p { /* General sibling selector: Selects all sibling elements that follow a specified element. It is represented by the '~' between two selectors. Only elements that share the same parent as are considered */
+    font-style: italic;
+}
+
+h2 + p { /* Adjacent sibling selector: Selects an element that is immediately follows a sibling element, and both elements share the same parent. It is represented by the '+' between two selectors. */
+    color: green;
+}
+
+h2 + p + p {
+    color: blue;
+}
+
+/* Add-to-cart buttons styles */
+.add-to-cart {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px; /* Specify different padding values for each side of the element (top and bottom padding, right and left padding) */
+    border: none; /* Removes border from buttons */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+
+.add-to-cart::before { /* Pseudo-element selector: Selects parts of an element, such as the first line or first letter. Pseudo-elements also start with a colon ':' */
+    content: "🛒"; /* Inserts a shopping cart emoji before the button content */
+    margin-right: 5px;
+}
+
+/* Details and summary styles */
+details {
+    margin-top: 10px; /* Adds top margin to details */
+}
+
+summary {
+    cursor: pointer;
+    color: #333;
+    border-bottom: 1px solid #ccc; /* Adds bottom border */
+    padding-bottom: 5px; /* Adds padding to bottom */
+    margin-bottom: 10px;
+}
+
+/* List styles */
+ul, ol { /* Group selector: Selectors combined with a comma form a group selector, allowing to apply the same styles to multiple elements at once */
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+/* Styling for the product comparison section */
+#product-comparison { /* ID selector: Selects elements based on their ID attribute. It is denoted by a hash '#' followed by the ID name */
+    text-align: center; /* Center the content */
+}
+
+/* Table styles */
+table {
+    width: 100%; /* Sets table width */
+    border-collapse: collapse; /* Collapses borders between table cells */
+    border: 1px solid #ccc; /* Sets border style for the table */
+    text-align: center;
+}
+
+caption {
+    font-weight: bold; /* Sets font weight to bold */
+    font-size: 1.2em; /* Sets font size */
+    margin-bottom: 10px;
+}
+
+th { /* Styling for table header cells */
+    background-color: #f0f0f0;
+}
+
+td { /* Styling for table data cells */
+    font-weight: normal;
+}
+
+td:first-child { /* Selects elements that are the first child of their parent. Here, it selects cells in the first column */
+    font-weight: bold;
+}
+
+/* Aside section styles */
+aside {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+/* Related products section styles */
+.related-products {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.related-products h3 { /* Targets elements that are descendants of elements with a specific class */
+    margin-bottom: 10px;
+}
+
+.related-products ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.related-products ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.related-products ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Contact info section styles */
+.contact-info {
+    background-color: #555;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-info footer {
+    margin-top: 10px;
+}
+
+.contact-info p {
+    margin: 0;
+}
+
+.contact-info address a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Form section styles */
+.form {
+    background-color: #fff;
+    border-radius: 5px; /* Adds border-radius to input fields */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* Styling for form input fields */
+input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+input[type="file"] { /* Attribute selector: Selects elements based on their attributes. It can target elements with specific attribute values */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.radio-group {
+    display: flex; /* Display radio buttons horizontally */
+    justify-content: center; /* Center the radio buttons horizontally */
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+label {
+    display: inline-block;
+    vertical-align: middle; /* Align elements vertically */
+    margin-bottom: 5px;
+}
+
+/* Styling for the submit and clear button */
+#send, #clear {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send {
+    background-color: #333;
+    color: #fff;
+}
+
+#clear {
+    background-color: #ccc;
+    color: #333;
+}
+
+/* Footer styles */
+footer {
+    background-color: #555;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer a {
+    color: #333;
+}
