@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+    <header style="background-color: #333; color: #fff; padding: 20px; text-align: center;">
+        <h1 style="margin: 0;">Contact Us</h1>
+    </header>
+
+    <nav style="background-color: #555; padding: 10px; text-align: center;">
+        <a href="index.html" style="text-decoration: none; color: #fff;">&larr; <u>Back to Products</u></a>
+    </nav>
+
+    <main style="padding: 20px;">
+        <section style="background-color: #fff; border-radius: 5px; padding: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <h2 style="margin-bottom: 20px; text-align: center;">Send us a Message</h2>
+
+            <form action="#" method="post" style="text-align: center;"> <!-- Form tag defines a form for user input -->
+                
+                <div style="margin-bottom: 10px;"> <!-- Each form input field is enclosed within a div for better organization -->
+                    <label for="name" style="display: block;">Your Name:</label>  <!-- Create a label for the input field -->
+                    <input type="text" id="name" name="name" required style="padding: 8px; width: 100%; border-radius: 5px; border: 1px solid #ccc;"> <!-- Create a text input field for the user's name -->
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="email" style="display: block;">Your Email:</label>
+                    <input type="email" id="email" name="email" required style="padding: 8px; width: 100%; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="phone" style="display: block;">Your Phone:</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required style="padding: 8px; width: 100%; border-radius: 5px; border: 1px solid #ccc;" placeholder="format: 051-456-7890">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="message" style="display: block;">Message:</label>
+                    <textarea id="message" name="message" rows="4" required style="padding: 8px; width: 100%; border-radius: 5px; border: 1px solid #ccc;"></textarea> <!-- Create a textarea for the user's message -->
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="attachment" style="display: block;">Attach File:</label>
+                    <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.jpg,.png" style="border-radius: 5px; border: 1px solid #ccc;"> <!-- Create a file input field for attaching files -->
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="department" style="display: block;">Select Department:</label>
+                    <select id="department" name="department" style="padding: 8px; width: 100%; border-radius: 5px; border: 1px solid #ccc;"> <!-- Create a dropdown select menu -->
+                        <option value="sales">Sales</option>
+                        <option value="support">Support</option>
+                        <option value="billing">Billing</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="priority" style="display: block;">Priority:</label>
+                    <input type="radio" id="priority-low" name="priority" value="low"> <!-- Create radio buttons -->
+                    <label for="priority-low">Low</label>
+                    <input type="radio" id="priority-medium" name="priority" value="medium">
+                    <label for="priority-medium">Medium</label>
+                    <input type="radio" id="priority-high" name="priority" value="high">
+                    <label for="priority-high">High</label>
+                </div>
+
+                <br><br>
+
+                <div style="margin-bottom: 10px;">
+                    <input type="checkbox" id="subscribe" name="subscribe" value="subscribe"> <!-- Create a checkbox -->
+                    <label for="subscribe">Subscribe to our newsletter</label>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="terms" style="display: block;">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        I agree to the <a href="#" style="color: #333;">terms and conditions</a>
+                    </label>
+                </div>
+
+                <button type="submit" style="background-color: #333; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Send Message</button> <!-- Button to submit the form -->
+                <button type="reset" style="background-color: #ccc; color: #333; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Clear</button> <!-- Resets all form fields to their default values -->
+            </form>
+        </section>
+    </main>
+
+    <footer style="background-color: #555; color: #fff; padding: 20px; text-align: center; margin-top: 20px;">
+        <p>&copy; 2024 MyWebsite. All rights reserved.</p>
+    </footer>
+</body>
+</html>

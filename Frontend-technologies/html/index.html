@@ -1,0 +1,218 @@
+<!DOCTYPE html> <!-- Informs the browser that this document is an HTML5 document -->
+<html lang="en"> <!-- The root element of the HTML document and specifies the language for screen readers and search engines -->
+<head> <!-- Contains meta-information about the HTML document, such as character encoding and viewport settings -->
+    <meta charset="UTF-8"> <!-- Declares the character encoding as UTF-8 to support a wide range of characters -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Sets the viewport to the width of the device's screen for responsive design and sets the initial zoom level to 1.0 -->
+    <title>Our Product</title> <!-- Sets the title of the HTML document, displayed in the browser tab -->
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0;"> <!-- Contains the visible content of the HTML document -->
+
+    <header style="background-color: #333; color: #fff; padding: 20px; text-align: center;"> <!-- Represents the header section of a document -->
+        <h1 style="margin: 0;">Our Products and Prices</h1> <!-- Represents the main heading of the page -->
+    </header>
+
+    <nav style="background-color: #555; padding: 10px;"> <!-- Represents a section with navigation links -->
+        <ul style="list-style-type: none; padding: 0; margin: 0; text-align: center;"> <!-- Represents an unordered list -->
+            <li style="display: inline; margin-right: 20px;"><a href="#laptop" style="text-decoration: none; color: #fff;">Laptop</a></li> <!-- Represents a list item with a hyperlink -->
+            <li style="display: inline; margin-right: 20px;"><a href="#smartphone" style="text-decoration: none; color: #fff;">Smartphone</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="#tablet" style="text-decoration: none; color: #fff;">Tablet</a></li>
+            <li style="display: inline;"><a href="#printer" style="text-decoration: none; color: #fff;">Printer</a></li>
+        </ul>
+    </nav>
+
+    <main style="padding: 20px;"> <!-- Represents the main content of the HTML document -->
+
+        <section id="laptop" class="product" style="margin-bottom: 20px;"> <!-- Represents a section with an ID for linking and a class for styling. Use when we have a thematic grouping of content with a distinct heading -->
+            <article style="background-color: #f9f9f9; padding: 20px;"> <!-- Represents a self-contained piece of content -->
+                <img src="laptop.jpg" alt="Laptop Image" style="max-width: 100%; height: auto; display: block; float: right; margin-left: 20px; width: 150px;"> <!-- Represents an image of the laptop -->
+                <h2 style="color: #333;">Laptop</h2> <!-- Represents a subheading -->
+                <p>A powerful laptop for all your computing needs.</p> <!-- Represents a paragraph of text -->
+                <p>Price: $999.99</p>
+                <button style="background-color: #333; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Add to Cart</button> <!-- Represents a button to add the product to the shopping cart -->
+                <details style="margin-top: 10px;"> <!-- Represents additional details that can be toggled open or closed -->
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Specifications</summary> <!-- Represents a summary or title for the details -->
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Processor: Intel Core i7</li>
+                        <li>RAM: 16GB</li>
+                        <li>Storage: 512GB SSD</li>
+                        <li>Screen Size: 15.6 inches</li>
+                        <li>Operating System: Windows 11</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Key Features</summary>
+                    <ol style="list-style-type: decimal; margin-left: 20px;"> <!-- Represents an ordered list -->
+                        <li>Long-lasting battery life</li>
+                        <li>High-resolution display</li>
+                        <li>Fast performance</li>
+                    </ol>
+                </details>
+            </article>
+        </section>
+
+        <section id="smartphone" class="product" style="margin-bottom: 20px;">
+            <article style="background-color: #f9f9f9; padding: 20px;">
+                <img src="smartphone.jpg" alt="Smartphone Image" style="max-width: 100%; height: auto; display: block; float: right; margin-left: 20px; width: 150px;">
+                <h2 style="color: #333;">Smartphone</h2>
+                <p>An advanced smartphone with cutting-edge features.</p>
+                <p>Price: $599.99</p>
+                <button style="background-color: #333; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Add to Cart</button>
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Specifications</summary>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Display: 6.5" AMOLED</li>
+                        <li>Camera: Triple-lens setup</li>
+                        <li>Battery: 4000mAh</li>
+                        <li>Storage: 128GB</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Key Features</summary>
+                    <ol style="list-style-type: decimal; margin-left: 20px;">
+                        <li>High-quality camera system</li>
+                        <li>Large and vibrant display</li>
+                        <li>Fast and efficient performance</li>
+                    </ol>
+                </details>
+            </article>
+        </section>
+
+        <section id="tablet" class="product" style="margin-bottom: 20px;">
+            <article style="background-color: #f9f9f9; padding: 20px;">
+                <img src="tablet.jpg" alt="Tablet Image" style="max-width: 100%; height: auto; display: block; float: right; margin-left: 20px; width: 150px;">
+                <h2 style="color: #333;">Tablet</h2>
+                <p>A versatile tablet for work and entertainment.</p>
+                <p>Price: $299.99</p>
+                <button style="background-color: #333; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Add to Cart</button>
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Specifications</summary>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Display: 10.2" IPS LCD</li>
+                        <li>Processor: Octa-core</li>
+                        <li>Storage: 64GB</li>
+                        <li>Battery: 8000mAh</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Key Features</summary>
+                    <ol style="list-style-type: decimal; margin-left: 20px;">
+                        <li>Lightweight and portable design</li>
+                        <li>High-definition display</li>
+                        <li>Long-lasting battery</li>
+                    </ol>
+                </details>
+            </article>
+        </section>
+
+        <section id="printer" class="product" style="margin-bottom: 20px;">
+            <article style="background-color: #f9f9f9; padding: 20px;">
+                <img src="printer.jpg" alt="Printer Image" style="max-width: 100%; height: auto; display: block; float: right; margin-left: 20px; width: 150px;">
+                <h2 style="color: #333;">Printer</h2>
+                <p>A reliable printer for home and office use.</p>
+                <p>Price: $149.99</p>
+                <button style="background-color: #333; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Add to Cart</button>
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Specifications</summary>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+                        <li>Print Technology: Inkjet</li>
+                        <li>Connectivity: USB, Wi-Fi</li>
+                        <li>Print Speed: 10 pages per minute</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary style="cursor: pointer; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Key Features</summary>
+                    <ol style="list-style-type: decimal; margin-left: 20px;">
+                        <li>High-quality printing</li>
+                        <li>Wireless connectivity</li>
+                        <li>Compact and space-saving design</li>
+                    </ol>
+                </details>
+            </article>
+        </section>
+
+        <section id="product-comparison" style="margin-bottom: 20px;">
+            <h2 style="text-align: center; margin-bottom: 20px;">Product Comparison</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc; text-align: center;"> <!-- Used to create a table structure -->
+                <caption style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px;">Compare Features Across Devices</caption> <!-- Provides a title or explanation for the table -->
+                <thead> <!-- Table head section contains header rows -->
+                    <tr> <!-- Table row tag used to define a row in the table -->
+                        <th style="background-color: #f0f0f0;">Feature</th> <!-- Table header cell tag defines a header cell in a table -->
+                        <th style="background-color: #f0f0f0;">Laptop</th>
+                        <th style="background-color: #f0f0f0;">Smartphone</th>
+                        <th style="background-color: #f0f0f0;">Tablet</th>
+                        <th style="background-color: #f0f0f0;">Printer</th>
+                    </tr>
+                </thead>
+                <tbody> <!-- Table body section contains data rows -->
+                    <tr>
+                        <td style="font-weight: bold;">Price</td> <!-- Table data cell tag defines a cell in a table -->
+                        <td>$999.99</td>
+                        <td>$599.99</td>
+                        <td>$299.99</td>
+                        <td>$149.99</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Processor</td>
+                        <td>Intel Core i7</td>
+                        <td>-</td>
+                        <td>Octa-core</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">RAM</td>
+                        <td>16GB</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Storage</td>
+                        <td>512GB SSD</td>
+                        <td>128GB</td>
+                        <td>64GB</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Screen Size</td>
+                        <td>15.6 inches</td>
+                        <td>-</td>
+                        <td>10.2 inches</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Operating System</td>
+                        <td>Windows 11</td>
+                        <td>Android</td>
+                        <td>Chrome OS</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <aside style="background-color: #f5f5f5; padding: 20px;"> <!-- Represents a section of content aside from the main content -->
+        <h3 style="color: #333;">Special Offer</h3>
+        <p style="color: #333;">Get free shipping on orders over $100! Limited time only.</p>
+    </aside>
+
+    <div style="background-color: #333; color: #fff; text-align: center; padding: 20px;"> <!-- Represents a generic container that can be used to group elements together for styling purposes or to apply javascript behavior. Use when we need a generic container for grouping content together for styling or scripting purposes without conveying any specific meaning -->
+        <h3>Related Products</h3>
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+            <li style="display: inline; margin-right: 20px;"><a href="#laptop" style="text-decoration: none; color: #fff;">Headphone</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="#smartphone" style="text-decoration: none; color: #fff;">Keyboard</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="#tablet" style="text-decoration: none; color: #fff;">Camera</a></li>
+            <li style="display: inline;"><a href="#printer" style="text-decoration: none; color: #fff;">TV</a></li>
+        </ul>
+    </div>
+    <div class="contact-info" style="background-color: #555; color: #fff; padding: 20px; text-align: center;">
+        <footer style="margin-top: 10px;"> <!-- Represents the footer section of a document -->
+            <p style="margin: 0;">For inquiries, <a href="contact.html" style="text-decoration: none; color: #fff;"><u>contact us</u></a>.</p> <!-- 'a href' is a link to another page -->
+            <address> <!-- Represents contact information -->
+                Email: <a href="mailto:orders@mywebsite.com">orders@mywebsite.com</a>
+            </address>
+            <p>&copy; 2024 MyWebsite. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
