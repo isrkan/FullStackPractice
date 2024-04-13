@@ -1,5 +1,8 @@
 import dependencyInjection.Product;
 import dependencyInjection.ShoppingCart;
+import observerPattern.Restaurant;
+import observerPattern.Chef;
+import observerPattern.DeliveryPerson;
 import singleton.Device;
 import singleton.PriceManager;
 import singleton.Car;
@@ -85,5 +88,29 @@ public class Main {
         } else {
             System.out.println("No previous state available to undo.");
         }
+        System.out.println();
+
+        // Observer pattern
+        // Create the restaurant
+        Restaurant restaurant = new Restaurant();
+        // Create some observers (chefs and delivery persons)
+        Chef chef1 = new Chef("Guy");
+        Chef chef2 = new Chef("Ben");
+        Chef chef3 = new Chef("Gila");
+        DeliveryPerson deliveryPerson1 = new DeliveryPerson("Adam");
+        DeliveryPerson deliveryPerson2 = new DeliveryPerson("Noa");
+        DeliveryPerson deliveryPerson3 = new DeliveryPerson("Omer");
+        // Subscribe the observers to the restaurant
+        restaurant.addObserver(chef1);
+        restaurant.addObserver(chef2);
+        restaurant.addObserver(chef3);
+        restaurant.addObserver(deliveryPerson1);
+        restaurant.addObserver(deliveryPerson2);
+        restaurant.addObserver(deliveryPerson3);
+        // Simulate receiving a new order
+        restaurant.receiveOrder("Pizza");
+        restaurant.receiveOrder("Pasta");
+        restaurant.receiveOrder("Risotto");
+        System.out.println("Restaurant last order: " + restaurant.getState());
     }
 }
