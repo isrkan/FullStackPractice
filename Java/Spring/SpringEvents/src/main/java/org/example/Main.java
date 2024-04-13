@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         Restaurant restaurant = (Restaurant) context.getBean(Restaurant.class);
-        restaurant.receiveOrder("Pizza");
-        restaurant.receiveOrder("Pasta");
-        restaurant.receiveOrder("Risotto");
+
+        restaurant.receiveOrder("123", "Israel Israeli", new String[]{"Pizza", "Pasta"});
+        restaurant.receiveOrder("456", "Michael Michaeli", new String[]{"Risotto", "Gnocchi"});
     }
 }
