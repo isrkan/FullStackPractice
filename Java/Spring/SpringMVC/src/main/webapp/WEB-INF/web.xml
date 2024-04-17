@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- This XML file defines the configuration for a web application. -->
+<web-app version="3.1">
+    <!-- This section configures a servlet, which is a Java class that handles HTTP requests and responses -->
+    <servlet>
+        <servlet-name>myapp</servlet-name>
+        <!-- It specifies the class responsible for handling incoming requests -->
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- This block defines a mapping between a servlet and a URL pattern -->
+    <servlet-mapping>
+        <servlet-name>myapp</servlet-name>
+        <url-pattern>/myapp/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
