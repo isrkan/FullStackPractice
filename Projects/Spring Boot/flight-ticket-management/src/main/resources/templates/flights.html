@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+    <link rel="stylesheet" href="/styles/fragments/navbar.css">
+    <link rel="stylesheet" href="/styles/fragments/footer.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-spacing: 0;
+            overflow-x: auto;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 50px;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        th:hover {
+            background-color: #ddd;
+        }
+        thead {
+            display: table-header-group;
+        }
+        tbody {
+            display: block;
+            overflow-y: auto;
+            max-height: calc(100vh - 170px);
+        }
+        tbody::-webkit-scrollbar {
+            width: 10px; /* Width of scrollbar */
+        }
+        tbody::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Track color */
+        }
+        tbody::-webkit-scrollbar-thumb {
+            background: #888; /* Thumb color */
+        }
+        tbody::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Hover effect for thumb */
+        }
+        tr {
+            display: table; /* Restore table row behavior */
+            width: 100%; /* Ensure rows span full width */
+            table-layout: fixed; /* Maintain table layout */
+        }
+        td {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div th:insert="fragments/navbar :: navbar"></div>
+    <div class="container">
+        <h1>Available Flights</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <a th:href="@{/flights(sort='flightNumber', dir=${sort == 'flightNumber' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Flight Number
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='airlineIataCode', dir=${sort == 'airlineIataCode' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Airline
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='originAirport', dir=${sort == 'originAirport' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Origin Airport
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='destinationAirport', dir=${sort == 'destinationAirport' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Destination Airport
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='date', dir=${sort == 'date' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Date
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='departureTimeLocal', dir=${sort == 'departureTimeLocal' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Departure Time (Local)
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/flights(sort='landingTimeLocal', dir=${sort == 'landingTimeLocal' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Landing Time (Local)
+                        </a>
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over flight data and display in table rows -->
+                <tr th:each="flight : ${flights}">
+                    <td th:text="${flight.flightNumber}"></td>
+                    <td th:text="${flight.airlineIataCode}"></td>
+                    <td th:text="${flight.originAirport}"></td>
+                    <td th:text="${flight.destinationAirport}"></td>
+                    <td th:text="${flight.date}"></td>
+                    <td th:text="${flight.departureTimeLocal}"></td>
+                    <td th:text="${flight.landingTimeLocal}"></td>
+                    <td><button onclick="viewDetails(${flight})">View Details</button></td>
+                    <td><button onclick="bookFlight(${flight})">Book Now</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>
