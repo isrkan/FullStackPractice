@@ -1,8 +1,10 @@
 package com.example.flightticketmanagement.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity

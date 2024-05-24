@@ -122,15 +122,14 @@
             <tbody>
                 <!-- Iterate over flight data and display in table rows -->
                 <tr th:each="flight : ${flights}">
-                    <td th:text="${flight.flightNumber}"></td>
-                    <td th:text="${flight.airlineIataCode}"></td>
-                    <td th:text="${flight.originAirport}"></td>
-                    <td th:text="${flight.destinationAirport}"></td>
-                    <td th:text="${flight.date}"></td>
-                    <td th:text="${flight.departureTimeLocal}"></td>
-                    <td th:text="${flight.landingTimeLocal}"></td>
-                    <td><button onclick="viewDetails(${flight})">View Details</button></td>
-                    <td><button onclick="bookFlight(${flight})">Book Now</button></td>
+                    <td th:text="${flight[0]}">Flight Number</td>
+                    <td th:text="${flight[7]}">Airline</td>
+                    <td th:text="${flight[1]}">Origin Airport</td>
+                    <td th:text="${flight[2]}">Destination Airport</td>
+                    <td th:text="${flight[3]}">Date</td>
+                    <td th:text="${flight[4]}">Departure Time (Local)</td>
+                    <td th:text="${flight[5]}">Landing Time (Local)</td>
+                    <td th:text="${flight[6]}">Remaining Tickets</td>
                 </tr>
             </tbody>
         </table>

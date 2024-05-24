@@ -24,11 +24,12 @@ public class FlightController {
                           @RequestParam(value = "dir", required = false) String dir,
                           Model model) {
         // Read flight data from the database
-        List<Flight> flights = flightRepository.findAll();
+        // List<Flight> flights = flightRepository.findAll();
+        List<Object[]> flights = flightRepository.findAllFlights();
 
         // Sort flights based on parameters
         if (sort != null && dir != null) {
-            Comparator<Flight> comparator = getComparator(sort);
+            Comparator<Object[]> comparator = getComparator(sort);
             if (comparator != null) {
                 if ("desc".equals(dir)) {
                     flights = flights.stream()
@@ -49,24 +50,24 @@ public class FlightController {
         return "flights";
     }
 
-    private Comparator<Flight> getComparator(String sort) {
+    private Comparator<Object[]> getComparator(String sort) {
         switch (sort) {
             case "flightNumber":
-                return Comparator.comparing(Flight::getFlightNumber);
-            case "airlineIataCode":
-                return Comparator.comparing(Flight::getAirlineIataCode);
+                return Comparator.comparing(objects -> (String) objects[0]); // flightNumber
+            case "airlineName":
+                return Comparator.comparing(objects -> (String) objects[7]); // airlineName
             case "originAirport":
-                return Comparator.comparing(Flight::getOriginAirport);
+                return Comparator.comparing(objects -> (String) objects[1]); // originAirport
             case "destinationAirport":
-                return Comparator.comparing(Flight::getDestinationAirport);
+                return Comparator.comparing(objects -> (String) objects[2]); // destinationAirport
             case "date":
-                return Comparator.comparing(Flight::getDate);
+                return Comparator.comparing(objects -> (String) objects[3]); // date
             case "departureTimeLocal":
-                return Comparator.comparing(Flight::getDepartureTimeLocal);
+                return Comparator.comparing(objects -> (String) objects[4]); // departureTimeLocal
             case "landingTimeLocal":
-                return Comparator.comparing(Flight::getLandingTimeLocal);
+                return Comparator.comparing(objects -> (String) objects[5]); // landingTimeLocal
             case "remainingTickets":
-                return Comparator.comparingInt(Flight::getRemainingTickets);
+                return Comparator.comparing(objects -> (Integer) objects[6]); // remainingTickets
             default:
                 return null;
         }

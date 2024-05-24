@@ -22,7 +22,7 @@ import lombok.Data;
 import java.util.List;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.format.DateTimeFormatter;
+
 @Component
 public class DataInitializer {
 
@@ -42,7 +42,6 @@ public class DataInitializer {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
             objectMapper.registerModule(new JavaTimeModule());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             objectMapper.setDateFormat(new StdDateFormat().withColonInTimeZone(true));
             objectMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 

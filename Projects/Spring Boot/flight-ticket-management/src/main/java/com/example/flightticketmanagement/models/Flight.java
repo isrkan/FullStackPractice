@@ -19,12 +19,15 @@ public class Flight {
     @JsonProperty("flight_number")
     private String flightNumber;
 
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("airline_iata_code")
     private String airlineIataCode;
 
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("origin_airport")
     private String originAirport;
 
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("destination_airport")
     private String destinationAirport;
 
