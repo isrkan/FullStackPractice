@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Flight Search</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/search.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>Search Flights</h1>
+            <form th:action="@{/flights/search}" method="get">
+                <label for="originAirport">Origin Airport:</label>
+                <input type="text" id="originAirport" name="originAirport" required>
+
+                <label for="destinationAirport">Destination Airport:</label>
+                <input type="text" id="destinationAirport" name="destinationAirport" required>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <button type="submit">Search Flights</button>
+            </form>
+
+            <div th:if="${flights != null}">
+                <h2>Search Results</h2>
+                <div th:if="${#lists.isEmpty(flights)}">
+                    <p>No flights found for the selected criteria.</p>
+                </div>
+                <div th:unless="${#lists.isEmpty(flights)}">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Flight Number</th>
+                            <th>Airline Name</th>
+                            <th>Origin Airport</th>
+                            <th>Destination Airport</th>
+                            <th>Date</th>
+                            <th>Departure Time (Local)</th>
+                            <th>Landing Time (Local)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="flight : ${flights}">
+                            <td th:text="${flight?.flightNumber}"></td>
+                            <td th:text="${flight?.airline?.airlineName}"></td>
+                            <td th:text="${flight?.originAirport?.airportCode}"></td>
+                            <td th:text="${flight?.destinationAirport?.airportCode}"></td>
+                            <td th:text="${flight?.date}"></td>
+                            <td th:text="${flight?.departureTimeLocal}"></td>
+                            <td th:text="${flight?.landingTimeLocal}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

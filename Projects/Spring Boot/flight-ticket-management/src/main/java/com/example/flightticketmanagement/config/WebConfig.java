@@ -11,5 +11,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         // Map the root URL to the welcome page
         registry.addViewController("/").setViewName("home");
+        registry.addViewController("/contact").setViewName("contact");
     }
 }

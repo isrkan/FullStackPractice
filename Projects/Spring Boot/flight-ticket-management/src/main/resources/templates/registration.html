@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/registration.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>Registration</h1>
+            <div th:if="${message}">
+                <p th:text="${message}"></p>
+            </div>
+            <form th:action="@{/registration}" th:object="${customer}" method="post">
+                <label for="firstName">First Name</label>
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-message"></span>
+                <input type="text" id="firstName" th:field="*{firstName}">
+
+                <label for="lastName">Last Name</label>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-message"></span>
+                <input type="text" id="lastName" th:field="*{lastName}">
+
+                <label for="address">Address</label>
+                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error-message"></span>
+                <input type="text" id="address" th:field="*{address}">
+
+                <label for="phoneNumber">Phone Number</label>
+                <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="error-message"></span>
+                <input type="tel" id="phoneNumber" th:field="*{phoneNumber}">
+
+                <label for="creditCardNumber">Credit Card Number</label>
+                <span th:if="${#fields.hasErrors('creditCardNumber')}" th:errors="*{creditCardNumber}" class="error-message"></span>
+                <input type="text" id="creditCardNumber" th:field="*{creditCardNumber}">
+
+                <label for="username">Username</label>
+                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span>
+                <input type="text" id="username" th:field="*{username}">
+
+                <label for="password">Password</label>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span>
+                <input type="password" id="password" th:field="*{password}">
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

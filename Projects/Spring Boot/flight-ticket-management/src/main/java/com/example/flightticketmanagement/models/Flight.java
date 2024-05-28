@@ -1,45 +1,34 @@
 package com.example.flightticketmanagement.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
 @Entity
-@Table(name = "flight")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @JsonProperty("flight_number")
     private String flightNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonProperty("airline_iata_code")
-    private String airlineIataCode;
+    @ManyToOne
+    private Airline airline;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonProperty("origin_airport")
-    private String originAirport;
+    @ManyToOne
+    private Airport originAirport;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonProperty("destination_airport")
-    private String destinationAirport;
-
-    @JsonProperty("date")
+    @ManyToOne
+    private Airport destinationAirport;
     private LocalDate date;
-
-    @JsonProperty("departure_time_local")
     private LocalTime departureTimeLocal;
-
-    @JsonProperty("landing_time_local")
     private LocalTime landingTimeLocal;
-
-    @JsonProperty("remaining_tickets")
     private int remainingTickets;
 }

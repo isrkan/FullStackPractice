@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact SkyMaster</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="styles/contact.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <header>
+            <h1>Get in Touch with SkyMaster</h1>
+        </header>
+        <main>
+            <section class="contact-info">
+                <p>Have questions, suggestions, or just want to say hi? We'd love to hear from you!</p>
+                <p>Here's how you can reach out:</p>
+                <ul>
+                    <li><strong>Email:</strong> contact@skymaster.com</li>
+                    <li><strong>Phone:</strong> 1-800-759-3597</li>
+                    <li><strong>Address:</strong> SkyMaster Headquarters, Cloud Plaza, 5 Ave, Sky City
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>
