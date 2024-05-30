@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Airline {
     @Id
     private String iataCode;
+
     private String airlineName;
     private String airportBase;
     private String username;

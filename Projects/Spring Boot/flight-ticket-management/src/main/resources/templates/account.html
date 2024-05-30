@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Account</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/account.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>My Account</h1>
+            <!-- Personal Details Container -->
+            <div class="personal-details-container">
+                <div class="title-and-button">
+                    <h2>Personal Details</h2>
+                    <div class="edit-button-container">
+                        <a href="/account/edit" class="edit-button">Edit Details</a>
+                    </div>
+                </div>
+                <div>
+                    <p><strong>First Name:</strong> <span th:text="${customer.firstName}"></span></p>
+                    <p><strong>Last Name:</strong> <span th:text="${customer.lastName}"></span></p>
+                    <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+                    <p><strong>Phone Number:</strong> <span th:text="${customer.phoneNumber}"></span></p>
+                    <p><strong>Credit Card Number:</strong> <span th:text="${customer.creditCardNumber}"></span></p>
+                    <p><strong>Username:</strong> <span th:text="${customer.username}"></span></p>
+                </div>
+            </div>
+            <!-- My Tickets Container -->
+            <div class="my-tickets-container">
+                <h2>My Tickets</h2>
+            </div>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

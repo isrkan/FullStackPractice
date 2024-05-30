@@ -5,9 +5,11 @@ import com.example.flightticketmanagement.repositories.CustomerRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(4)
 public class CustomerDataInitializer {
 
     @Bean
