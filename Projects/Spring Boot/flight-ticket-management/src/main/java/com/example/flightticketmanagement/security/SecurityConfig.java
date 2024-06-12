@@ -1,7 +1,9 @@
 package com.example.flightticketmanagement.security;
 
+import com.example.flightticketmanagement.models.Airline;
 import com.example.flightticketmanagement.models.Customer;
 import com.example.flightticketmanagement.repositories.CustomerRepository;
+import com.example.flightticketmanagement.repositories.AirlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,8 @@ public class SecurityConfig {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private AirlineRepository airlineRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -26,18 +30,26 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain FilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/account").authenticated()  // Restrict access to the account page
+                        .requestMatchers("/account", "/airline-flights").authenticated()  // Restrict access to the account and airline flights pages
                         .anyRequest().permitAll())  // Permit all requests
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")  // Custom login page
                         .defaultSuccessUrl("/account") // Redirect to /account after successful login
+                        .loginProcessingUrl("/login")
+                        .failureUrl("/login?error=true") // Redirect to login with error
                         .permitAll())  // Permit access to the login page
+                //.formLogin(formLogin -> formLogin
+                //        .loginPage("/airline-login")
+                //        .defaultSuccessUrl("/airline-flights")
+                //        .loginProcessingUrl("/airline-login")
+                //        .failureUrl("/airline-login?error=true")
+                //        .permitAll())
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/"));  // Redirect to home after logout
+                        .logoutSuccessUrl("/").permitAll());  // Redirect to home after logout
         return http.build();
     }
 
@@ -47,6 +59,10 @@ public class SecurityConfig {
             Customer customer = customerRepository.findByUsername(username);
             if (customer != null) {
                 return customer;
+            }
+            Airline airline = airlineRepository.findByUsername(username).orElse(null);
+            if (airline != null) {
+                return airline;
             }
             throw new UsernameNotFoundException("User '" + username + "' not found");
         };

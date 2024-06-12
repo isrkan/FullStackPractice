@@ -16,7 +16,7 @@ import java.util.Arrays;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer  implements UserDetails {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")

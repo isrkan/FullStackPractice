@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Airline Login</title>
         <link rel="stylesheet" href="/styles/fragments/navbar.css">
         <link rel="stylesheet" href="/styles/fragments/footer.css">
         <link rel="stylesheet" href="/styles/login.css">
@@ -10,23 +10,22 @@
     <body>
         <div th:insert="~{fragments/navbar :: navbar}"></div>
         <div class="container">
-            <h1>Login</h1>
+            <h1>Airline Login</h1>
             <div th:if="${message}">
                 <p th:text="${message}" class="success-message"></p>
             </div>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/airline-login}" method="post">
                 <div>
-                    <label for="username">Username:</label>
+                    <label for="username">Airline Username:</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div>
-                    <label for="password">Password:</label>
+                    <label for="password">Airline Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit">Login</button>
             </form>
-            <p>Don't have an account? <a href="/registration">Register here</a></p>
-            <p>Are you an airline? <a href="/airline-login">Login here</a></p>
+            <p>Are you a customer? <a href="/login">Login here</a></p>
         </div>
         <div th:insert="~{fragments/footer :: footer}"></div>
     </body>

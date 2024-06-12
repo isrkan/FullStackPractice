@@ -73,3 +73,46 @@ tr:nth-child(even) {
 .edit-button:hover {
     background-color: #0056b3;
 }
+
+.cancel-ticket-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-ticket-button:hover {
+    background-color: #c82333;
+}
+
+.ticket-sub-container {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #e9ecef;  /* White background for a clean look */
+    border: 1px solid #dee2e6;  /* Light border for better definition */
+    border-radius: 10px;  /* Slightly more rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Softer and more subtle shadow */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;  /* Smooth transition for hover effects */
+}
+
+.ticket-sub-container:hover {
+    transform: scale(1.02);  /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+}
+
+.ticket-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ticket-details div {
+    flex: 1 1 45%;
+    margin-bottom: 20px;
+}
+
+.ticket-details div p {
+        margin: 0;
+ }

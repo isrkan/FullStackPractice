@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Flight</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/add-flight.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>Add New Flight</h1>
+            <form th:action="@{/airline-flights/add}" method="post">
+                <div>
+                    <label for="airline">Airline (IATA Code):</label>
+                    <input type="text" id="airline" name="airline" th:value="${loggedInAirline.iataCode}" disabled>
+                </div>
+                <div>
+                    <label for="flightNumber">Flight Number:</label>
+                    <input type="text" id="flightNumber" name="flightNumber" required>
+                </div>
+                <div>
+                    <label for="originAirport">Origin Airport:</label>
+                    <select id="originAirport" name="originAirport" required>
+                        <option th:each="airport : ${airports}" th:value="${airport.airportCode}" th:text="${airport.airportCode + ' - ' + airport.airportName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="destinationAirport">Destination Airport:</label>
+                    <select id="destinationAirport" name="destinationAirport" required>
+                        <option th:each="airport : ${airports}" th:value="${airport.airportCode}" th:text="${airport.airportCode + ' - ' + airport.airportName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div>
+                    <label for="departureTimeLocal">Departure Time (Local):</label>
+                    <input type="time" id="departureTimeLocal" name="departureTimeLocal" required>
+                </div>
+                <div>
+                    <label for="landingTimeLocal">Landing Time (Local):</label>
+                    <input type="time" id="landingTimeLocal" name="landingTimeLocal" required>
+                </div>
+                <div>
+                    <label for="remainingTickets">Remaining Tickets:</label>
+                    <input type="number" id="remainingTickets" name="remainingTickets" required>
+                </div>
+                <button type="submit">Add Flight</button>
+            </form>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

@@ -7,7 +7,13 @@
                         <a href="/contact">Contact Us</a>
                 </div>
                 <div class="login-link">
-                        <a href="/login">Login</a>
+                        <div th:if="${#authorization.expression('isAuthenticated()')}">
+                                <a href="/account">My Account</a>
+                                <a href="/logout">Logout</a>
+                        </div>
+                        <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                                <a href="/login">Login</a>
+                        </div>
                 </div>
         </div>
 </div>

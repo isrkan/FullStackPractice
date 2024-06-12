@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Purchase Ticket</title>
+  </head>
+  <body>
+    <div th:insert="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+      <h1>Purchase Ticket</h1>
+      <form action="/confirm-purchase" method="post">
+        <div>
+          <h2>Flight Details</h2>
+          <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
+          <p><strong>Airline Name:</strong> <span th:text="${flight.airline.airlineName}"></span></p>
+          <p><strong>Origin Airport:</strong> <span th:text="${flight.originAirport.airportCode}"></span> - <span th:text="${flight.originAirport.airportName}"></span></p>
+          <p><strong>Destination Airport:</strong> <span th:text="${flight.destinationAirport.airportCode}"></span> - <span th:text="${flight.destinationAirport.airportName}"></span></p>
+          <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
+          <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
+          <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>
+        </div>
+        <div>
+          <h2>Customer Details</h2>
+          <p><strong>First Name:</strong> <span th:text="${customer.firstName}"></span></p>
+          <p><strong>Last Name:</strong> <span th:text="${customer.lastName}"></span></p>
+          <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+        </div>
+        <div>
+          <h2>Ticket Details</h2>
+          <label for="classType">Class Type:</label>
+          <select id="classType" name="classType">
+            <option th:each="classType : ${classTypes}" th:value="${classType}" th:text="${classType}"></option>
+          </select>
+          <label for="seatNumber">Seat Number:</label>
+          <input type="text" id="seatNumber" name="seatNumber" required>
+          <p><strong>Price:</strong> $500</p>
+          <input type="hidden" name="price" value="500">
+          <input type="hidden" name="flightNumber" th:value="${flight.flightNumber}">
+        </div>
+        <button type="submit">Confirm Purchase</button>
+      </form>
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+  </body>
+</html>

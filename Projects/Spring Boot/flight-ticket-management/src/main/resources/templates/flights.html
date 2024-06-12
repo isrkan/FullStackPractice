@@ -14,32 +14,81 @@
             <div class="search-link">
                 <a href="/flights/search" class="search-button">Search Flights</a>
             </div>
-            <table>
+            <div class="view-toggle-buttons">
+                <button onclick="showTableView()">Table View</button>
+                <button onclick="showContainerView()">Container View</button>
+            </div>
+            <!-- Table View -->
+            <table id="flights-table" style="display: none;">
                 <thead>
-                    <tr>
-                        <th>Flight Number</th>
-                        <th>Airline name</th>
-                        <th>Origin Airport</th>
-                        <th>Destination Airport</th>
-                        <th>Date</th>
-                        <th>Departure Time (Local)</th>
-                        <th>Landing Time (Local)</th>
-                    </tr>
+                <tr>
+                    <th>Flight Number</th>
+                    <th>Airline Name</th>
+                    <th>Origin Airport</th>
+                    <th>Destination Airport</th>
+                    <th>Date</th>
+                    <th>Departure Time (Local)</th>
+                    <th>Landing Time (Local)</th>
+                </tr>
                 </thead>
                 <tbody>
                 <!-- Iterate over flight data and display in table rows -->
-                    <tr th:each="flight : ${flights}">
-                        <td th:text="${flight?.flightNumber}"></td>
-                        <td th:text="${flight?.airline?.airlineName}"></td>
-                        <td th:text="${flight?.originAirport?.airportCode}"></td>
-                        <td th:text="${flight?.destinationAirport?.airportCode}"></td>
-                        <td th:text="${flight?.date}"></td>
-                        <td th:text="${flight?.departureTimeLocal}"></td>
-                        <td th:text="${flight?.landingTimeLocal}"></td>
-                    </tr>
+                <tr th:each="flight : ${flights}">
+                    <td th:text="${flight?.flightNumber}"></td>
+                    <td th:text="${flight?.airline?.airlineName}"></td>
+                    <td th:text="${flight?.originAirport?.airportCode}"></td>
+                    <td th:text="${flight?.destinationAirport?.airportCode}"></td>
+                    <td th:text="${flight?.date}"></td>
+                    <td th:text="${flight?.departureTimeLocal}"></td>
+                    <td th:text="${flight?.landingTimeLocal}"></td>
+                </tr>
                 </tbody>
             </table>
+            <!-- Container View -->
+            <div id="flights-container" style="display: none;">
+                <div th:each="flight : ${flights}" class="flight-sub-container">
+                    <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
+                    <p><strong>Airline Name:</strong> <span th:text="${flight.airline.airlineName}"></span></p>
+                    <p><strong>Origin Airport:</strong> <span th:text="${flight.originAirport.airportCode}"></span> - <span th:text="${flight.originAirport.airportName}"></span>, <span th:text="${flight.originAirport.city}"></span>, <span th:text="${flight.originAirport.country}"></span></p>
+                    <p><strong>Destination Airport:</strong> <span th:text="${flight.destinationAirport.airportCode}"></span> - <span th:text="${flight.destinationAirport.airportName}"></span>, <span th:text="${flight.destinationAirport.city}"></span>, <span th:text="${flight.destinationAirport.country}"></span></p>
+                    <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
+                    <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
+                    <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>
+                    <div class="purchase-button-container">
+                        <button class="purchase-button" onclick="purchaseTicket('${flight.id}')">Purchase Ticket</button>
+                        <p class="login-message" style="display: none; color: red;">You need to log in to purchase a ticket</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div th:insert="~{fragments/footer :: footer}"></div>
+        <script>
+            function showTableView() {
+                document.getElementById('flights-table').style.display = 'table';
+                document.getElementById('flights-container').style.display = 'none';
+            }
+
+            function showContainerView() {
+                document.getElementById('flights-table').style.display = 'none';
+                document.getElementById('flights-container').style.display = 'block';
+            }
+
+            // Default to table view
+            showTableView();
+
+            function purchaseTicket(id) {
+                // Check if the user is authenticated
+                var isAuthenticated = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false;
+                if (isAuthenticated) {
+                    // Proceed to purchase the ticket
+                    window.location.href = "/purchase/" + id;
+                } else {
+                    // Show the login required message
+                    var purchaseButtonContainer = event.target.closest('.purchase-button-container');
+                    var loginMessage = purchaseButtonContainer.querySelector('.login-message');
+                    loginMessage.style.display = 'block';
+                }
+            }
+        </script>
     </body>
 </html>

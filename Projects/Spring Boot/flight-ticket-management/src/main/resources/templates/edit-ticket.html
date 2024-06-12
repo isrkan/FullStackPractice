@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Ticket</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/edit-ticket.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>Edit Ticket</h1>
+            <form th:action="@{/account/tickets/edit/{ticketId}(ticketId=${ticket.ticketId})}" th:object="${ticket}" method="post">
+                <div class="form-group">
+                    <label for="ticketId">Ticket Number:</label>
+                    <input type="text" id="ticketId" name="ticketId" class="form-control" th:field="*{ticketId}" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="flight">Flight:</label>
+                    <select id="flight" name="flight" class="form-control" th:field="*{flight}" disabled>
+                        <option th:each="flight : ${flights}" th:value="${flight.id}" th:text="${flight.flightNumber}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="classType">Class Type:</label>
+                    <select id="classType" name="classType" class="form-control" th:field="*{classType}">
+                        <option th:each="classType : ${T(com.example.flightticketmanagement.models.Ticket.ClassType).values()}" th:value="${classType}" th:text="${classType}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookingStatus">Booking Status:</label>
+                    <select id="bookingStatus" name="bookingStatus" class="form-control" th:field="*{bookingStatus}" disabled>
+                        <option th:each="status : ${T(com.example.flightticketmanagement.models.Ticket$BookingStatus).values()}" th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="seatNumber">Seat Number:</label>
+                    <input type="text" id="seatNumber" name="seatNumber" class="form-control" th:field="*{seatNumber}" />
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" id="price" name="price" class="form-control" th:field="*{price}" disabled />
+                </div>
+                <div>
+                    <button type="submit" class="save-button">Save</button>
+                </div>
+            </form>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

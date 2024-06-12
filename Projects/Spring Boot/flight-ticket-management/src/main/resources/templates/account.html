@@ -31,6 +31,26 @@
             <!-- My Tickets Container -->
             <div class="my-tickets-container">
                 <h2>My Tickets</h2>
+                <div th:each="ticket : ${tickets}" class="ticket-sub-container">
+                    <div class="ticket-details">
+                        <div><p><strong>Ticket Number:</strong> <span th:text="${ticket.ticketId}"></span></p></div>
+                        <div><p><strong>Flight Number:</strong> <span th:text="${ticket.flight != null ? ticket.flight.flightNumber : 'N/A'}"></span></p></div>
+                        <div><p><strong>From:</strong> <span th:text="${ticket.flight != null ? ticket.flight.originAirport.airportCode : 'N/A'}"></span></p></div>
+                        <div><p><strong>To:</strong> <span th:text="${ticket.flight != null ? ticket.flight.destinationAirport.airportCode : 'N/A'}"></span></p></div>
+                        <div><p><strong>Date:</strong> <span th:text="${ticket.flight != null ? ticket.flight.date : 'N/A'}"></span></p></div>
+                        <div><p><strong>Departure Time (Local):</strong> <span th:text="${ticket.flight != null ? ticket.flight.departureTimeLocal : 'N/A'}"></span></p></div>
+                        <div><p><strong>Class:</strong> <span th:text="${ticket.classType}"></span></p></div>
+                        <div><p><strong>Seat Number:</strong> <span th:text="${ticket.seatNumber}"></span></p></div>
+                        <div><p><strong>Booking Status:</strong> <span th:text="${ticket.bookingStatus}"></span></p></div>
+                        <div><p><strong>Price:</strong> <span th:text="${ticket.price}"></span></p></div>
+                    </div>
+                    <div class="ticket-actions">
+                        <a th:href="@{/account/tickets/edit/{ticketId}(ticketId=${ticket.ticketId})}" class="edit-button">Edit</a>
+                        <form th:action="@{/account/tickets/delete/{ticketId}(ticketId=${ticket.ticketId})}" method="post" style="display:inline;">
+                            <button type="submit" class="cancel-ticket-button">Cancel Ticket</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div th:insert="~{fragments/footer :: footer}"></div>
