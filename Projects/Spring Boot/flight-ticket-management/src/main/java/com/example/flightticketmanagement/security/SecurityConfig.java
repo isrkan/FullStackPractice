@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/account", "/airline-flights").authenticated()  // Restrict access to the account and airline flights pages
+                        .requestMatchers("/account", "/payment", "/airline-flights").authenticated()  // Restrict access to the account and airline flights pages
                         .anyRequest().permitAll())  // Permit all requests
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")  // Custom login page

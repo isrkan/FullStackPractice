@@ -31,7 +31,7 @@ public class Ticket {
     private double price;
 
     public enum BookingStatus {
-        BOOKED, CANCELLED, CONFIRMED,CHECKED_IN, COMPLETED
+        BOOKED, CANCELLED, CONFIRMED, CHECKED_IN, COMPLETED, PENDING
     }
 
     public enum ClassType {

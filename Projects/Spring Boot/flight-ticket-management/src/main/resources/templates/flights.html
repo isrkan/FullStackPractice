@@ -46,6 +46,7 @@
             </table>
             <!-- Container View -->
             <div id="flights-container" style="display: none;">
+                <div id="authStatus" th:data-authenticated="${#authorization.expression('isAuthenticated()')}"></div>
                 <div th:each="flight : ${flights}" class="flight-sub-container">
                     <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
                     <p><strong>Airline Name:</strong> <span th:text="${flight.airline.airlineName}"></span></p>
@@ -54,8 +55,8 @@
                     <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
                     <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
                     <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>
-                    <div class="purchase-button-container">
-                        <button class="purchase-button" onclick="purchaseTicket('${flight.id}')">Purchase Ticket</button>
+                    <div class="purchase-button-container" th:data-flight-id="${flight.id}">
+                        <button class="purchase-button" onclick="purchaseTicket(this)">Purchase Ticket</button>
                         <p class="login-message" style="display: none; color: red;">You need to log in to purchase a ticket</p>
                     </div>
                 </div>
@@ -76,12 +77,16 @@
             // Default to table view
             showTableView();
 
-            function purchaseTicket(id) {
+            function purchaseTicket(button) {
                 // Check if the user is authenticated
-                var isAuthenticated = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false;
+                var isAuthenticated = document.getElementById('authStatus').getAttribute('data-authenticated');
+                isAuthenticated = (isAuthenticated === 'true');
+                console.log("Is authenticated:", isAuthenticated);
                 if (isAuthenticated) {
                     // Proceed to purchase the ticket
-                    window.location.href = "/purchase/" + id;
+                    var flightId = button.parentElement.getAttribute('data-flight-id');
+                    console.log("Flight ID:", flightId);
+                    window.location.href = "/purchase/" + flightId;
                 } else {
                     // Show the login required message
                     var purchaseButtonContainer = event.target.closest('.purchase-button-container');

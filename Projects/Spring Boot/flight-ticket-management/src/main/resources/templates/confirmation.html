@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Booking Confirmation</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/confirmation.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>Booking Confirmation</h1>
+            <div>
+                <h2>Flight Details</h2>
+                <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
+                <p><strong>Airline Name:</strong> <span th:text="${flight.airline.airlineName}"></span></p>
+                <p><strong>Origin Airport:</strong> <span th:text="${flight.originAirport.airportCode}"></span> - <span th:text="${flight.originAirport.airportName}"></span></p>
+                <p><strong>Destination Airport:</strong> <span th:text="${flight.destinationAirport.airportCode}"></span> - <span th:text="${flight.destinationAirport.airportName}"></span></p>
+                <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
+                <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
+                <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>
+            </div>
+            <div>
+                <h2>Customer Details</h2>
+                <p><strong>First Name:</strong> <span th:text="${customer.firstName}"></span></p>
+                <p><strong>Last Name:</strong> <span th:text="${customer.lastName}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${customer.address}"></span>
+                <p><strong>Phone Number:</strong> <span th:text="${customer.phoneNumber}"></span>
+                <p><strong>Username:</strong> <span th:text="${customer.username}"></span></p>
+            </div>
+            <div>
+                <h2>Ticket Details</h2>
+                <p><strong>Ticket ID:</strong> <span th:text="${ticket.ticketId}"></span></p>
+                <p><strong>Class Type:</strong> <span th:text="${ticket.classType}"></span></p>
+                <p><strong>Seat Number:</strong> <span th:text="${ticket.seatNumber}"></span></p>
+                <p><strong>Price:</strong> <span th:text="${ticket.price}"></span></p>
+                <p><strong>Booking Status:</strong> <span th:text="${ticket.bookingStatus}"></span></p>
+            </div>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

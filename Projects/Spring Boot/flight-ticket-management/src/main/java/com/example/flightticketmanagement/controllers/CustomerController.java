@@ -10,21 +10,25 @@ import com.example.flightticketmanagement.models.Ticket.BookingStatus;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.BindingResult;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 @Slf4j
 @Controller
+@SessionAttributes(names = {"ticket"})
 public class CustomerController {
 
     @Autowired
@@ -151,17 +155,114 @@ public class CustomerController {
     }
 
     @GetMapping("/purchase/{id}")
-    public String showPurchasePage(@RequestParam Long id, Model model, Authentication authentication) {
+    public String showPurchasePage(@PathVariable Long id, Model model, Authentication authentication) {
+        System.out.println("Is Authenticated: " + (authentication != null && authentication.isAuthenticated()));
         // Retrieve the flight details
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Flight not found"));
         // Retrieve the customer details
         Customer customer = (Customer) authentication.getPrincipal();
+        // Generate a random ticket ID
+        // String ticketId = TicketIdGenerator.generateTicketId();
         // Add flight and customer details to the model
         model.addAttribute("flight", flight);
         model.addAttribute("customer", customer);
+        // model.addAttribute("ticketId", ticketId);
         // Add class types to the model
         model.addAttribute("classTypes", Ticket.ClassType.values());
         return "purchase";
+    }
+
+    @PostMapping("/purchase")
+    public String processPurchaseForm(@RequestParam("flightId") Long flightId, @RequestParam("classType") String classType, @RequestParam("seatNumber") String seatNumber, Model model, Authentication authentication) {
+        // Retrieve the flight details from the database
+        Flight flight = flightRepository.findById(flightId)
+                .orElseThrow(() -> new NoSuchElementException("Flight not found"));
+
+        // Retrieve the authenticated customer from the database
+        Customer customer = (Customer) authentication.getPrincipal();
+
+        // Generate a ticket ID
+        String ticketId = TicketIdGenerator.generateTicketId();
+
+        // Create a new ticket with the provided details
+        Ticket ticket = new Ticket();
+        ticket.setTicketId(ticketId);
+        ticket.setFlight(flight);
+        ticket.setCustomer(customer);
+        ticket.setClassType(Ticket.ClassType.valueOf(classType));
+        ticket.setSeatNumber(seatNumber);
+        ticket.setPrice(500); // Assuming a fixed price for now
+        ticket.setBookingStatus(Ticket.BookingStatus.PENDING);
+
+        // Save the ticket to the database (or perform any other necessary actions)
+        ticketRepository.save(ticket);
+        System.out.println("Ticket saved with ID: " + ticketId);
+
+        // Redirect to the payment page
+        return "redirect:/payment?ticketId=" + ticketId;
+    }
+
+    @GetMapping("/payment")
+    public String showPaymentPage(@RequestParam("ticketId") String ticketId, Model model, Authentication authentication) {
+        Customer customer = (Customer) authentication.getPrincipal();
+        System.out.println("Received ticketId: " + ticketId);
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
+        model.addAttribute("customer", customer);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("ticketId", ticketId);
+        return "payment";
+    }
+
+    @Transactional
+    @PostMapping("/confirm-purchase")
+    public String processPayment(@RequestParam("expiryDate") String expiryDate, @RequestParam("cvv") String cvv, @RequestParam("ticketId") String ticketId, Model model) {
+
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
+
+        // Perform payment validation and processing (this is a placeholder for actual payment logic)
+        boolean paymentSuccessful = validateAndProcessPayment(expiryDate, cvv);
+        System.out.println("Received ticketId: " + ticket.getTicketId());
+        if (paymentSuccessful) {
+            // Update the booking status to BOOKED
+            ticket.setBookingStatus(Ticket.BookingStatus.BOOKED);
+            ticketRepository.save(ticket);
+
+            // Add flight and ticket details to the model
+            model.addAttribute("flight", ticket.getFlight());
+            model.addAttribute("customer", ticket.getCustomer());
+            model.addAttribute("ticket", ticket);
+
+            // Redirect to the confirmation page
+            return "confirmation";
+        } else {
+            // Handle payment failure (e.g., show an error message)
+            model.addAttribute("error", "Payment failed. Please try again.");
+            model.addAttribute("ticket", ticket); // Add ticket to model to display on payment page
+            return "payment";
+        }
+    }
+
+
+    public class TicketIdGenerator {
+        public static String generateTicketId() {
+            StringBuilder ticketId = new StringBuilder("TCKT");
+            Random random = new Random();
+            for (int i = 0; i < 8; i++) {
+                if (i % 2 == 0) {
+                    ticketId.append(random.nextInt(10)); // Add a random digit
+                } else {
+                    char randomChar = (char) (random.nextInt(26) + 'A'); // Add a random capital letter
+                    ticketId.append(randomChar);
+                }
+            }
+            return ticketId.toString();
+        }
+    }
+
+    private boolean validateAndProcessPayment(String expiryDate, String cvv) {
+        return true; // Assuming payment is always successful for this example
     }
 }

@@ -2,12 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Purchase Ticket</title>
+    <link rel="stylesheet" href="/styles/fragments/navbar.css">
+    <link rel="stylesheet" href="/styles/fragments/footer.css">
+    <link rel="stylesheet" href="/styles/purchase.css">
   </head>
   <body>
     <div th:insert="~{fragments/navbar :: navbar}"></div>
     <div class="container">
       <h1>Purchase Ticket</h1>
-      <form action="/confirm-purchase" method="post">
+      <form action="/purchase" method="post">
         <div>
           <h2>Flight Details</h2>
           <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
@@ -26,17 +29,29 @@
         </div>
         <div>
           <h2>Ticket Details</h2>
-          <label for="classType">Class Type:</label>
-          <select id="classType" name="classType">
-            <option th:each="classType : ${classTypes}" th:value="${classType}" th:text="${classType}"></option>
-          </select>
-          <label for="seatNumber">Seat Number:</label>
-          <input type="text" id="seatNumber" name="seatNumber" required>
-          <p><strong>Price:</strong> $500</p>
-          <input type="hidden" name="price" value="500">
-          <input type="hidden" name="flightNumber" th:value="${flight.flightNumber}">
+          <div class="ticket-details">
+            <div class="form-group">
+              <label for="classType">Class Type:</label>
+              <select id="classType" name="classType" class="form-control">
+                <option th:each="classType : ${classTypes}" th:value="${classType}" th:text="${classType}"></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="seatNumber">Seat Number:</label>
+              <input type="text" id="seatNumber" name="seatNumber" class="form-control" required>
+            </div>
+            <div class="price-info">
+              <label><strong>Price:</strong></label>
+              <span>$500</span>
+            </div>
+            <input type="hidden" name="price" value="500">
+            <input type="hidden" name="flightNumber" th:value="${flight.flightNumber}">
+            <input type="hidden" id="bookingStatus" name="bookingStatus" value="PENDING">
+            <input type="hidden" name="ticketId" th:value="${ticketId}">
+            <input type="hidden" name="flightId" th:value="${flight.id}">
+          </div>
         </div>
-        <button type="submit">Confirm Purchase</button>
+        <button type="submit" class="continue-button">Continue Purchase</button>
       </form>
     </div>
     <div th:insert="~{fragments/footer :: footer}"></div>
