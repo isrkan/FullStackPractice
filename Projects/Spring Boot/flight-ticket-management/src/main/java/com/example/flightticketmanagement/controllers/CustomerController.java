@@ -161,7 +161,8 @@ public class CustomerController {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Flight not found"));
         // Retrieve the customer details
-        Customer customer = (Customer) authentication.getPrincipal();
+        String username = authentication.getName();
+        Customer customer = customerRepository.findByUsername(username);
         // Generate a random ticket ID
         // String ticketId = TicketIdGenerator.generateTicketId();
         // Add flight and customer details to the model
@@ -180,7 +181,8 @@ public class CustomerController {
                 .orElseThrow(() -> new NoSuchElementException("Flight not found"));
 
         // Retrieve the authenticated customer from the database
-        Customer customer = (Customer) authentication.getPrincipal();
+        String username = authentication.getName();
+        Customer customer = customerRepository.findByUsername(username);
 
         // Generate a ticket ID
         String ticketId = TicketIdGenerator.generateTicketId();
@@ -205,7 +207,8 @@ public class CustomerController {
 
     @GetMapping("/payment")
     public String showPaymentPage(@RequestParam("ticketId") String ticketId, Model model, Authentication authentication) {
-        Customer customer = (Customer) authentication.getPrincipal();
+        String username = authentication.getName();
+        Customer customer = customerRepository.findByUsername(username);
         System.out.println("Received ticketId: " + ticketId);
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new NoSuchElementException("Ticket not found"));

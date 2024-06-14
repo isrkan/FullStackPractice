@@ -8,7 +8,9 @@
                 </div>
                 <div class="login-link">
                         <div th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a href="/account">My Account</a>
+                                <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" href="/account">My Account</a>
+                                <a th:if="${#authorization.expression('hasRole(''ROLE_AIRLINE'')')}" href="/airline-flights">Airline Account</a>
+                                <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" href="/admin-page">Admin Page</a>
                                 <a href="/logout">Logout</a>
                         </div>
                         <div th:if="${#authorization.expression('!isAuthenticated()')}">
