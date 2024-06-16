@@ -25,6 +25,7 @@
           <th>Departure Time (Local)</th>
           <th>Landing Time (Local)</th>
           <th>Remaining Tickets</th>
+          <th>Status</th>
           <th></th>
         </tr>
         </thead>
@@ -39,10 +40,11 @@
           <td th:text="${flight.departureTimeLocal}"></td>
           <td th:text="${flight.landingTimeLocal}"></td>
           <td th:text="${flight.remainingTickets}"></td>
+          <td th:text="${flight.flightStatus}"></td>
           <td>
             <a th:href="@{'/airline-flights/edit/' + ${flight.id}}" class="edit-flights-button">Edit</a>
-            <form th:action="@{/airline-flights/delete/{flightId}(flightId=${flight.id})}" method="post">
-              <button type="submit" class="delete-flights-button">Delete</button>
+            <form th:action="@{/airline-flights/cancel/{flightId}(flightId=${flight.id})}" method="post">
+              <button type="submit" class="cancel-flights-button">Cancel</button>
             </form>
           </td>
         </tr>

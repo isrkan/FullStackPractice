@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Ticket</title>
+    <link rel="stylesheet" href="/styles/fragments/navbar.css">
+    <link rel="stylesheet" href="/styles/fragments/footer.css">
+    <link rel="stylesheet" href="/styles/add-flight.css">
+  </head>
+  <body>
+    <div th:insert="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+      <h1>Add New Ticket</h1>
+      <form th:action="@{/admin-page/add-ticket}" method="post">
+        <div>
+          <label for="customer">Customer:</label>
+          <select id="customer" name="customer" required>
+            <option th:each="customer : ${customers}" th:value="${customer.customerId}" th:text="${customer.firstName + ' ' + customer.lastName + ' (' + customer.username + ')'}"></option>
+          </select>
+        </div>
+        <div>
+          <label for="flight">Flight:</label>
+          <select id="flight" name="flight" required>
+            <option th:each="flight : ${flights}" th:value="${flight.id}" th:text="${flight.flightNumber + ' (' + flight.originAirport.airportCode + ' to ' + flight.destinationAirport.airportCode + ')'}"></option>
+          </select>
+        </div>
+        <div>
+          <label for="classType">Class Type:</label>
+          <select id="classType" name="classType" required>
+            <option th:each="classType : ${T(com.example.flightticketmanagement.models.Ticket.ClassType).values()}" th:value="${classType}" th:text="${classType}"></option>
+          </select>
+        </div>
+        <div>
+          <label for="seatNumber">Seat Number:</label>
+          <input type="text" id="seatNumber" name="seatNumber" required>
+        </div>
+        <div>
+          <label for="bookingStatus">Booking Status:</label>
+          <select id="bookingStatus" name="bookingStatus" required>
+            <option th:each="bookingStatus : ${T(com.example.flightticketmanagement.models.Ticket.BookingStatus).values()}" th:value="${bookingStatus}" th:text="${bookingStatus}"></option>
+          </select>
+        </div>
+        <div>
+          <label for="price">Price:</label>
+          <input type="number" step="0.01" id="price" name="price" required>
+        </div>
+        <button type="submit">Add Ticket</button>
+      </form>
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+  </body>
+</html>

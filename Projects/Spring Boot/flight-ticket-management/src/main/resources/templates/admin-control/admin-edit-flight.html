@@ -11,10 +11,12 @@
         <div th:insert="~{fragments/navbar :: navbar}"></div>
         <div class="container">
             <h1>Edit Flight</h1>
-            <form th:action="@{/airline-flights/edit/{flightId}(flightId=${flight.id})}" method="post">
+            <form th:action="@{/admin-page/edit-flight/{flightId}(flightId=${flight.id})}" method="post">
                 <div>
-                    <label for="airline">Airline (IATA Code):</label>
-                    <input type="text" id="airline" name="airline" th:value="${flight.airline.iataCode}" disabled>
+                    <label for="iataCode">Airline (IATA Code):</label>
+                    <select id="iataCode" name="iataCode" required>
+                        <option th:each="airline : ${airlines}" th:value="${airline.iataCode}" th:text="${airline.iataCode + ' - ' + airline.airlineName}" th:selected="${airline.iataCode eq flight.airline.iataCode}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="flightNumber">Flight Number:</label>
@@ -51,7 +53,7 @@
                 <div>
                     <label for="flightStatus">Flight Status:</label>
                     <select id="flightStatus" name="flightStatus" required>
-                        <option th:each="flightStatus : ${T(com.example.flightticketmanagement.models.Flight.FlightStatus).values()}" th:value="${flightStatus}" th:text="${flightStatus}"></option>
+                        <option th:each="flightStatus : ${T(com.example.flightticketmanagement.models.Flight.FlightStatus).values()}" th:value="${flightStatus}" th:text="${flightStatus}" th:selected="${flightStatus == flight.flightStatus}"></option>
                     </select>
                 </div>
                 <button type="submit">Update Flight</button>

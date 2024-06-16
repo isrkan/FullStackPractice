@@ -5,7 +5,22 @@
         <title>Admin Page</title>
         <link rel="stylesheet" href="/styles/fragments/navbar.css">
         <link rel="stylesheet" href="/styles/fragments/footer.css">
-        <link rel="stylesheet" href="/styles/confirmation.css">
+        <link rel="stylesheet" href="/styles/admin-page.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".tab-content").hide();
+                $(".tab-content:first").show();
+                $(".tabs li").click(function(){
+                    $(".tabs li").removeClass("active");
+                    $(this).addClass("active");
+                    $(".tab-content").hide();
+                    var activeTab = $(this).find("a").attr("href");
+                    $(activeTab).fadeIn();
+                    return false;
+                });
+            });
+        </script>
     </head>
     <body>
     <div th:insert="~{fragments/navbar :: navbar}"></div>
@@ -13,6 +28,121 @@
         <h1>Admin Page</h1>
         <div>
             <h2>Hello, <span th:text="${administrator.firstName}"></span>!</h2>
+        </div>
+        <ul class="tabs">
+            <li class="active"><a href="#airlines">Airlines</a></li>
+            <li><a href="#airports">Airports</a></li>
+            <li><a href="#flights">Flights</a></li>
+            <li><a href="#customers">Customers</a></li>
+            <li><a href="#tickets">Tickets</a></li>
+        </ul>
+        <!-- Manage Airlines Section -->
+        <div id="airlines" class="tab-content">
+            <h2>Manage Airlines</h2>
+            <div th:each="airline : ${airlines}" class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>IATA Code:</strong> <span th:text="${airline.iataCode}"></span></p>
+                    <p><strong>Airline Name:</strong> <span th:text="${airline.airlineName}"></span></p>
+                    <p><strong>Airport Base:</strong> <span th:text="${airline.airportBase}"></span></p>
+                    <p><strong>Username:</strong> <span th:text="${airline.username}"></span></p>
+                </div>
+                <div class="entity-actions">
+                    <form th:action="@{'/admin-page/edit-airline/' + ${airline.iataCode}}" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Manage Airports Section -->
+        <div id="airports" class="tab-content">
+            <h2>Manage Airports</h2>
+            <div th:each="airport : ${airports}" class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Airport IATA Code:</strong> <span th:text="${airport.airportCode}"></span></p>
+                    <p><strong>Airport Name:</strong> <span th:text="${airport.airportName}"></span></p>
+                    <p><strong>City:</strong> <span th:text="${airport.city}"></span></p>
+                    <p><strong>Country:</strong> <span th:text="${airport.country}"></span></p>
+                    <p><strong>Latitude:</strong> <span th:text="${airport.latitude}"></span></p>
+                    <p><strong>Longitude:</strong> <span th:text="${airport.longitude}"></span></p>
+                </div>
+                <div class="entity-actions">
+                    <form th:action="@{'/admin-page/edit-airport/' + ${airport.airportCode}}" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Manage Flights Section -->
+        <div id="flights" class="tab-content">
+            <h2>Manage Flights</h2>
+            <form th:action="@{/admin-page/add-flight}" method="get">
+                <button type="submit" class="add-button">Add Flight</button>
+            </form>
+            <div th:each="flight : ${flights}" class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
+                    <p><strong>Origin:</strong> <span th:text="${flight.originAirport.airportCode}"></span></p>
+                    <p><strong>Destination:</strong> <span th:text="${flight.destinationAirport.airportCode}"></span></p>
+                    <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
+                    <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
+                    <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>
+                    <p><strong>Remaining Tickets:</strong> <span th:text="${flight.remainingTickets}"></span></p>
+                    <p><strong>Flight Status:</strong> <span th:text="${flight.flightStatus}"></span></p>
+                </div>
+                <div class="entity-actions">
+                    <form th:action="@{'/admin-page/edit-flight/' + ${flight.id}}" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                    <form th:action="@{/admin-page/delete-flight/{flightId}(flightId=${flight.id})}" method="post">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Manage Customers Section -->
+        <div id="customers" class="tab-content">
+            <h2>Manage Customers</h2>
+            <div th:each="customer : ${customers}" class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Customer Id:</strong> <span th:text="${customer.customerId}"></span></p>
+                    <p><strong>First Name:</strong> <span th:text="${customer.firstName}"></span></p>
+                    <p><strong>Last Name:</strong> <span th:text="${customer.lastName}"></span></p>
+                    <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+                    <p><strong>Phone Number:</strong> <span th:text="${customer.phoneNumber}"></span></p>
+                    <p><strong>Username:</strong> <span th:text="${customer.username}"></span></p>
+                </div>
+                <div class="entity-actions">
+                    <form th:action="@{'/admin-page/edit-customer/' + ${customer.customerId}}" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Manage Tickets Section -->
+        <div id="tickets" class="tab-content">
+            <h2>Manage Tickets</h2>
+            <form th:action="@{/admin-page/add-ticket}" method="get">
+                <button type="submit" class="add-button">Add Ticket</button>
+            </form>
+            <div th:each="ticket : ${tickets}" class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Ticket ID:</strong> <span th:text="${ticket.ticketId}"></span></p>
+                    <p><strong>Customer:</strong> <span th:text="${ticket.customer.username}"></span></p>
+                    <p><strong>Flight:</strong> <span th:text="${ticket.flight.flightNumber}"></span></p>
+                    <p><strong>Class:</strong> <span th:text="${ticket.classType}"></span></p>
+                    <p><strong>Seat:</strong> <span th:text="${ticket.seatNumber}"></span></p>
+                    <p><strong>Status:</strong> <span th:text="${ticket.bookingStatus}"></span></p>
+                    <p><strong>Price:</strong> <span th:text="${ticket.price}"></span></p>
+                </div>
+                <div class="entity-actions">
+                    <form th:action="@{'/admin-page/edit-ticket/' + ${ticket.ticketId}}" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                    <form th:action="@{/admin-page/delete-ticket/{ticketId}(ticketId=${ticket.ticketId})}" method="post">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div th:insert="~{fragments/footer :: footer}"></div>

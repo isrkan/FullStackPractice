@@ -11,14 +11,16 @@
         <div th:insert="~{fragments/navbar :: navbar}"></div>
         <div class="container">
             <h1>Add New Flight</h1>
-            <form th:action="@{/airline-flights/add}" method="post">
-                <div>
-                    <label for="airline">Airline (IATA Code):</label>
-                    <input type="text" id="airline" name="airline" th:value="${loggedInAirline.iataCode}" disabled>
-                </div>
+            <form th:action="@{/admin-page/add-flight}" method="post">
                 <div>
                     <label for="flightNumber">Flight Number:</label>
                     <input type="text" id="flightNumber" name="flightNumber" required>
+                </div>
+                <div>
+                    <label for="airline">Airline:</label>
+                    <select id="airline" name="airline" required>
+                        <option th:each="airline : ${airlines}" th:value="${airline.iataCode}" th:text="${airline.iataCode + ' - ' + airline.airlineName}"></option>
+                    </select>
                 </div>
                 <div>
                     <label for="originAirport">Origin Airport:</label>

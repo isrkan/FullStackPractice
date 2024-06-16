@@ -46,7 +46,7 @@
                     </div>
                     <div class="ticket-actions">
                         <a th:href="@{/account/tickets/edit/{ticketId}(ticketId=${ticket.ticketId})}" class="edit-button">Edit</a>
-                        <form th:action="@{/account/tickets/delete/{ticketId}(ticketId=${ticket.ticketId})}" method="post" style="display:inline;">
+                        <form th:action="@{/account/tickets/cancel/{ticketId}(ticketId=${ticket.ticketId})}" method="post" style="display:inline;">
                             <button type="submit" class="cancel-ticket-button">Cancel Ticket</button>
                         </form>
                     </div>

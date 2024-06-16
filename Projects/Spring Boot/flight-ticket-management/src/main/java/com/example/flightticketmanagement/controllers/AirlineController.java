@@ -2,9 +2,11 @@ package com.example.flightticketmanagement.controllers;
 
 import com.example.flightticketmanagement.models.Airline;
 import com.example.flightticketmanagement.models.Flight;
+import com.example.flightticketmanagement.models.Ticket;
 import com.example.flightticketmanagement.repositories.AirlineRepository;
 import com.example.flightticketmanagement.repositories.AirportRepository;
 import com.example.flightticketmanagement.repositories.FlightRepository;
+import com.example.flightticketmanagement.repositories.TicketRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,18 @@ public class AirlineController {
     @Autowired
     private final AirportRepository airportRepository;
     @Autowired
+    private final TicketRepository ticketRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public AirlineController(AirlineRepository airlineRepository,
                              FlightRepository flightRepository,
-                             AirportRepository airportRepository) {
+                             AirportRepository airportRepository,
+                             TicketRepository ticketRepository) {
         this.airlineRepository = airlineRepository;
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
+        this.ticketRepository = ticketRepository;
     }
 
     @GetMapping("/airline-login")
@@ -128,7 +134,7 @@ public class AirlineController {
         existingFlight.setDepartureTimeLocal(updatedFlight.getDepartureTimeLocal());
         existingFlight.setLandingTimeLocal(updatedFlight.getLandingTimeLocal());
         existingFlight.setRemainingTickets(updatedFlight.getRemainingTickets());
-
+        existingFlight.setFlightStatus(updatedFlight.getFlightStatus());
         // Save the updated flight details to the database
         flightRepository.save(existingFlight);
 
@@ -137,14 +143,33 @@ public class AirlineController {
         return "redirect:/airline-flights";
     }
 
-    // POST request to handle flight deletion
-    @PostMapping("/airline-flights/delete/{flightId}")
-    public String deleteFlight(@PathVariable Long flightId, RedirectAttributes redirectAttributes) {
-        // Delete the flight from the database
-        flightRepository.deleteById(flightId);
+    // POST request to handle flight cancellation
+    @PostMapping("/airline-flights/cancel/{flightId}")
+    public String cancelFlight(@PathVariable Long flightId, RedirectAttributes redirectAttributes) {
+        // Retrieve the flight from the database
+        Flight flight = flightRepository.findById(flightId).orElse(null);
+        if (flight == null) {
+            // Handle flight not found
+            redirectAttributes.addFlashAttribute("error", "Flight not found.");
+            return "redirect:/airline-flights";
+        }
+        // Set the flight status to CANCELED
+        flight.setFlightStatus(Flight.FlightStatus.CANCELLED);
+        // Save the updated flight
+        flightRepository.save(flight);
+
+        // Retrieve all tickets associated with this flight
+        List<Ticket> tickets = ticketRepository.findByFlight(flight);
+        for (Ticket ticket : tickets) {
+            // Set each ticket's booking status to CANCELED
+            ticket.setBookingStatus(Ticket.BookingStatus.CANCELLED);
+            // Save the updated ticket
+            ticketRepository.save(ticket);
+        }
 
         // Redirect to the airline flights page with a success message
-        redirectAttributes.addFlashAttribute("message", "Flight deleted successfully.");
+        redirectAttributes.addFlashAttribute("message", "Flight canceled successfully.");
         return "redirect:/airline-flights";
     }
+
 }

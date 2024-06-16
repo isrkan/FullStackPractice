@@ -137,14 +137,18 @@ public class CustomerController {
         return "redirect:/account";
     }
 
-    // Handle delete ticket request
-    @PostMapping("/account/tickets/delete/{ticketId}")
+    // Handle cancel ticket request
+    @PostMapping("/account/tickets/cancel/{ticketId}")
     public String deleteTicket(@PathVariable String ticketId, RedirectAttributes redirectAttributes) {
         Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
 
         if (ticket != null) {
             // Update the booking status to CANCELED
             ticket.setBookingStatus(BookingStatus.CANCELLED);
+            // Increment the remainingTickets for the flight
+            Flight flight = ticket.getFlight();
+            flight.setRemainingTickets(flight.getRemainingTickets() + 1);
+            flightRepository.save(flight);
             // Save the updated ticket
             ticketRepository.save(ticket);
             redirectAttributes.addFlashAttribute("message", "Ticket canceled successfully.");
@@ -231,6 +235,11 @@ public class CustomerController {
         if (paymentSuccessful) {
             // Update the booking status to BOOKED
             ticket.setBookingStatus(Ticket.BookingStatus.BOOKED);
+            // Update the remainingTickets for the flight
+            Flight flight = ticket.getFlight();
+            flight.setRemainingTickets(flight.getRemainingTickets() - 1);
+            flightRepository.save(flight);
+
             ticketRepository.save(ticket);
 
             // Add flight and ticket details to the model

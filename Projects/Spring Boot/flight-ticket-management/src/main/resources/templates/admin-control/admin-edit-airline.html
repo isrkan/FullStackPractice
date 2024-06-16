@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Airline</title>
+    <link rel="stylesheet" href="/styles/fragments/navbar.css">
+    <link rel="stylesheet" href="/styles/fragments/footer.css">
+    <link rel="stylesheet" href="/styles/add-flight.css">
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+<div class="container">
+    <h1>Edit Airline</h1>
+    <form th:action="@{/admin-page/edit-airline/{iataCode}(iataCode=${airline.iataCode})}" method="post">
+        <div>
+            <label for="iataCode">IATA Code:</label>
+            <input type="text" id="iataCode" name="iataCode" th:value="${airline.iataCode}" readonly required>
+        </div>
+        <div>
+            <label for="airlineName">Airline Name:</label>
+            <input type="text" id="airlineName" name="airlineName" th:value="${airline.airlineName}" required>
+        </div>
+        <div>
+            <label for="airportBase">Airport Base:</label>
+            <input type="text" id="airportBase" name="airportBase" th:value="${airline.airportBase}" required>
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" th:value="${airline.username}" required>
+        </div>
+        <button type="submit">Update Airline</button>
+    </form>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

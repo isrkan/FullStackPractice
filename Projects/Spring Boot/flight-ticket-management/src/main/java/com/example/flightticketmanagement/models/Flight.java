@@ -31,4 +31,12 @@ public class Flight {
     private LocalTime departureTimeLocal;
     private LocalTime landingTimeLocal;
     private int remainingTickets;
+    @Enumerated(EnumType.STRING)
+    private FlightStatus flightStatus;
+
+    public enum FlightStatus {
+        SCHEDULED,
+        CANCELLED,
+        COMPLETED
+    }
 }

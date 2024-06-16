@@ -16,7 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query("SELECT f FROM Flight f WHERE f.originAirport.airportCode = :originAirportCode " +
             "AND f.destinationAirport.airportCode = :destinationAirportCode " +
-            "AND f.date = :date")
+            "AND f.date = :date AND f.flightStatus = 'SCHEDULED'")
     List<Flight> findFlights(@Param("originAirportCode") String originAirportCode,
                              @Param("destinationAirportCode") String destinationAirportCode,
                              @Param("date") LocalDate date);
@@ -24,4 +24,5 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     Optional<Flight> findByFlightNumberAndDate(String flightNumber, LocalDate date);
 
     List<Flight> findByAirline(Airline airline);
+    List<Flight> findByFlightStatus(Flight.FlightStatus flightStatus);
 }

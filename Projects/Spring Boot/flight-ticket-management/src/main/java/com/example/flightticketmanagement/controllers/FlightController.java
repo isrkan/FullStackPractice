@@ -23,7 +23,7 @@ public class FlightController {
 
     @GetMapping
     public String flights(Model model) {
-        List<Flight> flightList = flightRepository.findAll();
+        List<Flight> flightList = flightRepository.findByFlightStatus(Flight.FlightStatus.SCHEDULED);
         model.addAttribute("flights", flightList);
         return "flights";
     }

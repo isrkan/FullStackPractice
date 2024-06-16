@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Airport</title>
+    <link rel="stylesheet" href="/styles/fragments/navbar.css">
+    <link rel="stylesheet" href="/styles/fragments/footer.css">
+    <link rel="stylesheet" href="/styles/add-flight.css">
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+<div class="container">
+    <h1>Edit Airport</h1>
+    <form th:action="@{/admin-page/edit-airport/{airportCode}(airportCode=${airport.airportCode})}" method="post">
+        <div>
+            <label for="airportCode">Airport IATA Code:</label>
+            <input type="text" id="airportCode" name="airportCode" th:value="${airport.airportCode}" readonly>
+        </div>
+        <div>
+            <label for="airportName">Airport Name:</label>
+            <input type="text" id="airportName" name="airportName" th:value="${airport.airportName}" required>
+        </div>
+        <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" th:value="${airport.city}" required>
+        </div>
+        <div>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" th:value="${airport.country}" required>
+        </div>
+        <div>
+            <label for="latitude">Latitude:</label>
+            <input type="number" step="any" id="latitude" name="latitude" th:value="${airport.latitude}" required>
+        </div>
+        <div>
+            <label for="longitude">Longitude:</label>
+            <input type="number" step="any" id="longitude" name="longitude" th:value="${airport.longitude}" required>
+        </div>
+        <div>
+            <label for="timeZone">Time Zone:</label>
+            <input type="text" id="timeZone" name="timeZone" th:value="${airport.timeZone}" required>
+        </div>
+        <button type="submit">Update Airport</button>
+    </form>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
