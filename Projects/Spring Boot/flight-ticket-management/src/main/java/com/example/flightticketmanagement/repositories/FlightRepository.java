@@ -13,16 +13,17 @@ import java.util.Optional;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
-
+    // Query method to find scheduled flights between specified airports on a given date
     @Query("SELECT f FROM Flight f WHERE f.originAirport.airportCode = :originAirportCode " +
             "AND f.destinationAirport.airportCode = :destinationAirportCode " +
             "AND f.date = :date AND f.flightStatus = 'SCHEDULED'")
     List<Flight> findFlights(@Param("originAirportCode") String originAirportCode,
                              @Param("destinationAirportCode") String destinationAirportCode,
                              @Param("date") LocalDate date);
-
+    // Finds a flight by its flight number and date
     Optional<Flight> findByFlightNumberAndDate(String flightNumber, LocalDate date);
-
+    // Finds flights operated by a specific airline
     List<Flight> findByAirline(Airline airline);
+    // Finds flights with a specific flight status
     List<Flight> findByFlightStatus(Flight.FlightStatus flightStatus);
 }

@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Administrator implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adminId;
@@ -25,12 +24,11 @@ public class Administrator implements UserDetails {
     private String username;
     private String password;
 
+    // Override methods from UserDetails interface for Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
-
-
     @Override
     public boolean isAccountNonExpired() {
         return true; //by default not expired

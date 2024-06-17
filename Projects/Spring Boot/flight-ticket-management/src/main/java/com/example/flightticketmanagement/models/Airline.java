@@ -18,17 +18,17 @@ import java.util.List;
 public class Airline implements UserDetails {
     @Id
     private String iataCode;
-
     private String airlineName;
     private String airportBase;
     private String username;
     private String password;
 
+    // Override methods from UserDetails interface for Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Returns the authorities granted to the airline
         return List.of(new SimpleGrantedAuthority("ROLE_AIRLINE"));
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true; //by default not expired

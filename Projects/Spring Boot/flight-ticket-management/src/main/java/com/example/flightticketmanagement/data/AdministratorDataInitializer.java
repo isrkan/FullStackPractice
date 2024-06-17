@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+// Class for preloading adminstrator data into the database when the application starts
 @Component
 @Order(6)
 public class AdministratorDataInitializer {
@@ -16,12 +17,12 @@ public class AdministratorDataInitializer {
     @Bean
     public ApplicationRunner preloadAdministratorData(AdministratorRepository administratorRepository) {
         return args -> {
-            // Check if an administrator with the given username already exists
+            // Check if an administrator with the given username already exists, if not, create and save it
             Optional<Administrator> existingAdmin = administratorRepository.findByUsername("admin");
             if (existingAdmin == null) {
-                // Step 1: Create the Administrator object
+                // Step 1: Create the administrator object
                 Administrator admin = new Administrator(1L, "admin", "admin", "admin", "admin");
-                // Step 2: Save the Administrator object
+                // Step 2: Save the administrator object
                 administratorRepository.save(admin);
             }
         };

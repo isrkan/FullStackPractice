@@ -11,9 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, String> {
+    // Finds tickets for a specific customer
     List<Ticket> findByCustomer(Customer customer);
-
+    // Finds tickets for a specific flight
     List<Ticket> findByFlight(Flight flight);
-
+    // Finds a ticket by its ticket id
     Optional<Ticket> findByTicketId(String ticketId);
 }

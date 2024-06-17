@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +19,7 @@ import java.util.Optional;
 
 import org.springframework.core.annotation.Order;
 
+// Class for preloading flight data into the database when the application starts
 @Slf4j
 @Component
 @Order(3)
@@ -71,12 +71,12 @@ public class FlightDataInitializer {
             Airline osAirline = airlineRepository.findByIataCode("OS").orElseThrow(() -> new RuntimeException("Airline not found: OS"));
             Airline a3Airline = airlineRepository.findByIataCode("A3").orElseThrow(() -> new RuntimeException("Airline not found: A3"));
 
-            // Check if flights with the given flight numbers and dates already exist
+            // Check if flights with the given flight numbers and dates already exist if not, create and save it
             Optional<Flight> existingFlight1Optional = flightRepository.findByFlightNumberAndDate("AA101", LocalDate.of(2024, 7, 15));
             if (!existingFlight1Optional.isPresent()) {
-                // Create the first flight object
+                // Create the flight object
                 Flight aa1011507202408 = new Flight(null, "AA101", aaAirline, jfkAirport, lhrAirport, LocalDate.of(2024, 7, 15), LocalTime.of(8, 0), LocalTime.of(20, 0), 150, Flight.FlightStatus.SCHEDULED);
-                // Save the first flight object
+                // Save the flight object
                 flightRepository.save(aa1011507202408);
             }
             Optional<Flight> existingFlight2Optional = flightRepository.findByFlightNumberAndDate("AA201", LocalDate.of(2024, 7, 10));

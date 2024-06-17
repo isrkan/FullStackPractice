@@ -71,7 +71,8 @@ public class CustomerController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
+        model.addAttribute("error", true);
         return "login";
     }
 

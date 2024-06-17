@@ -51,7 +51,8 @@ public class AdministratorController {
     }
 
     @GetMapping("/admin-login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
+        model.addAttribute("error", true);
         return "admin-login";
     }
 
@@ -188,6 +189,17 @@ public class AdministratorController {
             // Handle flight not found
             return "error"; // You can define an error page for this
         }
+
+        // Check if the flight status is being changed from SCHEDULED to CANCELLED
+        if (existingFlight.getFlightStatus() == Flight.FlightStatus.SCHEDULED && updatedFlight.getFlightStatus() == Flight.FlightStatus.CANCELLED) {
+            // Fetch all tickets associated with this flight
+            List<Ticket> tickets = ticketRepository.findByFlight(existingFlight);
+            // Update the booking status of each ticket to CANCELLED
+            for (Ticket ticket : tickets) {
+                ticket.setBookingStatus(Ticket.BookingStatus.CANCELLED);
+                ticketRepository.save(ticket);
+            }
+        }
         // Update the existing flight with the updated details
         existingFlight.setFlightNumber(updatedFlight.getFlightNumber());
         existingFlight.setOriginAirport(updatedFlight.getOriginAirport());
@@ -310,7 +322,9 @@ public class AdministratorController {
         existingTicket.setTicketId(updatedTicket.getTicketId());
         existingTicket.setCustomer(updatedTicket.getCustomer());
         existingTicket.setFlight(updatedTicket.getFlight());
+        existingTicket.setClassType(updatedTicket.getClassType());
         existingTicket.setSeatNumber(updatedTicket.getSeatNumber());
+        existingTicket.setBookingStatus(updatedTicket.getBookingStatus());
         existingTicket.setPrice(updatedTicket.getPrice());
         // Save the updated flight details to the database
         ticketRepository.save(existingTicket);

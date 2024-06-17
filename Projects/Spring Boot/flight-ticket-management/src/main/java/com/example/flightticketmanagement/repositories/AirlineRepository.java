@@ -8,7 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface AirlineRepository extends JpaRepository<Airline, String> {
+    // Finds an airline by its iata code
     Optional<Airline> findByIataCode(String iataCode);
 
+    // Finds an airline by its username
     Optional<Airline> findByUsername(String username);
 }

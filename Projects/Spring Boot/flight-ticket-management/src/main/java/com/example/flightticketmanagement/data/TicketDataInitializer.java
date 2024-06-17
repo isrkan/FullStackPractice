@@ -1,6 +1,5 @@
 package com.example.flightticketmanagement.data;
 
-import com.example.flightticketmanagement.models.Airport;
 import com.example.flightticketmanagement.models.Customer;
 import com.example.flightticketmanagement.models.Flight;
 import com.example.flightticketmanagement.models.Ticket;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Optional;
 
+// Class for preloading ticket data into the database when the application starts
 @Slf4j
 @Component
 @Order(5)
@@ -48,9 +48,11 @@ public class TicketDataInitializer {
             // Retrieve the related customers
             Customer customer1 = customerRepository.findByUsername("tomhanks123");
 
-            // Create and save tickets
+            // Check if the ticket exists; if not, create and save it
             if (!ticketRepository.existsById("TCKT1A2B3C4D5")) {
+                // Step 1: Create the ticket object
                 Ticket ticket1 = new Ticket("TCKT1A2B3C4D5", customer1, flight1, Ticket.ClassType.ECONOMY, "12A", Ticket.BookingStatus.CONFIRMED,450.00);
+                // Step 2: Save the ticket object
                 ticketRepository.save(ticket1);
             }
             if (!ticketRepository.existsById("TCKT6E7F8G9H0")) {

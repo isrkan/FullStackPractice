@@ -6,13 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.core.annotation.Order;
 
 import java.util.Optional;
 
+// Class for preloading airline data into the database when the application starts
 @Slf4j
 @Component
 @Order(2)
@@ -25,16 +25,18 @@ public class AirlineDataInitializer {
     }
 
     @Bean
-    @DependsOn({"preloadAirportData"})
+    @DependsOn({"preloadAirportData"}) // Ensures this bean is initialized after preloadAirportData
     public ApplicationRunner preloadAirlineData() {
         return args -> {
+            // Check if the AA airline exists; if not, create and save it
             Optional<Airline> existingAirlineAA = airlineRepository.findByIataCode("AA");
             if (!existingAirlineAA.isPresent()) {
-                // Step 1: Create the Airline objects
+                // Step 1: Create the airline object
                 Airline aaAirline = new Airline("AA", "American Airlines", "DFW", "userAmerican", "passAmerican123");
-                // Step 2: Save the Airline objects
+                // Step 2: Save the airline object
                 airlineRepository.save(aaAirline);
             }
+            // Check if the BA airline exists; if not, create and save it
             Optional<Airline> existingAirlineBA = airlineRepository.findByIataCode("BA");
             if (!existingAirlineBA.isPresent()) {
                 Airline baAirline = new Airline("BA", "British Airways", "LHR", "userBritish", "passBritish123");

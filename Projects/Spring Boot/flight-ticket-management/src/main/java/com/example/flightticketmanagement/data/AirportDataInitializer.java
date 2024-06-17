@@ -6,15 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.core.annotation.Order;
 
 import java.util.Optional;
 
-@Slf4j
-@Component
-@Order(1)
+// Class for preloading airport data into the database when the application starts
+@Slf4j // Lombok annotation for logging
+@Component // Indicates that this class is a Spring component
+@Order(1) // Specifies the order of execution for multiple ApplicationRunners
 public class AirportDataInitializer {
     private final AirportRepository airportRepository;
 
@@ -22,16 +22,19 @@ public class AirportDataInitializer {
     public AirportDataInitializer(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
     }
+
     @Bean
     public ApplicationRunner preloadAirportData() {
         return args -> {
+            // Check if the BOS airport exists; if not, create and save it
             Optional<Airport> existingAirportBOS = airportRepository.findByAirportCode("BOS");
             if (!existingAirportBOS.isPresent()) {
-                // Step 1: Create the Airport objects
+                // Step 1: Create the airport object
                 Airport bosAirport = new Airport("BOS", "Logan International Airport", "Boston", "USA", 42.3656, -71.0096, "UTC-5");
-                // Step 2: Save the Airport objects
+                // Step 2: Save the airport object
                 airportRepository.save(bosAirport);
             }
+            // Check if the JFK airport exists; if not, create and save it
             Optional<Airport> existingAirportJFK = airportRepository.findByAirportCode("JFK");
             if (!existingAirportJFK.isPresent()) {
                 Airport jfkAirport = new Airport("JFK", "John F. Kennedy International Airport", "New York", "USA", 40.6413, -73.7781, "UTC-5");
@@ -97,7 +100,7 @@ public class AirportDataInitializer {
                 Airport athAirport = new Airport("ATH", "Athens International Airport", "Athens", "Greece", 37.9356, 23.9484, "UTC+2");
                 airportRepository.save(athAirport);
             }
-            log.info("Airport data preloaded.");
+            log.info("Airport data preloaded."); // Log a message
         };
     }
 }
