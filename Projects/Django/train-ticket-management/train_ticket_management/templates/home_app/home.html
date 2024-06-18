@@ -1,58 +1,20 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>RailwayMaster - Home</title>
-    <link rel="stylesheet" href="{% static '/styles/fragments/navbar.css' %}" />
-    <link rel="stylesheet" href="{% static '/styles/fragments/footer.css' %}" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 50px;
-        }
-        .logo {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-            <a href="/">Home</a>
-            <a href="/flights">Flights</a>
-            <a href="#">Search Flights</a>
-            <a href="#">Register</a>
-            <a href="#">Login</a>
-            <a href="#">Contact Us</a>
-    </div>
-    <div class="container">
-        <h1>Welcome to RailwayMaster - Train Ticket Management System</h1>
-        <div class="logo-container">
-            <img class="logo" src="{% static 'images/logo.jpg' %}" alt="RailwayMaster logo">
+    <head>
+        <meta charset="UTF-8">
+        <title>RailwayMaster - Home</title>
+        <link rel="stylesheet" href="{% static '/styles/home_app/home.css' %}" />
+        <link rel="stylesheet" href="{% static '/styles/fragments/navbar.css' %}" />
+        <link rel="stylesheet" href="{% static '/styles/fragments/footer.css' %}" />
+    </head>
+    <body>
+        {% include 'fragments/navbar.html' %}
+        <div class="container">
+            <h1>Welcome to RailwayMaster - Train Ticket Management System</h1>
+            <div class="logo-container">
+                <img class="logo" src="{% static 'images/logo.jpg' %}" alt="RailwayMaster logo">
+            </div>
         </div>
-    </div>
-    <div class="footer">
-        <div class="footer">
-            <p>&copy; 2024 RailwayMaster - Train Ticket Management System. All rights reserved.</p>
-        </div>
-    </div>
-</body>
+        {% include 'fragments/footer.html' %}
+    </body>
 </html>

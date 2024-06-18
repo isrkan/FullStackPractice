@@ -2,20 +2,55 @@
     background-color: #333;
     color: #fff;
     padding: 10px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: fixed;
+    top: 0;
     width: 100%;
+    z-index: 1000;
 }
 
-.navbar a {
+.navbar .company-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.navbar .nav-links a {
     color: #fff;
     text-decoration: none;
     margin: 0 15px;
 }
 
+.navbar .login-link {
+    margin-right: 20px;
+}
+
 @media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .nav-links {
+        width: 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
     .navbar a {
         display: block;
         margin: 5px 0;
+    }
+
+    .navbar .login-link {
+        margin: 10px 0;
     }
 }
