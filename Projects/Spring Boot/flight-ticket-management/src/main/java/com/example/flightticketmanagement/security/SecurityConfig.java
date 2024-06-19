@@ -28,6 +28,8 @@ public class SecurityConfig {
     private AirlineRepository airlineRepository;
     @Autowired
     private AdministratorRepository administratorRepository;
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,26 +42,29 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/account", "/payment", "/airline-flights", "/admin-page").authenticated()  // Restrict access to the account and airline flights pages
+                        .requestMatchers("/account", "/payment").hasRole("USER")  // Restrict access to the account and airline flights pages
+                        .requestMatchers("/airline-flights").hasRole("AIRLINE")
+                        .requestMatchers("/admin-page").hasRole("ADMIN")
                         .anyRequest().permitAll())  // Permit all requests
-                //.formLogin(formLogin -> formLogin
-                //        .loginPage("/login")  // Custom login page
-                //        .defaultSuccessUrl("/account") // Redirect to /account after successful login
-                //        .loginProcessingUrl("/login")
-                //        .failureUrl("/login?error=true") // Redirect to login with error
-                //        .permitAll())  // Permit access to the login page
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")  // Custom login page
+                        .defaultSuccessUrl("/") // Redirect to /account after successful login
+                        .successHandler(successHandler)  // Use custom success handler
+                        .loginProcessingUrl("/login")
+                        .failureUrl("/login?error=true") // Redirect to login with error
+                        .permitAll())  // Permit access to the login page
                 //.formLogin(formLogin -> formLogin
                 //        .loginPage("/airline-login")
                 //        .defaultSuccessUrl("/airline-flights")
                 //        .loginProcessingUrl("/airline-login")
                 //        .failureUrl("/airline-login?error=true")
                 //        .permitAll())
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/admin-login")
-                        .defaultSuccessUrl("/admin-page")
-                        .loginProcessingUrl("/admin-login")
-                        .failureUrl("/admin-login?error=true")
-                        .permitAll())
+                //.formLogin(formLogin -> formLogin
+                //        .loginPage("/admin-login")
+                //        .defaultSuccessUrl("/admin-page")
+                //        .loginProcessingUrl("/admin-login")
+                //        .failureUrl("/admin-login?error=true")
+                //        .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll());  // Redirect to home after logout
         return http.build();
