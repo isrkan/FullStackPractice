@@ -18,10 +18,13 @@ public class Flight {
     private Long id;
     private String flightNumber;
     @ManyToOne // Specifies a many-to-one relationship with the Airline entity
+    @JoinColumn(name = "airline_iata_code")
     private Airline airline;
     @ManyToOne
+    @JoinColumn(name = "origin_airport_code")
     private Airport originAirport;
     @ManyToOne
+    @JoinColumn(name = "destination_airport_code")
     private Airport destinationAirport;
     private LocalDate date;
     private LocalTime departureTimeLocal;

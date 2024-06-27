@@ -49,9 +49,9 @@
                 <div id="authStatus" th:data-authenticated="${#authorization.expression('isAuthenticated()')}"></div>
                 <div th:each="flight : ${flights}" class="flight-sub-container">
                     <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
-                    <p><strong>Airline Name:</strong> <span th:text="${flight.airline.airlineName}"></span></p>
-                    <p><strong>Origin Airport:</strong> <span th:text="${flight.originAirport.airportCode}"></span> - <span th:text="${flight.originAirport.airportName}"></span>, <span th:text="${flight.originAirport.city}"></span>, <span th:text="${flight.originAirport.country}"></span></p>
-                    <p><strong>Destination Airport:</strong> <span th:text="${flight.destinationAirport.airportCode}"></span> - <span th:text="${flight.destinationAirport.airportName}"></span>, <span th:text="${flight.destinationAirport.city}"></span>, <span th:text="${flight.destinationAirport.country}"></span></p>
+                    <p><strong>Airline Name:</strong> <span th:text="${flight?.airline?.airlineName}"></span></p>
+                    <p><strong>Origin Airport:</strong> <span th:text="${flight?.originAirport?.airportCode}"></span> - <span th:text="${flight?.originAirport?.airportName}"></span>, <span th:text="${flight?.originAirport?.city}"></span>, <span th:text="${flight?.originAirport?.country}"></span></p>
+                    <p><strong>Destination Airport:</strong> <span th:text="${flight?.destinationAirport?.airportCode}"></span> - <span th:text="${flight?.destinationAirport?.airportName}"></span>, <span th:text="${flight?.destinationAirport?.city}"></span>, <span th:text="${flight?.destinationAirport?.country}"></span></p>
                     <p><strong>Date:</strong> <span th:text="${flight.date}"></span></p>
                     <p><strong>Departure Time (Local):</strong> <span th:text="${flight.departureTimeLocal}"></span></p>
                     <p><strong>Landing Time (Local):</strong> <span th:text="${flight.landingTimeLocal}"></span></p>

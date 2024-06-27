@@ -13,8 +13,10 @@ public class Ticket {
     @Id
     private String ticketId;
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToOne
+    @JoinColumn(name = "flight_id")
     private Flight flight;
     @Enumerated(EnumType.STRING)
     private ClassType classType;
