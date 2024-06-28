@@ -1,3 +1,5 @@
+-- data.sql initializes the data when the app starts
+
 -- Insert initial airport data if not exists
 INSERT INTO airport (airport_code, airport_name, city, country, latitude, longitude, time_zone)
 SELECT 'BOS', 'Logan International Airport', 'Boston', 'USA', 42.3656, -71.0096, 'UTC-5'
@@ -54,8 +56,6 @@ WHERE NOT EXISTS (SELECT 1 FROM airport WHERE airport_code = 'VIE');
 INSERT INTO airport (airport_code, airport_name, city, country, latitude, longitude, time_zone)
 SELECT 'ATH', 'Athens International Airport', 'Athens', 'Greece', 37.9356, 23.9484, 'UTC+2'
 WHERE NOT EXISTS (SELECT 1 FROM airport WHERE airport_code = 'ATH');
-
-
 
 
 
@@ -128,12 +128,10 @@ WHERE NOT EXISTS (SELECT 1 FROM customer WHERE username = 'ldicaprio567');
 
 
 
-
 -- Insert initial administrator data if not exists
 INSERT INTO administrator (admin_id, username, password, first_name, last_name)
 SELECT 1, 'admin', 'admin', 'admin', 'admin'
 WHERE NOT EXISTS (SELECT 1 FROM administrator WHERE username = 'admin');
-
 
 
 
@@ -190,8 +188,6 @@ WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LX348' AND date = 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'A3985', (SELECT iata_code FROM airline WHERE iata_code = 'A3'), (SELECT airport_code FROM airport WHERE airport_code = 'ATH'), (SELECT airport_code FROM airport WHERE airport_code = 'LHR'), '2024-07-01', '12:00', '14:15', 120, 'SCHEDULED'
 WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'A3985' AND date = '2024-07-01');
-
-
 
 
 

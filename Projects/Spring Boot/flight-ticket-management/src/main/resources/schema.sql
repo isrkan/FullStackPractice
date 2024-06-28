@@ -1,3 +1,6 @@
+-- schema.sql is defining the database schema for a Spring Boot application. It defines the structure, relationships, and constraints of the database entities
+-- schema.sql initializes tables when the app starts and maps Java objects (@Entity) to SQL tables, using frameworks like Hibernate
+
 -- Create table for airports
 CREATE TABLE IF NOT EXISTS airport (
     airport_code VARCHAR(10) PRIMARY KEY,

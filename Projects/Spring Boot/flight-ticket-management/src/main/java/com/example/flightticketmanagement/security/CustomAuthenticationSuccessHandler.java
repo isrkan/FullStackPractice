@@ -11,10 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@Component
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+@Component // Indicates that this class should be automatically detected and registered as a bean in the application context
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler { // Defines a strategy used to handle successful authentication
 
     @Override
+    // Handles the redirection of users based on their roles after successful authentication
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         String redirectUrl = "/";

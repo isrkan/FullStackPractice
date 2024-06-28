@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+// This class serves as a controller in a Spring MVC application, handling HTTP requests related to the admin. It maps URLs to methods that interact with the all data for admin control
 @Controller
 public class AdministratorController {
 
@@ -50,18 +51,20 @@ public class AdministratorController {
         this.ticketRepository = ticketRepository;
     }
 
+    // Handle GET requests to /admin-login, shows the admin login form
     @GetMapping("/admin-login")
     public String showLoginForm(Model model) {
         model.addAttribute("error", true);
         return "admin-login";
     }
 
+    // Handle GET requests to the admin-page, shows the admin page with various entities
     @GetMapping("/admin-page")
     public String showAirlineFlights(Model model, Principal principal) {
         String username = principal.getName(); // Retrieve the authenticated user's details
         Optional<Administrator> administratorOptional = administratorRepository.findByUsername(username);
         if (administratorOptional.isPresent()) {
-            Administrator administrator = administratorOptional.get();
+            Administrator administrator = administratorOptional.get(); // Retrieve the admin object
             model.addAttribute("administrator", administrator);
             model.addAttribute("airlines", airlineRepository.findAll());
             model.addAttribute("airports", airportRepository.findAll());
@@ -70,7 +73,7 @@ public class AdministratorController {
             model.addAttribute("tickets", ticketRepository.findAll());
             return "admin-page";
         }
-        return "redirect:/admin-login";
+        return "redirect:/admin-login"; // Redirect to the admin login page if the admin is not found
     }
 
     ///////// Airlines //////////
@@ -115,14 +118,17 @@ public class AdministratorController {
         Airport airport = airportRepository.findById(airportCode).orElse(null);
         if (airport == null) {
             // Handle airport not found
-            return "error"; // You can define an error page for this
+            return "error"; // We can define an error page for this
         }
         model.addAttribute("airport", airport);
         return "admin-control/admin-edit-airport"; // Return the edit airport form HTML page
     }
 
+    // Updates airport details
     @PostMapping("/admin-page/edit-airport/{airportCode}")
-    public String updateAirportDetails(@PathVariable String airportCode, @ModelAttribute Airport updatedAirport, RedirectAttributes redirectAttributes) {
+    public String updateAirportDetails(@PathVariable String airportCode,
+                                       @ModelAttribute Airport updatedAirport,
+                                       RedirectAttributes redirectAttributes) {
         Airport existingAirport = airportRepository.findById(airportCode).orElse(null);
         if (existingAirport == null) {
             // Handle airport not found
@@ -143,6 +149,7 @@ public class AdministratorController {
     }
 
     ///////// Flights //////////
+    // Shows the add flight form
     @GetMapping("/admin-page/add-flight")
     public String showAddFlightForm(Model model, Principal principal) {
         model.addAttribute("airlines", airlineRepository.findAll());
@@ -182,8 +189,11 @@ public class AdministratorController {
         return "admin-control/admin-edit-flight"; // Return the edit flight form HTML page
     }
 
+    // Updates flight details
     @PostMapping("/admin-page/edit-flight/{flightId}")
-    public String updateFlightDetails(@PathVariable Long flightId, @ModelAttribute Flight updatedFlight, RedirectAttributes redirectAttributes) {
+    public String updateFlightDetails(@PathVariable Long flightId,
+                                      @ModelAttribute Flight updatedFlight,
+                                      RedirectAttributes redirectAttributes) {
         Flight existingFlight = flightRepository.findById(flightId).orElse(null);
         if (existingFlight == null) {
             // Handle flight not found
@@ -242,7 +252,9 @@ public class AdministratorController {
 
     // Controller method to handle the form submission and update the customer details
     @PostMapping("/admin-page/edit-customer/{customerId}")
-    public String updateCustomerDetails(@PathVariable Long customerId, @ModelAttribute Customer updatedCustomer, RedirectAttributes redirectAttributes) {
+    public String updateCustomerDetails(@PathVariable Long customerId,
+                                        @ModelAttribute Customer updatedCustomer,
+                                        RedirectAttributes redirectAttributes) {
         Customer existingCustomer = customerRepository.findByCustomerId(customerId).orElse(null);
         if (existingCustomer == null) {
             // Handle customer not found
@@ -264,6 +276,7 @@ public class AdministratorController {
 
 
     ///////// Tickets //////////
+    // Shows the add ticket form
     @GetMapping("/admin-page/add-ticket")
     public String showAddTicketForm(Model model, Principal principal) {
         model.addAttribute("customers", customerRepository.findAll());
@@ -311,6 +324,7 @@ public class AdministratorController {
         return "admin-control/admin-edit-ticket"; // Return the edit flight form HTML page
     }
 
+    // Updates ticket details
     @PostMapping("/admin-page/edit-ticket/{ticketId}")
     public String updateTicketDetails(@PathVariable String ticketId, @ModelAttribute Ticket updatedTicket, RedirectAttributes redirectAttributes) {
         Ticket existingTicket = ticketRepository.findByTicketId(ticketId).orElse(null);

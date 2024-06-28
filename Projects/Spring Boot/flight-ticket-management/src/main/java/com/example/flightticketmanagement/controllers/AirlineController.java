@@ -53,7 +53,7 @@ public class AirlineController {
     @GetMapping("/airline-login")
     public String showLoginForm(Model model) {
         model.addAttribute("error", true); // Adds an error attribute to the model
-        return "airline-login";
+        return "airline-login"; // Returns the airline login form view
     }
 
     // Method to handle get requests to /airline-flights, shows flights for the logged-in airline
@@ -76,7 +76,7 @@ public class AirlineController {
         Airline loggedInAirline = airlineRepository.findByUsername(loggedInAirlineUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Logged-in airline not found")); // Finds the airline by username or throws an exception if not found
 
-        model.addAttribute("loggedInAirline", loggedInAirline);
+        model.addAttribute("loggedInAirline", loggedInAirline); // Adds the logged-in airline to the model
         model.addAttribute("airports", airportRepository.findAll());
         model.addAttribute("flight", new Flight()); // Add an empty Flight object to bind form data
         return "add-flight";
@@ -84,10 +84,10 @@ public class AirlineController {
 
     // Method to handle post requests to /airline-flights/add, to handle form submission and add new flight
     @PostMapping("/airline-flights/add")
-    public String addFlight(@ModelAttribute("flight") @Valid Flight flight,
-                            BindingResult result,
+    public String addFlight(@ModelAttribute("flight") @Valid Flight flight, // Binds the Flight object from the form data to the flight parameter and validates it. The @ModelAttribute annotation tells Spring to populate the flight parameter with form data
+                            BindingResult result, // Holds the result of the validation and binding. It contains errors if there are any validation issues
                             Principal principal,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes) { // Used to pass attributes to a redirect target. It can be used to add flash attributes, which are stored temporarily until the next request, usually for displaying success or error messages
         if (result.hasErrors()) {
             // If there are validation errors, return to the add flight form
             return "add-flight";
@@ -105,7 +105,8 @@ public class AirlineController {
 
     // Method to handle get requests to /airline-flights/edit/{flightId}, displays the edit flight form
     @GetMapping("/airline-flights/edit/{flightId}")
-    public String showEditFlightForm(@PathVariable Long flightId, Model model) {
+    public String showEditFlightForm(@PathVariable Long flightId, // @PathVariable extracts values from the URL
+                                     Model model) {
         Flight flight = flightRepository.findById(flightId).orElse(null);
         if (flight == null) {
             // Handle flight not found
@@ -118,7 +119,9 @@ public class AirlineController {
 
     // Method to handle post requests to /airline-flights/edit/{flightId}, updates flight details
     @PostMapping("/airline-flights/edit/{flightId}")
-    public String updateFlightDetails(@PathVariable Long flightId, @ModelAttribute Flight updatedFlight, RedirectAttributes redirectAttributes) {
+    public String updateFlightDetails(@PathVariable Long flightId,
+                                      @ModelAttribute Flight updatedFlight,
+                                      RedirectAttributes redirectAttributes) {
         Flight existingFlight = flightRepository.findById(flightId).orElse(null);
         if (existingFlight == null) {
             return "error";
@@ -141,7 +144,8 @@ public class AirlineController {
 
     // Method to handle post requests to /airline-flights/cancel/{flightId}, cancels a flight
     @PostMapping("/airline-flights/cancel/{flightId}")
-    public String cancelFlight(@PathVariable Long flightId, RedirectAttributes redirectAttributes) {
+    public String cancelFlight(@PathVariable Long flightId,
+                               RedirectAttributes redirectAttributes) {
         // Retrieve the flight from the database
         Flight flight = flightRepository.findById(flightId).orElse(null);
         if (flight == null) {

@@ -19,7 +19,11 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+/**
+ * This class configures Spring Security settings for the application, including authentication, authorization, and password encoding
+ */
+
+@Configuration // Indicates that this class provides Spring configuration
 public class SecurityConfig {
 
     @Autowired
@@ -31,63 +35,60 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthenticationSuccessHandler successHandler;
 
-    @Bean
+    @Bean // Bean for password encoder
     public PasswordEncoder passwordEncoder() {
         // return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
+    // Defines a SecurityFilterChain bean that configures HTTP security by defining security rules and filters
     public SecurityFilterChain FilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/account", "/payment").hasRole("USER")  // Restrict access to the account and airline flights pages
-                        .requestMatchers("/airline-flights").hasRole("AIRLINE")
-                        .requestMatchers("/admin-page").hasRole("ADMIN")
-                        .anyRequest().permitAll())  // Permit all requests
+                        .requestMatchers("/account", "/payment").hasRole("USER")  // Restrict access to the account and payment pages to user role
+                        .requestMatchers("/airline-flights").hasRole("AIRLINE") // Restrict access to the airline flights page to airline role
+                        .requestMatchers("/admin-page").hasRole("ADMIN") // Restrict access to the admin page to admin role
+                        .anyRequest().permitAll())  // Allow unrestricted access to other URLs
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login")  // Custom login page
-                        .defaultSuccessUrl("/") // Redirect to /account after successful login
-                        .successHandler(successHandler)  // Use custom success handler
-                        .loginProcessingUrl("/login")
-                        .failureUrl("/login?error=true") // Redirect to login with error
-                        .permitAll())  // Permit access to the login page
-                //.formLogin(formLogin -> formLogin
-                //        .loginPage("/airline-login")
-                //        .defaultSuccessUrl("/airline-flights")
-                //        .loginProcessingUrl("/airline-login")
-                //        .failureUrl("/airline-login?error=true")
-                //        .permitAll())
-                //.formLogin(formLogin -> formLogin
-                //        .loginPage("/admin-login")
-                //        .defaultSuccessUrl("/admin-page")
-                //        .loginProcessingUrl("/admin-login")
-                //        .failureUrl("/admin-login?error=true")
-                //        .permitAll())
+                        .loginPage("/login")  // Custom login page URL
+                        .defaultSuccessUrl("/") // Redirect to "/" after successful login
+                        .successHandler(successHandler)  // Use custom success handler to redirect users after successful login based on their role
+                        .loginProcessingUrl("/login")  // URL to submit the login form
+                        .failureUrl("/login?error=true") // Redirect to login in case of login failure
+                        .permitAll())  // Permit access to the login page for all users
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll());  // Redirect to home after logout
-        return http.build();
+        return http.build(); // Build and return the configured HttpSecurity object
     }
 
     @Bean
+    // Provides user-specific details based on username during authentication
     public UserDetailsService userDetailsService() {
         return username -> {
+            // Lookup customer by username
             Customer customer = customerRepository.findByUsername(username);
             if (customer != null) {
+                // Create UserDetails object with ROLE_USER authority
                 return new org.springframework.security.core.userdetails.User(
                         customer.getUsername(), customer.getPassword(), AuthorityUtils.createAuthorityList("ROLE_USER"));
             }
+            // Lookup airline by username
             Airline airline = airlineRepository.findByUsername(username).orElse(null);
             if (airline != null) {
+                // Create UserDetails object with ROLE_AIRLINE authority
                 return new org.springframework.security.core.userdetails.User(
                         airline.getUsername(), airline.getPassword(), AuthorityUtils.createAuthorityList("ROLE_AIRLINE"));
             }
+            // Lookup administrator by username
             Administrator administrator = administratorRepository.findByUsername(username).orElse(null);
             if (administrator != null) {
+                // Create UserDetails object with ROLE_ADMIN authority
                 return new org.springframework.security.core.userdetails.User(
                         administrator.getUsername(), administrator.getPassword(), AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
             }
+            // Throw exception if no user found with the given username
             throw new UsernameNotFoundException("User '" + username + "' not found");
         };
     }

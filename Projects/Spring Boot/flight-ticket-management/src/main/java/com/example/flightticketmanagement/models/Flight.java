@@ -18,7 +18,7 @@ public class Flight {
     private Long id;
     private String flightNumber;
     @ManyToOne // Specifies a many-to-one relationship with the Airline entity
-    @JoinColumn(name = "airline_iata_code")
+    @JoinColumn(name = "airline_iata_code") // Specifies the column that will be used to join the Flight table with the Airline table. 'name' defines the name of the column in the Flight table that will store the foreign key
     private Airline airline;
     @ManyToOne
     @JoinColumn(name = "origin_airport_code")

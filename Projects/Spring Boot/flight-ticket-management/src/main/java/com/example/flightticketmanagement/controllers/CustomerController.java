@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+// This class serves as a controller in a Spring MVC application, handling HTTP requests related to customers. It maps URLs to methods that interact with the customer data
 @Slf4j
 @Controller
 @SessionAttributes(names = {"ticket"})
@@ -52,35 +53,41 @@ public class CustomerController {
     // Show the registration form
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", new Customer()); // Add an empty Customer object to the model to bind form data
         return "registration";
     }
 
     // Handle the form submission
     @PostMapping("/registration")
-    public String registerCustomer(@Valid Customer customer, Errors errors, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String registerCustomer(@Valid Customer customer, // Bind form data to a Customer object and validate it
+                                   Errors errors, // To capture validation errors
+                                   BindingResult result, // To capture binding errors
+                                   RedirectAttributes redirectAttributes) {  // To add flash attributes for the redirect
         if (errors.hasErrors()) {
             // If there are validation errors, return to the registration form with error messages
             return "registration";
         }
-        // customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        // customer.setPassword(passwordEncoder.encode(customer.getPassword()));  // Encode the password before saving
         log.info("Registering customer: {}", customer);
         customerRepository.save(customer);
         redirectAttributes.addFlashAttribute("message", "Hello, " + customer.getFirstName() + "! You have been successfully registered.");
         return "redirect:/login";
     }
 
+    // Method to handle get requests to /login, displays the login form
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("error", true);
         return "login";
     }
 
+    // Method to handle get requests to /logout, redirects to home page
     @GetMapping("/logout")
     public String logout() {
         return "redirect:/";
     }
 
+    // Show account page to customer
     @GetMapping("/account")
     public String showAccountPage(Model model, Principal principal) {
         String username = principal.getName(); // Retrieve the authenticated user's details
@@ -101,7 +108,10 @@ public class CustomerController {
 
     // Handle the form submission for updating customer details
     @PostMapping("/account/update")
-    public String updateCustomerDetails(@ModelAttribute("customer") Customer updatedCustomer, Errors errors, Principal principal, RedirectAttributes redirectAttributes) {
+    public String updateCustomerDetails(@ModelAttribute("customer") Customer updatedCustomer,
+                                        Errors errors,
+                                        Principal principal,
+                                        RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
             return "edit-customer";
         }
@@ -116,6 +126,7 @@ public class CustomerController {
         return "redirect:/account";
     }
 
+    // Show the form for editing a ticket
     @GetMapping("/account/tickets/edit/{ticketId}")
     public String showEditTicketForm(@PathVariable String ticketId, Model model) {
         Ticket ticket = ticketRepository.findById(ticketId)
@@ -125,11 +136,14 @@ public class CustomerController {
         return "edit-ticket";
     }
 
+    // Handle the form submission for updating a ticket
     @PostMapping("/account/tickets/edit/{ticketId}")
-    public String updateTicket(@PathVariable String ticketId, @ModelAttribute Ticket updatedTicket, RedirectAttributes redirectAttributes) {
+    public String updateTicket(@PathVariable String ticketId,
+                               @ModelAttribute Ticket updatedTicket,
+                               RedirectAttributes redirectAttributes) {
         Ticket existingTicket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket not found"));
-
+        // Update the existing ticket with the new details
         existingTicket.setClassType(updatedTicket.getClassType());
         existingTicket.setSeatNumber(updatedTicket.getSeatNumber());
         ticketRepository.save(existingTicket);
@@ -140,7 +154,8 @@ public class CustomerController {
 
     // Handle cancel ticket request
     @PostMapping("/account/tickets/cancel/{ticketId}")
-    public String deleteTicket(@PathVariable String ticketId, RedirectAttributes redirectAttributes) {
+    public String deleteTicket(@PathVariable String ticketId,
+                               RedirectAttributes redirectAttributes) {
         Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
 
         if (ticket != null) {
@@ -154,13 +169,17 @@ public class CustomerController {
             ticketRepository.save(ticket);
             redirectAttributes.addFlashAttribute("message", "Ticket canceled successfully.");
         } else {
+            // Add a flash attribute to be shown after the redirect if the ticket was not found
             redirectAttributes.addFlashAttribute("error", "Ticket not found.");
         }
         return "redirect:/account";
     }
 
+    // Show the purchase page for a specific flight
     @GetMapping("/purchase/{id}")
-    public String showPurchasePage(@PathVariable Long id, Model model, Authentication authentication) {
+    public String showPurchasePage(@PathVariable Long id,
+                                   Model model,
+                                   Authentication authentication) { // To get the authenticated user's details
         System.out.println("Is Authenticated: " + (authentication != null && authentication.isAuthenticated()));
         // Retrieve the flight details
         Flight flight = flightRepository.findById(id)
@@ -179,8 +198,13 @@ public class CustomerController {
         return "purchase";
     }
 
+    // Handle the form submission for purchasing a ticket
     @PostMapping("/purchase")
-    public String processPurchaseForm(@RequestParam("flightId") Long flightId, @RequestParam("classType") String classType, @RequestParam("seatNumber") String seatNumber, Model model, Authentication authentication) {
+    public String processPurchaseForm(@RequestParam("flightId") Long flightId,
+                                      @RequestParam("classType") String classType,
+                                      @RequestParam("seatNumber") String seatNumber,
+                                      Model model,
+                                      Authentication authentication) {
         // Retrieve the flight details from the database
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new NoSuchElementException("Flight not found"));
@@ -188,10 +212,8 @@ public class CustomerController {
         // Retrieve the authenticated customer from the database
         String username = authentication.getName();
         Customer customer = customerRepository.findByUsername(username);
-
         // Generate a ticket ID
         String ticketId = TicketIdGenerator.generateTicketId();
-
         // Create a new ticket with the provided details
         Ticket ticket = new Ticket();
         ticket.setTicketId(ticketId);
@@ -205,13 +227,15 @@ public class CustomerController {
         // Save the ticket to the database (or perform any other necessary actions)
         ticketRepository.save(ticket);
         System.out.println("Ticket saved with ID: " + ticketId);
-
         // Redirect to the payment page
         return "redirect:/payment?ticketId=" + ticketId;
     }
 
+    // Show the payment page for a specific ticket
     @GetMapping("/payment")
-    public String showPaymentPage(@RequestParam("ticketId") String ticketId, Model model, Authentication authentication) {
+    public String showPaymentPage(@RequestParam("ticketId") String ticketId,
+                                  Model model,
+                                  Authentication authentication) {
         String username = authentication.getName();
         Customer customer = customerRepository.findByUsername(username);
         System.out.println("Received ticketId: " + ticketId);
@@ -223,7 +247,8 @@ public class CustomerController {
         return "payment";
     }
 
-    @Transactional
+    // Handle the form submission for confirming a purchase
+    @Transactional // Indicates that this method should be executed within a transactional context. This means that the payment processing and related operations (like updating the booking status and remaining tickets) are executed as a single transaction
     @PostMapping("/confirm-purchase")
     public String processPayment(@RequestParam("expiryDate") String expiryDate, @RequestParam("cvv") String cvv, @RequestParam("ticketId") String ticketId, Model model) {
 
@@ -258,7 +283,7 @@ public class CustomerController {
         }
     }
 
-
+    // Class to generate a random ticket ID
     public class TicketIdGenerator {
         public static String generateTicketId() {
             StringBuilder ticketId = new StringBuilder("TCKT");
@@ -275,6 +300,7 @@ public class CustomerController {
         }
     }
 
+    // Placeholder method for payment validation and processing
     private boolean validateAndProcessPayment(String expiryDate, String cvv) {
         return true; // Assuming payment is always successful for this example
     }

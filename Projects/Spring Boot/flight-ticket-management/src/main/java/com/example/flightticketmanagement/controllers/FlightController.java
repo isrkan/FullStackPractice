@@ -31,7 +31,7 @@ public class FlightController {
 
     // Method to handle get requests to /flights/search, allows searching for flights based on criteria
     @GetMapping("/search")
-    public String searchFlights(@RequestParam(value = "originAirport", required = false) String originAirportCode,
+    public String searchFlights(@RequestParam(value = "originAirport", required = false) String originAirportCode, // Binds the originAirport request parameter to the originAirportCode method parameter. This parameter is optional (required = false)
                                 @RequestParam(value = "destinationAirport", required = false) String destinationAirportCode,
                                 @RequestParam(value = "date", required = false) String date,
                                 Model model) {

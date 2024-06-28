@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Airline implements UserDetails {
+public class Airline implements UserDetails { // Implementing the UserDetails interface methods to integrate with Spring Security
     @Id
     private String iataCode;
     private String airlineName;
