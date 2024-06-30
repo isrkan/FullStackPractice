@@ -1,0 +1,12 @@
+# Service configuration file for the Postgres database
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  type: ClusterIP  # Service type to expose the Service within the cluster
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432

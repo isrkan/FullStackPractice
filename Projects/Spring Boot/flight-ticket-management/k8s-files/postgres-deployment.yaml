@@ -1,0 +1,36 @@
+# Deployment for the flight-ticket-management-app DB pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "template1"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres1"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data  # Path to mount the volume in the container
+              name: postgres-data  # Name of the volume mount
+      volumes:
+        - name: postgres-data  # Name of the volume
+          persistentVolumeClaim:
+            claimName: postgres-pvc  # Reference to the PersistentVolumeClaim in postgres-pvc.yaml file

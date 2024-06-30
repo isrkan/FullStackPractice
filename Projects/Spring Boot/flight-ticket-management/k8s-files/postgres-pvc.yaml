@@ -1,0 +1,11 @@
+# The PersistentVolumeClaim (PVC) file requests storage resources from Kubernetes. It allows the pod to use persistent storage that survives pod restarts.
+apiVersion: v1
+kind: PersistentVolumeClaim  # Indicates that this is a PersistentVolumeClaim object
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Access mode for the volume (read and write by a single node)
+  resources:
+    requests:
+      storage: 50Mi  # Amount of storage requested for the volume
