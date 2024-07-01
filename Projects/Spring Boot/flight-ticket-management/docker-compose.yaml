@@ -24,7 +24,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres1
 
   # Defines the PostgreSQL database service
-  db:
+  postgres:
     # Uses the official PostgreSQL image from Docker Hub
     image: postgres:15
     # Exposes port 5432 on the host machine and maps it to port 5432 on the container
