@@ -224,6 +224,8 @@ public class CustomerController {
         ticket.setPrice(500); // Assuming a fixed price for now
         ticket.setBookingStatus(Ticket.BookingStatus.PENDING);
 
+        // Save the ticket to the model attribute (session attribute)
+        // model.addAttribute("ticket", ticket);
         // Save the ticket to the database (or perform any other necessary actions)
         ticketRepository.save(ticket);
         System.out.println("Ticket saved with ID: " + ticketId);
@@ -250,7 +252,11 @@ public class CustomerController {
     // Handle the form submission for confirming a purchase
     @Transactional // Indicates that this method should be executed within a transactional context. This means that the payment processing and related operations (like updating the booking status and remaining tickets) are executed as a single transaction
     @PostMapping("/confirm-purchase")
-    public String processPayment(@RequestParam("expiryDate") String expiryDate, @RequestParam("cvv") String cvv, @RequestParam("ticketId") String ticketId, Model model) {
+    public String processPayment(@RequestParam("expiryDate") String expiryDate,
+                                 @RequestParam("cvv") String cvv,
+                                 @RequestParam("ticketId") String ticketId,
+                                 Model model,
+                                 SessionStatus sessionStatus) {
 
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
@@ -273,6 +279,9 @@ public class CustomerController {
             model.addAttribute("customer", ticket.getCustomer());
             model.addAttribute("ticket", ticket);
 
+            // Clear the session attributes after successful payment
+            // sessionStatus.setComplete();
+
             // Redirect to the confirmation page
             return "confirmation";
         } else {
@@ -281,6 +290,33 @@ public class CustomerController {
             model.addAttribute("ticket", ticket); // Add ticket to model to display on payment page
             return "payment";
         }
+    }
+
+    // Show the my-cart page
+    @GetMapping("/mycart")
+    public String showMyCart(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Customer customer = customerRepository.findByUsername(username);
+        // Retrieve tickets that are in the cart (e.g., with status PENDING)
+        List<Ticket> tickets = ticketRepository.findByCustomerAndBookingStatus(customer, Ticket.BookingStatus.PENDING);
+        model.addAttribute("tickets", tickets);
+        return "mycart";
+    }
+
+    // Remove ticket from my-cart
+    @PostMapping("/mycart/remove/{ticketId}")
+    public String removeTicketFromCart(@PathVariable String ticketId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Customer customer = customerRepository.findByUsername(username);
+
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
+        // Checks if the ticket belongs to the authenticated customer and has a PENDING booking status
+        if (ticket.getCustomer().equals(customer) && ticket.getBookingStatus() == Ticket.BookingStatus.PENDING) {
+            ticketRepository.delete(ticket); // Deletes the ticket from the repository if conditions are met
+        }
+
+        return "redirect:/mycart";
     }
 
     // Class to generate a random ticket ID

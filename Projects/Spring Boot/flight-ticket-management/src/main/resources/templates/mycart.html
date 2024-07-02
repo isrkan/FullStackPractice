@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>My Cart</title>
+        <link rel="stylesheet" href="/styles/fragments/navbar.css">
+        <link rel="stylesheet" href="/styles/fragments/footer.css">
+        <link rel="stylesheet" href="/styles/mycart.css">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="container">
+            <h1>My Cart</h1>
+            <div th:if="${#lists.isEmpty(tickets)}">
+                <p>You have no tickets in your cart.</p>
+            </div>
+            <div th:unless="${#lists.isEmpty(tickets)}">
+                <div th:each="ticket : ${tickets}" class="ticket-sub-container">
+                    <div class="ticket-details">
+                        <div><p><strong>Flight Number:</strong> <span th:text="${ticket.flight.flightNumber}"></span></p></div>
+                        <div><p><strong>Airline:</strong> <span th:text="${ticket.flight.airline.airlineName}"></span></p></div>
+                        <div><p><strong>From:</strong> <span th:text="${ticket.flight.originAirport.airportCode}"></span></p></div>
+                        <div><p><strong>To:</strong> <span th:text="${ticket.flight.destinationAirport.airportCode}"></span></p></div>
+                        <div><p><strong>Date:</strong> <span th:text="${ticket.flight.date}"></span></p></div>
+                        <div><p><strong>Departure Time (Local):</strong> <span th:text="${ticket.flight.departureTimeLocal}"></span></p></div>
+                        <div><p><strong>Class:</strong> <span th:text="${ticket.classType}"></span></p></div>
+                        <div><p><strong>Seat Number:</strong> <span th:text="${ticket.seatNumber}"></span></p></div>
+                        <div><p><strong>Price:</strong> <span th:text="${ticket.price}"></span></p></div>
+                    </div>
+                    <div class="ticket-actions">
+                        <a th:href="@{/payment(ticketId=${ticket.ticketId})}" class="complete-purchase-button">Complete Purchase</a>
+                        <form th:action="@{/mycart/remove/{ticketId}(ticketId=${ticket.ticketId})}" method="post" style="display:inline;">
+                            <button type="submit" class="remove-ticket-button">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

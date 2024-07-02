@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/account", "/payment").hasRole("USER")  // Restrict access to the account and payment pages to user role
+                        .requestMatchers("/account", "/purchase/**", "/payment").hasRole("USER")  // Restrict access to the account and payment pages to user role
                         .requestMatchers("/airline-flights").hasRole("AIRLINE") // Restrict access to the airline flights page to airline role
                         .requestMatchers("/admin-page").hasRole("ADMIN") // Restrict access to the admin page to admin role
                         .anyRequest().permitAll())  // Allow unrestricted access to other URLs

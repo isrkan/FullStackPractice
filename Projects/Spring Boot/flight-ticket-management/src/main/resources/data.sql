@@ -147,15 +147,15 @@ WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'AA201' AND date = 
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'LY073', (SELECT iata_code FROM airline WHERE iata_code = 'LY'), (SELECT airport_code FROM airport WHERE airport_code = 'TLV'), (SELECT airport_code FROM airport WHERE airport_code = 'BOM'), '2024-07-01', '16:30', '23:45', 90, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LY073' AND date = '2024-07-01');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LY073' AND date = '2024-07-10');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'AF1234', (SELECT iata_code FROM airline WHERE iata_code = 'AF'), (SELECT airport_code FROM airport WHERE airport_code = 'CDG'), (SELECT airport_code FROM airport WHERE airport_code = 'ATH'), '2024-07-04', '16:35', '20:50', 160, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'AF1234' AND date = '2024-07-04');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'AF1234' AND date = '2024-07-14');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'AI102', (SELECT iata_code FROM airline WHERE iata_code = 'AI'), (SELECT airport_code FROM airport WHERE airport_code = 'JFK'), (SELECT airport_code FROM airport WHERE airport_code = 'BOM'), '2024-07-02', '22:00', '22:30', 100, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'AI102' AND date = '2024-07-02');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'AI102' AND date = '2024-07-22');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'SN401', (SELECT iata_code FROM airline WHERE iata_code = 'SN'), (SELECT airport_code FROM airport WHERE airport_code = 'BRU'), (SELECT airport_code FROM airport WHERE airport_code = 'CDG'), '2024-08-23', '14:30', '16:30', 190, 'SCHEDULED'
@@ -175,19 +175,19 @@ WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'KL201' AND date = 
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'OS101', (SELECT iata_code FROM airline WHERE iata_code = 'OS'), (SELECT airport_code FROM airport WHERE airport_code = 'VIE'), (SELECT airport_code FROM airport WHERE airport_code = 'CDG'), '2024-07-05', '13:00', '16:00', 170, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'OS101' AND date = '2024-07-05');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'OS101' AND date = '2024-07-25');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'LH100', (SELECT iata_code FROM airline WHERE iata_code = 'LH'), (SELECT airport_code FROM airport WHERE airport_code = 'MUC'), (SELECT airport_code FROM airport WHERE airport_code = 'JFK'), '2024-07-01', '10:00', '12:30', 120, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LH100' AND date = '2024-07-01');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LH100' AND date = '2024-07-11');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'LX348', (SELECT iata_code FROM airline WHERE iata_code = 'LX'), (SELECT airport_code FROM airport WHERE airport_code = 'ZRH'), (SELECT airport_code FROM airport WHERE airport_code = 'LHR'), '2024-07-05', '09:15', '09:55', 60, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LX348' AND date = '2024-07-05');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'LX348' AND date = '2024-07-15');
 
 INSERT INTO flight (flight_number, airline_iata_code, origin_airport_code, destination_airport_code, date, departure_time_local, landing_time_local, remaining_tickets, flight_status)
 SELECT 'A3985', (SELECT iata_code FROM airline WHERE iata_code = 'A3'), (SELECT airport_code FROM airport WHERE airport_code = 'ATH'), (SELECT airport_code FROM airport WHERE airport_code = 'LHR'), '2024-07-01', '12:00', '14:15', 120, 'SCHEDULED'
-WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'A3985' AND date = '2024-07-01');
+WHERE NOT EXISTS (SELECT 1 FROM flight WHERE flight_number = 'A3985' AND date = '2024-07-21');
 
 
 

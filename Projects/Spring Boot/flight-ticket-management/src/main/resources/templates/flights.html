@@ -12,8 +12,28 @@
         <div class="container">
             <h1>Available Flights</h1>
             <div class="search-link">
-                <a href="/flights/search" class="search-button">Search Flights</a>
+                <button class="search-button" onclick="toggleSearchForm()">Search Flights</button>
             </div>
+            <!-- Search Form -->
+            <div id="search-form" th:style="${showSearchForm} ? 'display: block;' : 'display: none;'">
+                <h2>Search Flights</h2>
+                <form th:action="@{/flights/search}" method="get">
+                    <label for="originAirport">Origin Airport:</label>
+                    <input type="text" id="originAirport" name="originAirport" required>
+
+                    <label for="destinationAirport">Destination Airport:</label>
+                    <input type="text" id="destinationAirport" name="destinationAirport" required>
+
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <button type="submit">Search Flights</button>
+                </form>
+                <form action="/flights/showAll" method="get" style="display: inline;">
+                    <button type="submit">Show All Flights</button>
+                </form>
+            </div>
+
             <div class="view-toggle-buttons">
                 <button onclick="showTableView()">Table View</button>
                 <button onclick="showContainerView()">Container View</button>
@@ -46,7 +66,7 @@
             </table>
             <!-- Container View -->
             <div id="flights-container" style="display: none;">
-                <div id="authStatus" th:data-authenticated="${#authorization.expression('isAuthenticated()')}"></div>
+                <div id="authStatus" th:data-authenticated="${#authorization.expression('isAuthenticated()')}" th:data-user-role="${#authorization.expression('hasRole(''ROLE_USER'')') ? 'ROLE_USER' : ''}"></div>
                 <div th:each="flight : ${flights}" class="flight-sub-container">
                     <p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
                     <p><strong>Airline Name:</strong> <span th:text="${flight?.airline?.airlineName}"></span></p>
@@ -64,6 +84,11 @@
         </div>
         <div th:insert="~{fragments/footer :: footer}"></div>
         <script>
+            function toggleSearchForm() {
+                var form = document.getElementById('search-form');
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+
             function showTableView() {
                 document.getElementById('flights-table').style.display = 'table';
                 document.getElementById('flights-container').style.display = 'none';
@@ -82,7 +107,12 @@
                 var isAuthenticated = document.getElementById('authStatus').getAttribute('data-authenticated');
                 isAuthenticated = (isAuthenticated === 'true');
                 console.log("Is authenticated:", isAuthenticated);
-                if (isAuthenticated) {
+
+                // Check if the user has the required authority (ROLE_USER)
+                var hasUserRole = document.getElementById('authStatus').getAttribute('data-user-role') === 'ROLE_USER';
+                console.log("Has ROLE_USER:", hasUserRole);
+
+                if (isAuthenticated && hasUserRole) {
                     // Proceed to purchase the ticket
                     var flightId = button.parentElement.getAttribute('data-flight-id');
                     console.log("Flight ID:", flightId);

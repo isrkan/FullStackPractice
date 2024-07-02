@@ -17,4 +17,7 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     List<Ticket> findByFlight(Flight flight);
     // Finds a ticket by its ticket id
     Optional<Ticket> findByTicketId(String ticketId);
+    // Finds tickets by user and booking status
+    List<Ticket> findByCustomerAndBookingStatus(Customer customer, Ticket.BookingStatus bookingStatus);
+
 }

@@ -41,6 +41,15 @@ public class FlightController {
             List<Flight> flights = flightRepository.findFlights(originAirportCode, destinationAirportCode, flightDate);
             model.addAttribute("flights", flights); // Adds the list of flights to the model
         }
-        return "search"; // Returns the view name "search" to be rendered
+        model.addAttribute("showSearchForm", true);
+        return "flights"; // Returns the view name "flights" to be rendered
+    }
+
+    @GetMapping("/showAll")
+    public String showAllFlights(Model model) {
+        List<Flight> flightList = flightRepository.findByFlightStatus(Flight.FlightStatus.SCHEDULED);
+        model.addAttribute("flights", flightList);
+        model.addAttribute("showSearchForm", true); // Search form is visible after showing all flights
+        return "flights";
     }
 }

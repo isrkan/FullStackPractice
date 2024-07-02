@@ -20,6 +20,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     List<Flight> findFlights(@Param("originAirportCode") String originAirportCode,
                              @Param("destinationAirportCode") String destinationAirportCode,
                              @Param("date") LocalDate date);
+
     // Finds a flight by its flight number and date
     Optional<Flight> findByFlightNumberAndDate(String flightNumber, LocalDate date);
     // Finds flights operated by a specific airline
