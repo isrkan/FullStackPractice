@@ -68,19 +68,19 @@ public class FlightControllerTest {
     @Test
     public void testSearchFlightsMissingParams() throws Exception {
         // Performs a GET request with only the originAirport parameter and verifies the response
-        mockMvc.perform(get("/flights/search")
+        mockMvc.perform(get("/flights")
                         .param("originAirport", "JFK"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("search"));  // Asserts that the view name is "search"
+                .andExpect(view().name("flights"));  // Asserts that the view name is "search"
 
-        mockMvc.perform(get("/flights/search")
+        mockMvc.perform(get("/flights")
                         .param("destinationAirport", "LAX"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("search"));
+                .andExpect(view().name("flights"));
 
-        mockMvc.perform(get("/flights/search")
+        mockMvc.perform(get("/flights")
                         .param("date", LocalDate.now().toString()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("search"));
+                .andExpect(view().name("flights"));
     }
 }
