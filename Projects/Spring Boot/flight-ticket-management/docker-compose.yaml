@@ -19,7 +19,7 @@ services:
       # Specifies the profile to be used by the Spring Boot application (e.g., development, production)
       - SPRING_PROFILES_ACTIVE=development
       # Specifies the database URL for connecting to the PostgreSQL database
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/template1
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/template1
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres1
 
