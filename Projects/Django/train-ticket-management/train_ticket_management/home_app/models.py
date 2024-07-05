@@ -25,13 +25,13 @@ class TrainOperator(models.Model):
         return self.operator_name
 
 class TrainJourney(models.Model):
-    journey_number = models.CharField(max_length=20)
+    journey_number = models.CharField(max_length=20, primary_key=True)
     train_operator = models.ForeignKey('TrainOperator', on_delete=models.CASCADE)
     origin_station = models.ForeignKey('TrainStation', related_name='journeys_from', on_delete=models.CASCADE)
     destination_station = models.ForeignKey('TrainStation', related_name='journeys_to', on_delete=models.CASCADE)
     date = models.DateField()
-    departure_time = models.TimeField()
-    arrival_time = models.TimeField()
+    departure_time_local = models.TimeField()
+    arrival_time_local = models.TimeField()
     remaining_tickets = models.IntegerField()
     journey_status = models.CharField(max_length=20, choices=(
         ('SCHEDULED', 'Scheduled'),

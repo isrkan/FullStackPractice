@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Customer, TrainStation, TrainOperator, TrainJourney, Ticket, Administrator
+from .models import Customer, TrainStation, TrainOperator, TrainJourney, Ticket, Administrator
 
 # Register your models here.
 admin.site.register(Customer)

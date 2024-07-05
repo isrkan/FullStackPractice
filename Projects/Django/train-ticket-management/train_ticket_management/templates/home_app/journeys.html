@@ -1,0 +1,78 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Train Journeys</title>
+        <link rel="stylesheet" href="{% static '/styles/home_app/journeys.css' %}" />
+        <link rel="stylesheet" href="{% static '/styles/fragments/navbar.css' %}" />
+        <link rel="stylesheet" href="{% static '/styles/fragments/footer.css' %}" />
+    </head>
+    <body>
+        {% include 'fragments/navbar.html' %}
+        <div class="container">
+            <h1>Available Journeys</h1>
+
+            <div class="view-toggle-buttons">
+                <button onclick="showTableView()">Table View</button>
+                <button onclick="showContainerView()">Container View</button>
+            </div>
+            <!-- Table View -->
+            <table id="journeys-table" style="display: none;">
+                <thead>
+                <tr>
+                    <th>Journey Number</th>
+                    <th>Train Operator</th>
+                    <th>Origin Station</th>
+                    <th>Destination Station</th>
+                    <th>Date</th>
+                    <th>Departure Time (Local)</th>
+                    <th>Arrival Time (Local)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Iterate over journey data and display in table rows -->
+                {% for journey in journeys %}
+                <tr>
+                    <td> {{ journey.journey_number }} </td>
+                    <td> {{ journey.train_operator }} </td>
+                    <td> {{ journey.origin_station.station_code }} </td>
+                    <td> {{ journey.destination_station.station_code }} </td>
+                    <td> {{ journey.date }} </td>
+                    <td> {{ journey.departure_time_local }} </td>
+                    <td> {{ journey.arrival_time_local }} </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <!-- Container View -->
+            <div id="journeys-container" style="display: none;">
+                {% for journey in journeys %}
+                <div class="journey-sub-container">
+                    <p><strong>Journey Number:</strong> <span>{{ journey.journey_number }}</span></p>
+                    <p><strong>Train Operator:</strong> <span>{{ journey.train_operator }}</span></p>
+                    <p><strong>Origin Station:</strong> <span>{{ journey.origin_station.station_code }}</span></p>
+                    <p><strong>Destination Station:</strong> <span>{{ journey.destination_station.station_code }}</span></p>
+                    <p><strong>Date:</strong> <span>{{ journey.date }}</span></p>
+                    <p><strong>Departure Time (Local):</strong> <span>{{ journey.departure_time_local }}</span></p>
+                    <p><strong>Arrival Time (Local):</strong> <span>{{ journey.arrival_time_local }}</span></p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% include 'fragments/footer.html' %}
+        <script>
+            function showTableView() {
+                document.getElementById('journeys-table').style.display = 'table';
+                document.getElementById('journeys-container').style.display = 'none';
+            }
+
+            function showContainerView() {
+                document.getElementById('journeys-table').style.display = 'none';
+                document.getElementById('journeys-container').style.display = 'block';
+            }
+
+            // Default to table view
+            showTableView();
+        </script>
+    </body>
+</html>

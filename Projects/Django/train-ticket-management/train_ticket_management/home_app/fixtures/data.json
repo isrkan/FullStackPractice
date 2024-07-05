@@ -1,0 +1,119 @@
+[
+    {
+        "model": "home_app.trainstation",
+        "pk": "ZRH",
+        "fields": {
+            "station_name": "Zürich Hauptbahnhof",
+            "city": "Zürich",
+            "country": "Switzerland",
+            "latitude": 47.3782,
+            "longitude": 8.5402,
+            "time_zone": "UTC+1"
+        }
+    },
+    {
+        "model": "home_app.trainstation",
+        "pk": "MUC",
+        "fields": {
+            "station_name": "München Hauptbahnhof",
+            "city": "Munich",
+            "country": "Germany",
+            "latitude": 48.1402,
+            "longitude": 11.558,
+            "time_zone": "UTC+1"
+        }
+    },
+    {
+        "model": "home_app.trainstation",
+        "pk": "BER",
+        "fields": {
+            "station_name": "Berlin Hauptbahnhof",
+            "city": "Berlin",
+            "country": "Germany",
+            "latitude": 52.5251,
+            "longitude": 13.3695,
+            "time_zone": "UTC+1"
+        }
+    },
+
+
+    {
+        "model": "home_app.trainoperator",
+        "pk": "DB",
+        "fields": {
+            "operator_name": "Deutsche Bahn",
+            "operator_code": "DB",
+            "headquarters_location": "Berlin",
+            "username": "userDB",
+            "password": "passDB123"
+        }
+    },
+    {
+        "model": "home_app.trainoperator",
+        "pk": "SBB",
+        "fields": {
+            "operator_name": "Swiss Federal Railways",
+            "operator_code": "SBB",
+            "headquarters_location": "Bern",
+            "username": "userSBB",
+            "password": "passSBB123"
+        }
+    },
+
+
+    {
+        "model": "home_app.customer",
+        "pk": 1,
+        "fields": {
+            "first_name": "Tom",
+            "last_name": "Hanks",
+            "address": "123 Hollywood Blvd, Los Angeles, CA 90038",
+            "phone_number": "+13105551234",
+            "credit_card_number": "4111111111111111",
+            "username": "tomhanks123",
+            "password": "1928374657483921"
+        }
+    },
+    {
+        "model": "home_app.customer",
+        "pk": 2,
+        "fields": {
+            "first_name": "Jennifer",
+            "last_name": "Lawrence",
+            "address": "234 Vine St, Los Angeles, CA 90038",
+            "phone_number": "+13105552345",
+            "credit_card_number": "5555555555554444",
+            "username": "jlawrence234",
+            "password": "3827465982048576"
+        }
+    },
+
+
+    {
+        "model": "home_app.administrator",
+        "pk": 1,
+        "fields": {
+            "first_name": "admin",
+            "last_name": "admin",
+            "username": "admin",
+            "password": "admin"
+        }
+    },
+
+
+
+    {
+        "model": "home_app.trainjourney",
+        "pk": "ICE102",
+        "fields": {
+            "train_operator": "DB",
+            "origin_station": "BER",
+            "destination_station": "MUC",
+            "date": "2024-07-15",
+            "departure_time_local": "08:00",
+            "arrival_time_local": "13:00",
+            "remaining_tickets": 200,
+            "journey_status": "SCHEDULED"
+        }
+    }
+]
