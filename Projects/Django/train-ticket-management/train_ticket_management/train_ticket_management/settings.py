@@ -78,8 +78,12 @@ WSGI_APPLICATION = "train_ticket_management.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "template2",
+        "USER": "postgres",
+        "PASSWORD": "postgres1",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
