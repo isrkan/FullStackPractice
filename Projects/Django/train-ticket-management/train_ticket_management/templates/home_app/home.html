@@ -1,20 +1,16 @@
+<!DOCTYPE html>
+{% extends 'home_app/base.html' %}
 {% load static %}
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>RailwayMaster - Home</title>
-        <link rel="stylesheet" href="{% static '/styles/home_app/home.css' %}" />
-        <link rel="stylesheet" href="{% static '/styles/fragments/navbar.css' %}" />
-        <link rel="stylesheet" href="{% static '/styles/fragments/footer.css' %}" />
-    </head>
-    <body>
-        {% include 'fragments/navbar.html' %}
-        <div class="container">
-            <h1>Welcome to RailwayMaster - Train Ticket Management System</h1>
-            <div class="logo-container">
-                <img class="logo" src="{% static 'images/logo.jpg' %}" alt="RailwayMaster logo">
-            </div>
+
+    {% block title %}RailwayMaster - Home{% endblock %}
+
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/home_app/home.css' %}">
+    {% endblock %}
+
+    {% block content %}
+        <h1>Welcome to RailwayMaster - Train Ticket Management System</h1>
+        <div class="logo-container">
+            <img class="logo" src="{% static 'images/logo.jpg' %}" alt="RailwayMaster logo">
         </div>
-        {% include 'fragments/footer.html' %}
-    </body>
-</html>
+    {% endblock %}

@@ -1,78 +1,73 @@
 <!DOCTYPE html>
+{% extends 'home_app/base.html' %}
 {% load static %}
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Registration</title>
-        <link rel="stylesheet" href="{% static 'styles/fragments/navbar.css' %}">
-        <link rel="stylesheet" href="{% static 'styles/fragments/footer.css' %}">
+
+    {% block title %}Registration{% endblock %}
+
+    {% block extra_head %}
         <link rel="stylesheet" href="{% static 'styles/home_app/registration.css' %}">
-    </head>
-    <body>
-        {% include 'fragments/navbar.html' %}
-        <div class="container">
-            <h1>Registration</h1>
-            <form method="post" novalidate>
-                {% csrf_token %}
+    {% endblock %}
 
-                <div class="form-group">
-                    <label for="id_first_name">First Name</label>
-                    {% if form.first_name.errors %}
-                    <span class="error-message">{{ form.first_name.errors }}</span>
-                    {% endif %}
-                    {{ form.first_name }}
-                </div>
+    {% block content %}
+        <h1>Registration</h1>
+        <form method="post" novalidate>
+            {% csrf_token %}
 
-                <div class="form-group">
-                    <label for="id_last_name">Last Name</label>
-                    {% if form.last_name.errors %}
-                    <span class="error-message">{{ form.last_name.errors }}</span>
-                    {% endif %}
-                    {{ form.last_name }}
-                </div>
+            <div class="form-group">
+                <label for="id_first_name">First Name</label>
+                {% if form.first_name.errors %}
+                <span class="error-message">{{ form.first_name.errors }}</span>
+                {% endif %}
+                {{ form.first_name }}
+            </div>
 
-                <div class="form-group">
-                    <label for="id_address">Address</label>
-                    {% if form.address.errors %}
-                    <span class="error-message">{{ form.address.errors }}</span>
-                    {% endif %}
-                    {{ form.address }}
-                </div>
+            <div class="form-group">
+                <label for="id_last_name">Last Name</label>
+                {% if form.last_name.errors %}
+                <span class="error-message">{{ form.last_name.errors }}</span>
+                {% endif %}
+                {{ form.last_name }}
+            </div>
 
-                <div class="form-group">
-                    <label for="id_phone_number">Phone Number</label>
-                    {% if form.phone_number.errors %}
-                    <span class="error-message">{{ form.phone_number.errors }}</span>
-                    {% endif %}
-                    {{ form.phone_number }}
-                </div>
+            <div class="form-group">
+                <label for="id_address">Address</label>
+                {% if form.address.errors %}
+                <span class="error-message">{{ form.address.errors }}</span>
+                {% endif %}
+                {{ form.address }}
+            </div>
 
-                <div class="form-group">
-                    <label for="id_credit_card_number">Credit Card Number</label>
-                    {% if form.credit_card_number.errors %}
-                    <span class="error-message">{{ form.credit_card_number.errors }}</span>
-                    {% endif %}
-                    {{ form.credit_card_number }}
-                </div>
+            <div class="form-group">
+                <label for="id_phone_number">Phone Number</label>
+                {% if form.phone_number.errors %}
+                <span class="error-message">{{ form.phone_number.errors }}</span>
+                {% endif %}
+                {{ form.phone_number }}
+            </div>
 
-                <div class="form-group">
-                    <label for="id_username">Username</label>
-                    {% if form.username.errors %}
-                    <span class="error-message">{{ form.username.errors }}</span>
-                    {% endif %}
-                    {{ form.username }}
-                </div>
+            <div class="form-group">
+                <label for="id_credit_card_number">Credit Card Number</label>
+                {% if form.credit_card_number.errors %}
+                <span class="error-message">{{ form.credit_card_number.errors }}</span>
+                {% endif %}
+                {{ form.credit_card_number }}
+            </div>
 
-                <div class="form-group">
-                    <label for="id_password">Password</label>
-                    {% if form.password.errors %}
-                    <span class="error-message">{{ form.password.errors }}</span>
-                    {% endif %}
-                    {{ form.password }}
-                </div>
-                <button type="submit">Register</button>
-            </form>
-        </div>
-        {% include 'fragments/footer.html' %}
-    </body>
-</html>
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {% if form.username.errors %}
+                <span class="error-message">{{ form.username.errors }}</span>
+                {% endif %}
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {% if form.password.errors %}
+                <span class="error-message">{{ form.password.errors }}</span>
+                {% endif %}
+                {{ form.password }}
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    {% endblock %}

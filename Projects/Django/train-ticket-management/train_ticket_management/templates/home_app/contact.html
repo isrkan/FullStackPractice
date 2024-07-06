@@ -1,16 +1,14 @@
 <!DOCTYPE html>
+{% extends 'home_app/base.html' %}
 {% load static %}
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contact RailwayMaster</title>
-        <link rel="stylesheet" href="{% static '/styles/fragments/navbar.css' %}" />
-        <link rel="stylesheet" href="{% static '/styles/fragments/footer.css' %}" />
-        <link rel="stylesheet" href="{% static '/styles/home_app/contact.css' %}" />
-    </head>
-    <body>
-        {% include 'fragments/navbar.html' %}
+
+    {% block title %}Contact RailwayMaster{% endblock %}
+
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/home_app/contact.css' %}">
+    {% endblock %}
+
+    {% block content %}
         <header>
             <h1>Get in Touch with RailwayMaster</h1>
         </header>
@@ -21,11 +19,8 @@
                 <ul>
                     <li><strong>Email:</strong> contact@railwaymaster.com</li>
                     <li><strong>Phone:</strong> 1-800-759-3597</li>
-                    <li><strong>Address:</strong> RailwayMaster Headquarters, Valley Plaza, 5 Ave, Rail City
-                    </li>
+                    <li><strong>Address:</strong> RailwayMaster Headquarters, Valley Plaza, 5 Ave, Rail City</li>
                 </ul>
             </section>
         </main>
-        {% include 'fragments/footer.html' %}
-    </body>
-</html>
+    {% endblock %}
