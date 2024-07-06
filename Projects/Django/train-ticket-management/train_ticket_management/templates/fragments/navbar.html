@@ -1,7 +1,21 @@
-<div class="navbar">
-    <a href="/" class="company-name">RailwayMaster</a>
-    <a href="/">Home</a>
-    <a href="/journeys">Journeys</a>
-    <a href="contact">Contact Us</a>
-    <a href="/login">Login</a>
-</div>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'styles/fragments/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="/" class="company-name">RailwayMaster</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/journeys">Journeys</a>
+                <a href="/contact">Contact Us</a>
+            </div>
+            <div class="login-link">
+                <a href="/registration">Login</a>
+            </div>
+        </div>
+    </body>
+</html>
