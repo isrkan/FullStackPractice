@@ -6,7 +6,7 @@ This guide will walk you through setting up a simple Spring Boot project using S
 
 ### Using Spring Initializr
 
-1. **Go to `start.spring.io`.
+1. Go to `start.spring.io`.
 2. Fill in the project metadata:
    - **Project:** Maven Project
    - **Language:** Java
@@ -24,7 +24,11 @@ This guide will walk you through setting up a simple Spring Boot project using S
 ## Step 2: Configuring application properties
 
 1. Navigate to `src/main/resources/application.properties`.
-2. Configure the PostgreSQL database connection:
+2. Change the default port (Optional):
+   ```properties
+   server.port=8081
+   ```
+3. Configure the PostgreSQL database connection:
    ```properties
     # Database configuration
     spring.datasource.url=jdbc:postgresql://localhost:5432/expenses
@@ -92,11 +96,8 @@ This guide will walk you through setting up a simple Spring Boot project using S
 - **`src/main/resources`**
   - **`static`** (for static resources like CSS, JS)
     - **`styles`** (for CSS files)
-        - **`home.css`** (Home page style)
     - **`images`** (for images)
-  - **`templates`** (for Thymeleaf templates)
-    - **`home.html`** (Home page template)
-    - **`add-expense.html`** (Form to add expenses)
+  - **`templates`** (for html templates)
 
 ## Step 5: Creating the WebConfig class
 
@@ -159,7 +160,7 @@ This guide will walk you through setting up a simple Spring Boot project using S
    ```
 
 ## Step 13: Enable automatic rebuild in IntelliJ IDEA
-To enable automatic rebuild in IntelliJ IDEA for your Spring Boot project, follow these steps:
+To enable automatic rebuild in IntelliJ IDEA for our Spring Boot project, follow these steps:
 
 1. Click on **File** in the menu bar in IntelliJ.
 2. Navigate to **Settings**.
