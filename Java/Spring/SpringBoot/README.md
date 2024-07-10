@@ -159,6 +159,8 @@ This guide will walk you through setting up a simple Spring Boot project using S
    mvn spring-boot:run
    ```
 
+Finally, visit http://localhost:8081 in the web browser to verify that the Spring Boot app is running correctly. If we haven't changed the default port, use http://localhost:8080.
+
 ## Step 13: Enable automatic rebuild in IntelliJ IDEA
 To enable automatic rebuild in IntelliJ IDEA for our Spring Boot project, follow these steps:
 
