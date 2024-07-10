@@ -26,11 +26,17 @@ This guide will walk you through setting up a simple Spring Boot project using S
 1. Navigate to `src/main/resources/application.properties`.
 2. Configure the PostgreSQL database connection:
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/expenses
-   spring.datasource.username=postgres
-   spring.datasource.password=postgres1
-   spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
-   spring.jpa.hibernate.ddl-auto = update
+    # Database configuration
+    spring.datasource.url=jdbc:postgresql://localhost:5432/expenses
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    spring.datasource.username=postgres
+    spring.datasource.password=postgres1
+
+    # Hibernate configuration
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    logging.level.org.hibernate.SQL=DEBUG
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
    ```
 
 ## Step 3: Adding Thymeleaf and Lombok dependencies
@@ -70,13 +76,16 @@ This guide will walk you through setting up a simple Spring Boot project using S
 ### Main Java directory structure
 
 - **`src/main/java`**
-  - **`com.example.demo`** (or your defined package)
-    - **`DemoApplication.java`** (Spring Boot application initializer)
+  - **`com.example.expenses`** (or your defined package)
+    - **`ExpensesApplication.java`** (Spring Boot application initializer)
     - **`config`** (custom configurations - Java package)
         - **`WebConfig.java`** (Spring MVC configuration)
     - **`controllers`** (Spring MVC controllers - Java package)
+        - **`ExpenseController.java`** (Controller for handling expenses)
     - **`models`** (Entity classes - Java package)
+        - **`Expense.java`** (Expense entity class)
     - **`repositories`** (Spring Data repositories - Java package)
+        - **`ExpenseRepository.java`** (Repository for Expense entity)
 
 ### Main resources directory structure
 
@@ -87,53 +96,45 @@ This guide will walk you through setting up a simple Spring Boot project using S
     - **`images`** (for images)
   - **`templates`** (for Thymeleaf templates)
     - **`home.html`** (Home page template)
+    - **`add-expense.html`** (Form to add expenses)
 
 ## Step 5: Creating the WebConfig class
 
 1. Create a `WebConfig.java` file in the `config` package.
-2. Add the following code to configure the root URL to point to the home page:
-   ```java
-   package com.example.demo.config;
+2. Add the code from the `WebConfig.java` class example
 
-   import org.springframework.context.annotation.Configuration;
-   import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-   import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+## Step 6: Creating the Expense entity
 
-   @Configuration
-   public class WebConfig implements WebMvcConfigurer {
+1. Create an `Expense.java` file in the `models` package.
+2. Add the code from the `Expense.java` class example
 
-       @Override
-       public void addViewControllers(ViewControllerRegistry registry) {
-           // Map the root URL ("/") to the home page view
-           registry.addViewController("/").setViewName("home");
-       }
-   }
-   ```
+## Step 7: Creating the ExpenseRepository interface
 
-## Step 6: Creating the home page template
+1. Create an `ExpenseRepository.java` file in the `repositories` package.
+2. Add the code from the `ExpenseRepository.java` interface example
 
-1. Create a `home.html` file in the `templates` directory.
-2. Add the following content:
-   ```html
-   <!DOCTYPE html>
-   <html xmlns:th="http://www.thymeleaf.org">
-        <head>
-            <title>Home</title>
-        </head>
-        <body>
-            <h1>Hello World!</h1>
-        </body>
-   </html>
-   ```
-3. Create a `home.css` file in the `static/styles` directory.
-4. Add the following content:
-   ```css
-   h1 {
-    color: #333;
-   }
-   ```
+## Step 8: Creating the ExpenseController
 
-## Step 5: Running the application
+1. Create an `ExpenseController.java` file in the `controllers` package.
+2. Add the code from the `ExpenseController.java` controller example
+
+## Step 9: Creating the html templates and css styles
+
+1. Create a `home.html`, `expenses.html`, `add-expense.html` files in the `templates` directory, and add it the content from the html example files.
+2. Create a `home.css`, `expenses.css`, `add-expense.css` files in the `static/styles` directory, and add it the content from the css example files.
+
+## Step 10: Initializing data using schema.sql and data.sql
+
+1. Create a `schema.sql` and `data.sql` files in the `src/main/resources` directory, and add it the content from the sql example files.
+2. Add the following configuration to the application properties:
+    ```
+    # SQL initialization scripts - ensure the schema.sql and data.sql files are run at startup
+    spring.sql.init.mode=always
+    spring.sql.init.schema-locations=classpath:schema.sql
+    spring.sql.init.data-locations=classpath:data.sql
+    ```
+
+## Step 12: Running the application
 
 ### Using IntelliJ IDEA
 
@@ -156,3 +157,13 @@ This guide will walk you through setting up a simple Spring Boot project using S
    ```
    mvn spring-boot:run
    ```
+
+## Step 13: Enable automatic rebuild in IntelliJ IDEA
+To enable automatic rebuild in IntelliJ IDEA for your Spring Boot project, follow these steps:
+
+1. Click on **File** in the menu bar in IntelliJ.
+2. Navigate to **Settings**.
+3. In the Settings dialog, expand **Build, Execution, Deployment**.
+4. Select **Compiler**.
+5. Check the box next to **Build project automatically**.
+6. Click **OK** to apply the changes.
