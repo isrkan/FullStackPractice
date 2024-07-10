@@ -6,7 +6,7 @@ This guide will walk you through setting up a simple Spring Boot project using S
 
 ### Using Spring Initializr
 
-1. **Go to `start.spring.io`.
+1. Go to `start.spring.io`.
 2. Fill in the project metadata:
    - **Project:** Maven Project
    - **Language:** Java
