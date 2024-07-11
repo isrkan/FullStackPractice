@@ -165,7 +165,18 @@ This guide will walk you through setting up a simple Django project, connecting 
                 "category": "Food",
                 "description": "Lunch",
                 "approved": false,
-                "added_by": "Admin"
+                "added_by": "David"
+            }
+        },
+        {
+            "model": "expenses.expense",
+            "pk": 2,
+            "fields": {
+                "amount": "500.00",
+                "category": "Holidays",
+                "description": "Flight",
+                "approved": false,
+                "added_by": "Ben"
             }
         }
     ]
@@ -174,6 +185,7 @@ This guide will walk you through setting up a simple Django project, connecting 
     ```bash
     python manage.py loaddata data.json
     ```
+**Note**: Initializing the data with the data.json fixture works better with the default SQLite database compared to PostgreSQL. Here's why:
 
 #### Option 2: Data already exists in the databse
 In our use-cse, the table already exists.
