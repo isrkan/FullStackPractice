@@ -76,6 +76,7 @@ This guide will walk you through setting up a simple Django project, connecting 
 ## Step 2: Configuring the Database
 1. Create a new database for the project or make sure the desired database exists.
 2. Configure the database settings in `expenses_project/settings.py`:
+
 For PostgreSQL:
    ```python
    DATABASES = {
