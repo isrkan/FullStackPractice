@@ -76,6 +76,7 @@ This guide will walk you through setting up a simple Django project, connecting 
 ## Step 2: Configuring the Database
 1. Create a new database for the project or make sure the desired database exists.
 2. Configure the database settings in `expenses_project/settings.py`:
+For PostgreSQL:
    ```python
    DATABASES = {
       "default": {
@@ -87,6 +88,19 @@ This guide will walk you through setting up a simple Django project, connecting 
          "PORT": "5432",
       }
    }
+   ```
+For MySQL:
+   ```python
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "expenses",
+            "USER": "root",
+            "PASSWORD": "mysql1",
+            "HOST": "localhost",
+            "PORT": "3306",
+        }
+    }
    ```
 
 ## Step 3: Configuring templates and static files
@@ -185,7 +199,7 @@ This guide will walk you through setting up a simple Django project, connecting 
     ```bash
     python manage.py loaddata data.json
     ```
-**Note**: Initializing the data with the data.json fixture works better with the default SQLite database compared to PostgreSQL. Here's why:
+**Note**: Initializing the data with the data.json fixture works better with the default SQLite database or with MySQL compared to PostgreSQL.
 
 #### Option 2: Data already exists in the databse
 In our use-cse, the table already exists.
