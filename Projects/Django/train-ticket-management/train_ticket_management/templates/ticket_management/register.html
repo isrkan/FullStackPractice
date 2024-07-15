@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'ticket_management/base.html' %}
+{% load static %}
+
+{% block title %}Registration{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'styles/ticket_management/registration.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}

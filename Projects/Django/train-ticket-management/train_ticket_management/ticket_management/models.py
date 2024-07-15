@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 class TrainStation(models.Model):
@@ -14,15 +16,24 @@ class TrainStation(models.Model):
     def __str__(self):
         return f"{self.station_name} ({self.station_code})"
 
+
 class TrainOperator(models.Model):
     operator_code = models.CharField(max_length=10, primary_key=True)
     operator_name = models.CharField(max_length=100)
     headquarters_location = models.CharField(max_length=100)
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=128)
 
     def __str__(self):
         return self.operator_name
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+        self.save()
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
 
 class TrainJourney(models.Model):
     journey_number = models.CharField(max_length=20, primary_key=True)
@@ -42,10 +53,8 @@ class TrainJourney(models.Model):
     def __str__(self):
         return f"{self.journey_number} - {self.origin_station} to {self.destination_station}"
 
-class Customer(models.Model):
-    customer_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=100, validators=[MinLengthValidator(1)])
-    last_name = models.CharField(max_length=100, validators=[MinLengthValidator(1)])
+
+class CustomUser(AbstractUser):
     address = models.CharField(max_length=255, validators=[MinLengthValidator(1)])
     phone_number = models.CharField(
         max_length=15,
@@ -55,11 +64,6 @@ class Customer(models.Model):
         max_length=19,
         validators=[RegexValidator(regex=r'^\d{13,19}$',message="Credit Card Number must be between 13 and 19 digits")]
     )
-    username = models.CharField(max_length=50, unique=True, validators=[MinLengthValidator(1), MaxLengthValidator(50)])
-    password = models.CharField(max_length=20, validators=[MinLengthValidator(4), MaxLengthValidator(20)])
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
 
 class Ticket(models.Model):
     class BookingStatus(models.TextChoices):
@@ -76,8 +80,8 @@ class Ticket(models.Model):
         BUSINESS = 'BUSINESS', 'Business'
 
     ticket_id = models.CharField(max_length=20, primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    train_journey = models.ForeignKey('TrainJourney', on_delete=models.CASCADE)  # Replace 'TrainJourney' with the actual model name
+    custom_user = models.ForeignKey('CustomUser', on_delete=models.CASCADE)
+    train_journey = models.ForeignKey('TrainJourney', on_delete=models.CASCADE)
     class_type = models.CharField(max_length=10, choices=ClassType.choices)
     seat_number = models.CharField(max_length=10)
     booking_status = models.CharField(max_length=20, choices=BookingStatus.choices)
@@ -86,12 +90,20 @@ class Ticket(models.Model):
     def __str__(self):
         return f"{self.ticket_id} - {self.customer} - {self.train_journey}"
 
+
 class Administrator(models.Model):
     admin_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     username = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=128)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+        self.save()
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)

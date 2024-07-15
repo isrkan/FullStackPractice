@@ -1,0 +1,148 @@
+[
+    {
+        "model": "ticket_management.trainstation",
+        "pk": "ZRH",
+        "fields": {
+            "station_name": "Zürich Hauptbahnhof",
+            "city": "Zürich",
+            "country": "Switzerland",
+            "latitude": 47.3782,
+            "longitude": 8.5402,
+            "time_zone": "UTC+1"
+        }
+    },
+    {
+        "model": "ticket_management.trainstation",
+        "pk": "MUC",
+        "fields": {
+            "station_name": "München Hauptbahnhof",
+            "city": "Munich",
+            "country": "Germany",
+            "latitude": 48.1402,
+            "longitude": 11.558,
+            "time_zone": "UTC+1"
+        }
+    },
+    {
+        "model": "ticket_management.trainstation",
+        "pk": "BER",
+        "fields": {
+            "station_name": "Berlin Hauptbahnhof",
+            "city": "Berlin",
+            "country": "Germany",
+            "latitude": 52.5251,
+            "longitude": 13.3695,
+            "time_zone": "UTC+1"
+        }
+    },
+
+
+    {
+        "model": "ticket_management.trainoperator",
+        "pk": "DB",
+        "fields": {
+            "operator_name": "Deutsche Bahn",
+            "operator_code": "DB",
+            "headquarters_location": "Berlin",
+            "username": "userDB",
+            "password": "pbkdf2_sha256$600000$FQgvjMfoed0dkkHUQWTvO2$xyZYPNCI1vHX2Q48JigZusbyHkIFQrt15BxjGumgaBw="
+        }
+    },
+    {
+        "model": "ticket_management.trainoperator",
+        "pk": "SBB",
+        "fields": {
+            "operator_name": "Swiss Federal Railways",
+            "operator_code": "SBB",
+            "headquarters_location": "Bern",
+            "username": "userSBB",
+            "password": "pbkdf2_sha256$600000$zv1uGh3i9Z3lLgPzmWu3Np$VoWJwIeXwiN+QeevxMdzGnkGvfawVz5UcP9/cSx1Mt4="
+        }
+    },
+
+
+    {
+        "model": "ticket_management.trainjourney",
+        "pk": "ICE102",
+        "fields": {
+            "train_operator": "DB",
+            "origin_station": "BER",
+            "destination_station": "MUC",
+            "date": "2024-07-15",
+            "departure_time_local": "08:00",
+            "arrival_time_local": "13:00",
+            "remaining_tickets": 200,
+            "journey_status": "SCHEDULED"
+        }
+    },
+
+
+    {
+        "model": "ticket_management.customuser",
+        "pk": 1,
+        "fields": {
+            "username": "tomhanks123",
+            "password": "pbkdf2_sha256$600000$4jrAG31N3va8azxn3ZRxMd$/oDANG/ESGS7pVC6q9c2hiY5IoY5NE+9D8cNKTIedB0=",
+            "first_name": "Tom",
+            "last_name": "Hanks",
+            "address": "123 Hollywood Blvd, Los Angeles, CA 90038",
+            "phone_number": "+13105551234",
+            "credit_card_number": "4111111111111111",
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "ticket_management.customuser",
+        "pk": 2,
+        "fields": {
+            "username": "jlawrence234",
+            "password": "pbkdf2_sha256$600000$jidMFoHkyA2DjrFJGoxTfA$dAvCmIgUvaF0Rk2DUDGuMyWoJawSkOQMJcvIbGnWSZo=",
+            "first_name": "Jennifer",
+            "last_name": "Lawrence",
+            "address": "234 Vine St, Los Angeles, CA 90038",
+            "phone_number": "+13105552345",
+            "credit_card_number": "5555555555554444",
+            "is_staff": false,
+            "is_superuser": false
+        }
+    },
+
+
+    {
+        "model": "ticket_management.ticket",
+        "pk": "TCKT1A2B3C4D5",
+        "fields": {
+            "custom_user": 1,
+            "train_journey": "ICE102",
+            "class_type": "ECONOMY",
+            "seat_number": "12A",
+            "booking_status": "CONFIRMED",
+            "price": "450.00"
+        }
+    },
+    {
+        "model": "ticket_management.ticket",
+        "pk": "TCKT6E7F8G9H0",
+        "fields": {
+            "custom_user": 1,
+            "train_journey": "ICE102",
+            "class_type": "BUSINESS",
+            "seat_number": "5B",
+            "booking_status": "BOOKED",
+            "price": "860.00"
+        }
+    },
+
+
+    {
+        "model": "ticket_management.administrator",
+        "pk": 1,
+        "fields": {
+            "first_name": "admin",
+            "last_name": "admin",
+            "username": "admin",
+            "password": "pbkdf2_sha256$600000$HV8aqDtvKUfRs6Bsa6AHNM$BaZn+6BlvmgxGOiT/p6kyPVT3UsXlE8GNZTmn+KiGlQ="
+        }
+    }
+]
