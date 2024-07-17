@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout
-from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm
+from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm, JourneySearchForm, TrainJourneyForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -11,9 +11,28 @@ def home(request):
     return render(request, 'ticket_management/home.html')
 
 def train_journey(request):
-    journeyList = TrainJourney.objects.order_by('date')
-    journey_dict = {'journeys': journeyList}
-    return render(request, 'ticket_management/journeys.html', context=journey_dict)
+    form = JourneySearchForm(request.GET or None)
+    journeys = TrainJourney.objects.all()
+
+    if form.is_valid():
+        origin_station = form.cleaned_data.get('origin_station')
+        destination_station = form.cleaned_data.get('destination_station')
+        date = form.cleaned_data.get('date')
+
+        if origin_station:
+            journeys = journeys.filter(origin_station__station_code__icontains=origin_station)
+        if destination_station:
+            journeys = journeys.filter(destination_station__station_code__icontains=destination_station)
+        if date:
+            journeys = journeys.filter(date=date)
+
+    context = {
+        'form': form,
+        'journeys': journeys.order_by('date'),
+    }
+
+    return render(request, 'ticket_management/journeys.html', context)
+
 
 def contact(request):
     return render(request, 'ticket_management/contact.html')
@@ -83,6 +102,63 @@ def train_operator_logout(request):
         del request.session['operator_code']
     return redirect('home')
 
+def operator_journeys(request):
+    operator_code = request.session.get('operator_code')
+    operator = TrainOperator.objects.get(operator_code=operator_code)
+    journeys = TrainJourney.objects.filter(train_operator=operator).order_by('date')
+
+    form = JourneySearchForm(request.GET or None)
+    if form.is_valid():
+        origin_station = form.cleaned_data.get('origin_station')
+        destination_station = form.cleaned_data.get('destination_station')
+        date = form.cleaned_data.get('date')
+
+        if origin_station:
+            journeys = journeys.filter(origin_station__station_code__icontains=origin_station)
+        if destination_station:
+            journeys = journeys.filter(destination_station__station_code__icontains=destination_station)
+        if date:
+            journeys = journeys.filter(date=date)
+
+    context = {
+        'form': form,
+        'journeys': journeys,
+    }
+    return render(request, 'ticket_management/operator_journeys.html', context)
+
+
+def add_journey(request):
+    operator_code = request.session.get('operator_code')
+    train_operator = get_object_or_404(TrainOperator, operator_code=operator_code)
+    if request.method == 'POST':
+        form = TrainJourneyForm(request.POST)
+        if form.is_valid():
+            journey = form.save(commit=False)
+            journey.train_operator = train_operator
+            journey.save()
+            return redirect('operator_journeys')
+    else:
+        form = TrainJourneyForm()
+    return render(request, 'ticket_management/add-journey.html', {'form': form})
+
+def edit_journey(request, journey_id):
+    operator_code = request.session.get('operator_code')
+    journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+    if request.method == 'POST':
+        form = TrainJourneyForm(request.POST, instance=journey)
+        if form.is_valid():
+            form.save()
+            return redirect('operator_journeys')
+    else:
+        form = TrainJourneyForm(instance=journey)
+    return render(request, 'ticket_management/edit-journey.html', {'form': form, 'journey': journey})
+
+
+def cancel_journey(request, journey_id):
+    journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+    journey.journey_status = 'Canceled'
+    journey.save()
+    return redirect('operator_journeys')
 
 def admin_login(request):
     if request.method == 'POST':

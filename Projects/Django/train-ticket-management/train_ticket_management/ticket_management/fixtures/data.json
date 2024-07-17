@@ -63,8 +63,9 @@
 
     {
         "model": "ticket_management.trainjourney",
-        "pk": "ICE102",
+        "pk": 1,
         "fields": {
+            "journey_number": "ICE102",
             "train_operator": "DB",
             "origin_station": "BER",
             "destination_station": "MUC",
@@ -72,6 +73,21 @@
             "departure_time_local": "08:00",
             "arrival_time_local": "13:00",
             "remaining_tickets": 200,
+            "journey_status": "SCHEDULED"
+        }
+    },
+    {
+        "model": "ticket_management.trainjourney",
+        "pk": 2,
+        "fields": {
+            "journey_number": "ICE106",
+            "train_operator": "SBB",
+            "origin_station": "MUC",
+            "destination_station": "ZRH",
+            "date": "2024-07-20",
+            "departure_time_local": "09:00",
+            "arrival_time_local": "12:30",
+            "remaining_tickets": 100,
             "journey_status": "SCHEDULED"
         }
     },
@@ -114,7 +130,7 @@
         "pk": "TCKT1A2B3C4D5",
         "fields": {
             "custom_user": 1,
-            "train_journey": "ICE102",
+            "train_journey": "1",
             "class_type": "ECONOMY",
             "seat_number": "12A",
             "booking_status": "CONFIRMED",
@@ -126,7 +142,7 @@
         "pk": "TCKT6E7F8G9H0",
         "fields": {
             "custom_user": 1,
-            "train_journey": "ICE102",
+            "train_journey": "2",
             "class_type": "BUSINESS",
             "seat_number": "5B",
             "booking_status": "BOOKED",

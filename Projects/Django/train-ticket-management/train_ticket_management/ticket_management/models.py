@@ -36,7 +36,8 @@ class TrainOperator(models.Model):
 
 
 class TrainJourney(models.Model):
-    journey_number = models.CharField(max_length=20, primary_key=True)
+    journey_id = models.AutoField(primary_key=True)
+    journey_number = models.CharField(max_length=20)
     train_operator = models.ForeignKey('TrainOperator', on_delete=models.CASCADE)
     origin_station = models.ForeignKey('TrainStation', related_name='journeys_from', on_delete=models.CASCADE)
     destination_station = models.ForeignKey('TrainStation', related_name='journeys_to', on_delete=models.CASCADE)
