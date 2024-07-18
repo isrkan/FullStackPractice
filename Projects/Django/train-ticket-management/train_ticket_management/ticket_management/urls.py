@@ -18,4 +18,13 @@ urlpatterns = [
        path('admin-login/', views.admin_login, name='admin_login'),
        path('admin-logout/', views.admin_logout, name='admin_logout'),
        path('admin-page/', views.admin_page, name='admin_page'),
+       path('admin-page/edit-operator/<str:operator_code>/', views.admin_edit_train_operator, name='admin_edit_operator'),
+       path('admin-page/edit-station/<str:station_code>/', views.admin_edit_train_station, name='admin_edit_station'),
+       path('admin-page/edit-journey/<int:journey_id>/', views.admin_edit_journey, name='admin_edit_journey'),
+       path('admin-page/add-journey/', views.admin_add_journey, name='admin_add_journey'),
+       path('admin-page/delete-journey/<int:journey_id>/', views.admin_delete_journey, name='admin_delete_journey'),
+       path('admin-page/edit-customer/<int:customer_id>/', views.admin_edit_customer, name='admin_edit_customer'),
+       path('admin-page/edit-ticket/<str:ticket_id>/', views.admin_edit_ticket, name='admin_edit_ticket'),
+       path('admin-page/add-ticket/', views.admin_add_ticket, name='admin_add_ticket'),
+       path('admin-page/delete-ticket/<str:ticket_id>/', views.admin_delete_ticket, name='admin_delete_ticket'),
 ]

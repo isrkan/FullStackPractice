@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, TrainJourney
+from .models import CustomUser, TrainJourney, TrainOperator, TrainStation, Ticket
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -37,3 +37,34 @@ class TrainJourneyForm(forms.ModelForm):
             'departure_time_local': forms.TimeInput(attrs={'type': 'time'}),
             'arrival_time_local': forms.TimeInput(attrs={'type': 'time'}),
         }
+
+class TrainOperatorForm(forms.ModelForm):
+    class Meta:
+        model = TrainOperator
+        fields = ['operator_code', 'operator_name', 'headquarters_location', 'username']
+
+class TrainStationForm(forms.ModelForm):
+    class Meta:
+        model = TrainStation
+        fields = ['station_code', 'station_name', 'city', 'country']
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'address', 'phone_number', 'username']
+
+class TrainJourneyAdminForm(forms.ModelForm):
+    class Meta:
+        model = TrainJourney
+        fields = ['journey_number', 'train_operator', 'origin_station', 'destination_station', 'date', 'departure_time_local', 'arrival_time_local', 'remaining_tickets', 'journey_status']
+
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'departure_time_local': forms.TimeInput(attrs={'type': 'time'}),
+            'arrival_time_local': forms.TimeInput(attrs={'type': 'time'}),
+        }
+
+class TicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['ticket_id', 'custom_user', 'train_journey', 'class_type', 'seat_number', 'booking_status', 'price']

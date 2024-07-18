@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout
-from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm, JourneySearchForm, TrainJourneyForm
+from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm, JourneySearchForm, TrainJourneyForm, \
+    TrainOperatorForm, TrainStationForm, TicketForm, CustomerForm, TrainJourneyAdminForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .models import TrainStation, TrainOperator, TrainJourney, CustomUser, Ticket, Administrator
 
+
 # Create your views here.
 def home(request):
     return render(request, 'ticket_management/home.html')
+
 
 def train_journey(request):
     form = JourneySearchForm(request.GET or None)
@@ -37,6 +40,7 @@ def train_journey(request):
 def contact(request):
     return render(request, 'ticket_management/contact.html')
 
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -47,6 +51,7 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'ticket_management/register.html', {'form': form})
+
 
 def custom_login(request):
     if request.method == 'POST':
@@ -62,10 +67,12 @@ def custom_login(request):
         form = AuthenticationForm()
     return render(request, 'ticket_management/login.html', {'form': form})
 
+
 @login_required
 def custom_logout(request):
     auth_logout(request)
     return redirect('home')
+
 
 @login_required
 def account_view(request):
@@ -97,10 +104,12 @@ def train_operator_login(request):
         form = TrainOperatorLoginForm()
     return render(request, 'ticket_management/train_operator_login.html', {'form': form})
 
+
 def train_operator_logout(request):
     if 'operator_code' in request.session:
         del request.session['operator_code']
     return redirect('home')
+
 
 def operator_journeys(request):
     operator_code = request.session.get('operator_code')
@@ -141,6 +150,7 @@ def add_journey(request):
         form = TrainJourneyForm()
     return render(request, 'ticket_management/add-journey.html', {'form': form})
 
+
 def edit_journey(request, journey_id):
     operator_code = request.session.get('operator_code')
     journey = get_object_or_404(TrainJourney, journey_id=journey_id)
@@ -159,6 +169,7 @@ def cancel_journey(request, journey_id):
     journey.journey_status = 'Canceled'
     journey.save()
     return redirect('operator_journeys')
+
 
 def admin_login(request):
     if request.method == 'POST':
@@ -179,6 +190,7 @@ def admin_login(request):
         form = AdminLoginForm()
     return render(request, 'ticket_management/admin_login.html', {'form': form})
 
+
 def admin_logout(request):
     if 'admin_id' in request.session:
         del request.session['admin_id']
@@ -188,7 +200,7 @@ def admin_logout(request):
 def admin_page(request):
     admin_id = request.session.get('admin_id')
     administrator = get_object_or_404(Administrator, admin_id=admin_id)
-    #administrator = request.user
+    # administrator = request.user
     train_operators = TrainOperator.objects.all()
     stations = TrainStation.objects.all()
     journeys = TrainJourney.objects.all()
@@ -205,3 +217,105 @@ def admin_page(request):
     }
 
     return render(request, 'ticket_management/admin-page.html', context)
+
+
+# Edit Train Operator
+def admin_edit_train_operator(request, operator_code):
+    operator = get_object_or_404(TrainOperator, operator_code=operator_code)
+    if request.method == 'POST':
+        form = TrainOperatorForm(request.POST, instance=operator)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TrainOperatorForm(instance=operator)
+    return render(request, 'admin-control/admin-edit-operator.html', {'form': form, 'operator': operator})
+
+
+# Edit Train Station
+def admin_edit_train_station(request, station_code):
+    station = get_object_or_404(TrainStation, station_code=station_code)
+    if request.method == 'POST':
+        form = TrainStationForm(request.POST, instance=station)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TrainStationForm(instance=station)
+    return render(request, 'admin-control/admin-edit-station.html', {'form': form, 'station': station})
+
+
+# Edit Train Journey
+def admin_edit_journey(request, journey_id):
+    journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+    if request.method == 'POST':
+        form = TrainJourneyAdminForm(request.POST, instance=journey)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TrainJourneyAdminForm(instance=journey)
+    return render(request, 'admin-control/admin-edit-journey.html', {'form': form, 'journey': journey})
+
+
+# Add Train Journey
+def admin_add_journey(request):
+    if request.method == 'POST':
+        form = TrainJourneyAdminForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TrainJourneyAdminForm()
+    return render(request, 'admin-control/admin-add-journey.html', {'form': form})
+
+
+# Delete Train Journey
+def admin_delete_journey(request, journey_id):
+    journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+    if request.method == 'POST':
+        journey.delete()
+    return redirect('admin_page')
+
+# Edit Customer
+def admin_edit_customer(request, customer_id):
+    customer = get_object_or_404(CustomUser, id=customer_id)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = CustomerForm(instance=customer)
+    return render(request, 'admin-control/admin-edit-customer.html', {'form': form, 'customer': customer})
+
+
+# Edit Ticket
+def admin_edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, ticket_id=ticket_id)
+    if request.method == 'POST':
+        form = TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TicketForm(instance=ticket)
+    return render(request, 'admin-control/admin-edit-ticket.html', {'form': form, 'ticket': ticket})
+
+# Add Train Journey
+def admin_add_ticket(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_page')
+    else:
+        form = TicketForm()
+    return render(request, 'admin-control/admin-add-ticket.html', {'form': form})
+
+# Delete Ticket
+def admin_delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, ticket_id=ticket_id)
+    if request.method == 'POST':
+        ticket.delete()
+    return redirect('admin_page')

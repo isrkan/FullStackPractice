@@ -48,7 +48,7 @@
                     <p><strong>Username:</strong> {{ operator.username }}</p>
                 </div>
                 <div class="entity-actions">
-                    <form action="#" method="get">
+                    <form action="{% url 'admin_edit_operator' operator.operator_code %}" method="get">
                         <button type="submit" class="edit-button">Edit</button>
                     </form>
                 </div>
@@ -69,7 +69,7 @@
                     <p><strong>Longitude:</strong> {{ station.longitude }}</p>
                 </div>
                 <div class="entity-actions">
-                    <form action="#" method="get">
+                    <form action="{% url 'admin_edit_station' station.station_code %}" method="get">
                         <button type="submit" class="edit-button">Edit</button>
                     </form>
                 </div>
@@ -79,7 +79,7 @@
         <!-- Manage Journeys Section -->
         <div id="journeys" class="tab-content">
             <h2>Manage Journeys</h2>
-            <form action="{% url 'add_journey' %}" method="get">
+            <form action="{% url 'admin_add_journey' %}" method="get">
                 <button type="submit" class="add-button">Add Journey</button>
             </form>
             {% for journey in journeys %}
@@ -95,10 +95,10 @@
                     <p><strong>Status:</strong> {{ journey.journey_status }}</p>
                 </div>
                 <div class="entity-actions">
-                    <form action="#" method="get">
+                    <form action="{% url 'admin_edit_journey' journey.journey_id %}" method="get">
                         <button type="submit" class="edit-button">Edit</button>
                     </form>
-                    <form action="#" method="post">
+                    <form action="{% url 'admin_delete_journey' journey.journey_id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="delete-button">Delete</button>
                     </form>
@@ -120,7 +120,7 @@
                     <p><strong>Username:</strong> {{ customer.username }}</p>
                 </div>
                 <div class="entity-actions">
-                    <form action="#" method="get">
+                    <form action="{% url 'admin_edit_customer' customer.id %}" method="get">
                         <button type="submit" class="edit-button">Edit</button>
                     </form>
                 </div>
@@ -130,7 +130,7 @@
         <!-- Manage Tickets Section -->
         <div id="tickets" class="tab-content">
             <h2>Manage Tickets</h2>
-            <form action="#" method="get">
+            <form action="{% url 'admin_add_ticket' %}" method="get">
                 <button type="submit" class="add-button">Add Ticket</button>
             </form>
             {% for ticket in tickets %}
@@ -145,10 +145,10 @@
                     <p><strong>Price:</strong> {{ ticket.price }}</p>
                 </div>
                 <div class="entity-actions">
-                    <form action="#" method="get">
+                    <form action="{% url 'admin_edit_ticket' ticket.ticket_id %}" method="get">
                         <button type="submit" class="edit-button">Edit</button>
                     </form>
-                    <form action="#" method="post">
+                    <form action="{% url 'admin_delete_ticket' ticket.ticket_id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="delete-button">Delete</button>
                     </form>
