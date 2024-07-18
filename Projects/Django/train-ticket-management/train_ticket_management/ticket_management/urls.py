@@ -17,4 +17,5 @@ urlpatterns = [
        path('operator-journeys/cancel/<int:journey_id>/', views.cancel_journey, name='cancel_journey'),
        path('admin-login/', views.admin_login, name='admin_login'),
        path('admin-logout/', views.admin_logout, name='admin_logout'),
+       path('admin-page/', views.admin_page, name='admin_page'),
 ]

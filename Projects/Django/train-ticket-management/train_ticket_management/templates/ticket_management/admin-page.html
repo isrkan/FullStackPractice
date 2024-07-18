@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% extends 'ticket_management/base.html' %}
+{% load static %}
+
+{% block title %}Admin Page{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'styles/ticket_management/admin-page.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".tab-content").hide();
+            $(".tab-content:first").show();
+            $(".tabs li").click(function(){
+                $(".tabs li").removeClass("active");
+                $(this).addClass("active");
+                $(".tab-content").hide();
+                var activeTab = $(this).find("a").attr("href");
+                $(activeTab).fadeIn();
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Admin Page</h1>
+        <div>
+            <h2>Hello, {{ administrator.first_name }}!</h2>
+        </div>
+        <ul class="tabs">
+            <li class="active"><a href="#train-operators">Train Operators</a></li>
+            <li><a href="#stations">Train Stations</a></li>
+            <li><a href="#journeys">Train Journeys</a></li>
+            <li><a href="#customers">Customers</a></li>
+            <li><a href="#tickets">Tickets</a></li>
+        </ul>
+        <!-- Manage Train Operators Section -->
+        <div id="train-operators" class="tab-content">
+            <h2>Manage Train Operators</h2>
+            {% for operator in train_operators %}
+            <div class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Operator Code:</strong> {{ operator.operator_code }}</p>
+                    <p><strong>Operator Name:</strong> {{ operator.operator_name }}</p>
+                    <p><strong>Headquarters Location:</strong> {{ operator.headquarters_location }}</p>
+                    <p><strong>Username:</strong> {{ operator.username }}</p>
+                </div>
+                <div class="entity-actions">
+                    <form action="#" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Manage Stations Section -->
+        <div id="stations" class="tab-content">
+            <h2>Manage Stations</h2>
+            {% for station in stations %}
+            <div class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Station Code:</strong> {{ station.station_code }}</p>
+                    <p><strong>Station Name:</strong> {{ station.station_name }}</p>
+                    <p><strong>City:</strong> {{ station.city }}</p>
+                    <p><strong>Country:</strong> {{ station.country }}</p>
+                    <p><strong>Latitude:</strong> {{ station.latitude }}</p>
+                    <p><strong>Longitude:</strong> {{ station.longitude }}</p>
+                </div>
+                <div class="entity-actions">
+                    <form action="#" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Manage Journeys Section -->
+        <div id="journeys" class="tab-content">
+            <h2>Manage Journeys</h2>
+            <form action="{% url 'add_journey' %}" method="get">
+                <button type="submit" class="add-button">Add Journey</button>
+            </form>
+            {% for journey in journeys %}
+            <div class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Journey Number:</strong> {{ journey.journey_number }}</p>
+                    <p><strong>Origin:</strong> {{ journey.origin_station.station_code }}</p>
+                    <p><strong>Destination:</strong> {{ journey.destination_station.station_code }}</p>
+                    <p><strong>Date:</strong> {{ journey.date }}</p>
+                    <p><strong>Departure Time (Local):</strong> {{ journey.departure_time_local }}</p>
+                    <p><strong>Arrival Time (Local):</strong> {{ journey.arrival_time_local }}</p>
+                    <p><strong>Remaining Tickets:</strong> {{ journey.remaining_tickets }}</p>
+                    <p><strong>Status:</strong> {{ journey.journey_status }}</p>
+                </div>
+                <div class="entity-actions">
+                    <form action="#" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Manage Customers Section -->
+        <div id="customers" class="tab-content">
+            <h2>Manage Customers</h2>
+            {% for customer in customers %}
+            <div class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Customer Id:</strong> {{ customer.id }}</p>
+                    <p><strong>First Name:</strong> {{ customer.first_name }}</p>
+                    <p><strong>Last Name:</strong> {{ customer.last_name }}</p>
+                    <p><strong>Address:</strong> {{ customer.address }}</p>
+                    <p><strong>Phone Number:</strong> {{ customer.phone_number }}</p>
+                    <p><strong>Username:</strong> {{ customer.username }}</p>
+                </div>
+                <div class="entity-actions">
+                    <form action="#" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Manage Tickets Section -->
+        <div id="tickets" class="tab-content">
+            <h2>Manage Tickets</h2>
+            <form action="#" method="get">
+                <button type="submit" class="add-button">Add Ticket</button>
+            </form>
+            {% for ticket in tickets %}
+            <div class="entity-sub-container">
+                <div class="entity-details">
+                    <p><strong>Ticket ID:</strong> {{ ticket.ticket_id }}</p>
+                    <p><strong>Customer:</strong> {{ ticket.custom_user.username }}</p>
+                    <p><strong>Journey:</strong> {{ ticket.train_journey.journey_number }}</p>
+                    <p><strong>Class:</strong> {{ ticket.class_type }}</p>
+                    <p><strong>Seat:</strong> {{ ticket.seat_number }}</p>
+                    <p><strong>Status:</strong> {{ ticket.booking_status }}</p>
+                    <p><strong>Price:</strong> {{ ticket.price }}</p>
+                </div>
+                <div class="entity-actions">
+                    <form action="#" method="get">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

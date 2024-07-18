@@ -4,7 +4,7 @@ from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginFor
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-from .models import TrainOperator, TrainJourney, Ticket, Administrator
+from .models import TrainStation, TrainOperator, TrainJourney, CustomUser, Ticket, Administrator
 
 # Create your views here.
 def home(request):
@@ -88,7 +88,7 @@ def train_operator_login(request):
                 operator = TrainOperator.objects.get(username=username)
                 if operator.check_password(password):
                     request.session['operator_code'] = operator.operator_code
-                    return redirect('home')
+                    return redirect('operator_journeys')
                 else:
                     form.add_error('password', 'Incorrect password')
             except TrainOperator.DoesNotExist:
@@ -170,7 +170,7 @@ def admin_login(request):
                 administrator = Administrator.objects.get(username=username)
                 if administrator.check_password(password):
                     request.session['admin_id'] = administrator.admin_id
-                    return redirect('home')
+                    return redirect('admin_page')
                 else:
                     form.add_error('password', 'Incorrect password')
             except Administrator.DoesNotExist:
@@ -183,3 +183,25 @@ def admin_logout(request):
     if 'admin_id' in request.session:
         del request.session['admin_id']
     return redirect('home')
+
+
+def admin_page(request):
+    admin_id = request.session.get('admin_id')
+    administrator = get_object_or_404(Administrator, admin_id=admin_id)
+    #administrator = request.user
+    train_operators = TrainOperator.objects.all()
+    stations = TrainStation.objects.all()
+    journeys = TrainJourney.objects.all()
+    customers = CustomUser.objects.all()
+    tickets = Ticket.objects.all()
+
+    context = {
+        'administrator': administrator,
+        'train_operators': train_operators,
+        'stations': stations,
+        'journeys': journeys,
+        'customers': customers,
+        'tickets': tickets
+    }
+
+    return render(request, 'ticket_management/admin-page.html', context)
