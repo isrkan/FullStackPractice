@@ -6,12 +6,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .models import TrainStation, TrainOperator, TrainJourney, CustomUser, Ticket, Administrator
-
+from django.views.generic import TemplateView
 
 # Create your views here.
-def home(request):
-    return render(request, 'ticket_management/home.html')
+class HomeView(TemplateView):  # Uses TemplateView to render a static page
+    template_name = 'ticket_management/home.html'  # Specify the template to use
 
+class ContactView(TemplateView):  # Uses TemplateView to render a static page
+    template_name = 'ticket_management/contact.html'
 
 def train_journey(request):
     form = JourneySearchForm(request.GET or None)
@@ -35,10 +37,6 @@ def train_journey(request):
     }
 
     return render(request, 'ticket_management/journeys.html', context)
-
-
-def contact(request):
-    return render(request, 'ticket_management/contact.html')
 
 
 def register(request):
