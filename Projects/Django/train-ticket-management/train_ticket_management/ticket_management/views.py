@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm, JourneySearchForm, TrainJourneyForm, \
-    TrainOperatorForm, TrainStationForm, TicketForm, CustomerForm, TrainJourneyAdminForm
+    TrainOperatorForm, TrainStationForm, TicketForm, CustomerForm, TrainJourneyAdminForm, CustomerUpdateForm, TicketUpdateForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import TrainStation, TrainOperator, TrainJourney, CustomUser, Ticket, Administrator
-from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView, CreateView, DeleteView
+from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView, CreateView
 from django.views import View
 from django.urls import reverse_lazy, reverse
+from django.contrib import messages
 
 class HomeView(TemplateView):  # Uses TemplateView to render a static page
     template_name = 'ticket_management/home.html'  # Specify the template to use
@@ -95,6 +96,54 @@ class AccountView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['tickets'] = Ticket.objects.filter(custom_user=self.request.user)
         return context
+
+
+class CustomerUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = CustomerUpdateForm
+    template_name = 'ticket_management/edit_customer.html'
+    success_url = reverse_lazy('account')
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+
+class TicketUpdateView(UpdateView):
+    model = Ticket
+    form_class = TicketUpdateForm
+    template_name = 'ticket_management/edit_ticket.html'
+    success_url = reverse_lazy('account')
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Ticket, ticket_id=self.kwargs['ticket_id'])
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class CancelTicketView(View):
+    def post(self, request, ticket_id):
+        ticket = get_object_or_404(Ticket, ticket_id=ticket_id)
+        journey = ticket.train_journey
+
+        # Update the booking status to CANCELED
+        ticket.booking_status = 'CANCELED'
+        # Increment the remaining tickets for the flight
+        journey.remaining_tickets += 1
+        journey.save()
+        # Save the updated ticket
+        ticket.save()
+        # Add a success message
+        messages.success(request, "Ticket canceled successfully.")
+
+        return redirect('account')
+
 
 
 class TrainOperatorLoginView(FormView):

@@ -12,6 +12,19 @@ class CustomUserCreationForm(UserCreationForm):
         for field in self.fields.values():
             field.required = True
 
+
+class CustomerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['address', 'phone_number', 'credit_card_number']
+
+
+class TicketUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['class_type', 'seat_number']
+
+
 class TrainOperatorLoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
