@@ -11,6 +11,20 @@
     {% block content %}
         <h1>Available Journeys</h1>
 
+        <div class="search-link">
+            <button class="search-button" onclick="toggleSearchForm()">Search Journeys</button>
+        </div>
+
+        <!-- Search Form -->
+        <div id="search-form" style="display: none;">
+            <h2>Search Journeys</h2>
+            <form method="get">
+                {{ form.as_p }}
+                <button type="submit" class="search-button">Search Journeys</button>
+                <a href="{% url 'journeys' %}"><button type="button">Show All Journeys</button></a>
+            </form>
+        </div>
+
         <div class="view-toggle-buttons">
             <button onclick="showTableView()">Table View</button>
             <button onclick="showContainerView()">Container View</button>
@@ -61,6 +75,11 @@
 
     {% block extra_scripts %}
         <script>
+            function toggleSearchForm() {
+                var form = document.getElementById('search-form');
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+
             function showTableView() {
                 document.getElementById('journeys-table').style.display = 'table';
                 document.getElementById('journeys-container').style.display = 'none';
