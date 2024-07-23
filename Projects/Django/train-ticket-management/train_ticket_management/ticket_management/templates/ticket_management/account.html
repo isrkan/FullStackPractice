@@ -16,7 +16,7 @@
         <div class="title-and-button">
             <h2>Personal Details</h2>
             <div class="edit-button-container">
-                <a href="#" class="edit-button">Edit Details</a>
+                <a href="{% url 'edit_customer' %}" class="edit-button">Edit Details</a>
             </div>
         </div>
         <div>
@@ -46,7 +46,11 @@
                 <div><p><strong>Price:</strong> <span>{{ ticket.price }}</span></p></div>
             </div>
             <div class="ticket-actions">
-                <a href="#" class="edit-button">Edit</a>
+                    <a href="{% url 'edit_ticket' ticket.ticket_id %}" class="edit-button">Edit</a>
+                <form action="{% url 'cancel_ticket' ticket.ticket_id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="cancel-ticket-button">Cancel Ticket</button>
+                </form>
             </div>
         </div>
         {% endfor %}

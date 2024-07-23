@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'ticket_management/base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmation{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Booking Confirmation</h1>
+        <div>
+            <h2>Journey Details</h2>
+            <p><strong>Journey Number:</strong> {{ train_journey.journey_number }}</p>
+            <p><strong>Airline Name:</strong> {{ train_journey.train_operator.operator_name }}</p>
+            <p><strong>Origin Station:</strong> {{ train_journey.origin_station.station_code }} - {{ flight.origin_station.station_name }}</p>
+            <p><strong>Destination Station:</strong> {{ train_journey.destination_station.station_code }} - {{ flight.destination_station.station_name }}</p>
+            <p><strong>Date:</strong> {{ train_journey.date }}</p>
+            <p><strong>Departure Time (Local):</strong> {{ train_journey.departure_time_local }}</p>
+            <p><strong>Arrival Time (Local):</strong> {{ train_journey.arrival_time_local }}</p>
+        </div>
+        <div>
+            <h2>Customer Details</h2>
+            <p><strong>First Name:</strong> {{ customer.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ customer.last_name }}</p>
+            <p><strong>Address:</strong> {{ customer.address }}</p>
+            <p><strong>Phone Number:</strong> {{ customer.phone_number }}</p>
+            <p><strong>Username:</strong> {{ customer.username }}</p>
+        </div>
+        <div>
+            <h2>Ticket Details</h2>
+            <p><strong>Ticket ID:</strong> {{ ticket.ticket_id }}</p>
+            <p><strong>Class Type:</strong> {{ ticket.class_type }}</p>
+            <p><strong>Seat Number:</strong> {{ ticket.seat_number }}</p>
+            <p><strong>Price:</strong> {{ ticket.price }}</p>
+            <p><strong>Booking Status:</strong> {{ ticket.booking_status }}</p>
+        </div>
+    </div>
+{% endblock %}

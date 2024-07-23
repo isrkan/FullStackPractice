@@ -68,6 +68,16 @@
                 <p><strong>Date:</strong> <span>{{ journey.date }}</span></p>
                 <p><strong>Departure Time (Local):</strong> <span>{{ journey.departure_time_local }}</span></p>
                 <p><strong>Arrival Time (Local):</strong> <span>{{ journey.arrival_time_local }}</span></p>
+                <div class="purchase-button-container">
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'purchase_ticket' journey.journey_id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="purchase-button">Purchase Ticket</button>
+                    </form>
+                    {% else %}
+                    <p class="login-message" style="color: red;">You need to log in to purchase a ticket</p>
+                    {% endif %}
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -92,5 +102,11 @@
 
             // Default to table view
             showTableView();
+
+
+            function purchaseTicket(button) {
+                var journeyId = button.parentElement.getAttribute('data-journey-id');
+                window.location.href = "/purchase/" + journeyId;
+            }
         </script>
     {% endblock %}

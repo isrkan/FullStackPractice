@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm, TrainOperatorLoginForm, AdminLoginForm, JourneySearchForm, TrainJourneyForm, \
-    TrainOperatorForm, TrainStationForm, TicketForm, CustomerForm, TrainJourneyAdminForm, CustomerUpdateForm, TicketUpdateForm
+    TrainOperatorForm, TrainStationForm, TicketForm, CustomerForm, TrainJourneyAdminForm, CustomerUpdateForm, TicketUpdateForm, PurchaseTicketForm, PaymentForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +9,8 @@ from django.views.generic import TemplateView, ListView, FormView, DetailView, U
 from django.views import View
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+import random
+import string
 
 class HomeView(TemplateView):  # Uses TemplateView to render a static page
     template_name = 'ticket_management/home.html'  # Specify the template to use
@@ -145,6 +147,106 @@ class CancelTicketView(View):
         return redirect('account')
 
 
+class PurchaseTicketView(LoginRequiredMixin, View):
+    def get(self, request, journey_id):
+        journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+        customer = get_object_or_404(CustomUser, username=request.user.username)
+        form = PurchaseTicketForm()
+
+        context = {
+            'journey': journey,
+            'customer': customer,
+            'form': form
+        }
+        return render(request, 'ticket_management/purchase.html', context)
+
+    def post(self, request, journey_id):
+        journey = get_object_or_404(TrainJourney, journey_id=journey_id)
+        customer = get_object_or_404(CustomUser, username=request.user.username)
+        form = PurchaseTicketForm(request.POST)
+
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.ticket_id = generate_ticket_id()
+            ticket.train_journey = journey
+            ticket.custom_user = customer
+            ticket.price = 500  # Assuming a fixed price for now
+            ticket.booking_status = 'PENDING'
+            ticket.save()
+
+            messages.success(request, "Ticket saved.")
+            return redirect('payment', ticket_id=ticket.ticket_id)  # Redirect to the payment page
+        else:
+            messages.error(request, "There was an error with your purchase. Please try again.")
+
+        context = {
+            'journey': journey,
+            'customer': customer,
+            'form': form
+        }
+        return render(request, 'ticket_management/purchase.html', context)
+
+def generate_ticket_id():
+    ticket_id = 'TCKT'
+    for i in range(8):
+        if i % 2 == 0:
+            ticket_id += str(random.randint(0, 9))  # Add a random digit
+        else:
+            ticket_id += random.choice(string.ascii_uppercase)  # Add a random capital letter
+    return ticket_id
+
+
+class PaymentView(LoginRequiredMixin, FormView):
+    template_name = 'ticket_management/payment.html'
+    form_class = PaymentForm
+
+    def get_initial(self):
+        initial = super().get_initial()
+        ticket_id = self.kwargs.get('ticket_id')
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+        initial['ticket_id'] = ticket_id
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ticket_id = self.kwargs.get('ticket_id')
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+        customer = self.request.user
+        context['customer'] = customer
+        context['ticket'] = ticket
+        return context
+
+    def form_valid(self, form):
+        ticket_id = form.cleaned_data['ticket_id']
+        expiry_date = form.cleaned_data['expiry_date']
+        cvv = form.cleaned_data['cvv']
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+
+        # Placeholder for actual payment logic
+        payment_successful = self.validate_and_process_payment(expiry_date, cvv)
+
+        if payment_successful:
+            ticket.booking_status = Ticket.BookingStatus.BOOKED
+            ticket.save()
+            return redirect('confirmation', ticket_id=ticket_id)
+        else:
+            return self.form_invalid(form)
+
+    def validate_and_process_payment(self, expiry_date, cvv):
+        # Placeholder for real payment validation and processing
+        return True
+
+class ConfirmationView(LoginRequiredMixin, TemplateView):
+    template_name = 'ticket_management/confirmation.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ticket_id = self.kwargs['ticket_id']
+        ticket = get_object_or_404(Ticket, pk=ticket_id)
+        context['ticket'] = ticket
+        context['train_journey'] = ticket.train_journey
+        context['customer'] = ticket.custom_user
+        return context
 
 class TrainOperatorLoginView(FormView):
     template_name = 'ticket_management/train_operator_login.html'

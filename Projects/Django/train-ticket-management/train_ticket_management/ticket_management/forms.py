@@ -25,6 +25,19 @@ class TicketUpdateForm(forms.ModelForm):
         fields = ['class_type', 'seat_number']
 
 
+
+class PurchaseTicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['class_type', 'seat_number']
+
+
+class PaymentForm(forms.Form):
+    expiry_date = forms.CharField(max_length=5, required=True, help_text="MM/YY")
+    cvv = forms.CharField(max_length=3, required=True)
+    ticket_id = forms.CharField(widget=forms.HiddenInput())
+
+
 class TrainOperatorLoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
