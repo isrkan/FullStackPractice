@@ -1,6 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
+from .views_api import *
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+# Application urls
 urlpatterns = [
        path('', views.HomeView.as_view(), name='home'),
        path('journeys/', views.TrainJourneyListView.as_view(), name='journeys'),
@@ -35,4 +41,34 @@ urlpatterns = [
        path('admin-page/edit-ticket/<str:ticket_id>/', views.AdminEditTicketView.as_view(), name='admin_edit_ticket'),
        path('admin-page/add-ticket/', views.AdminAddTicketView.as_view(), name='admin_add_ticket'),
        path('admin-page/delete-ticket/<str:ticket_id>/', views.AdminDeleteTicketView.as_view(), name='admin_delete_ticket'),
+]
+
+
+# Create a router and register the viewsets. Router automatically generates URL patterns for the API endpoints based on the viewsets we define
+# Each register() call connects a viewset to a URL path, creating standard CRUD operations for each model
+router = DefaultRouter()
+router.register(r'trainstations', TrainStationViewSet)
+router.register(r'trainoperators', TrainOperatorViewSet)
+router.register(r'trainjourneys', TrainJourneyViewSet)
+router.register(r'users', CustomUserViewSet)
+router.register(r'tickets', TicketViewSet)
+router.register(r'administrators', AdministratorViewSet)
+
+# Create a schema view for Swagger
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Train Management System API",
+        default_version='v1',
+        description="This API exposes endpoints to manage train journeys, customers, tickets, and more.",
+        contact=openapi.Contact(email="contact@railwaymaster.com"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+# Add Swagger and ReDoc URL patterns
+urlpatterns += [
+    path('api/', include(router.urls)),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
