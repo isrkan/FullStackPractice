@@ -96,7 +96,7 @@ class AccountView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tickets'] = Ticket.objects.filter(custom_user=self.request.user)
+        context['tickets'] = Ticket.objects.filter(custom_user=self.request.user).exclude(booking_status=Ticket.BookingStatus.PENDING)
         return context
 
 
@@ -247,6 +247,32 @@ class ConfirmationView(LoginRequiredMixin, TemplateView):
         context['train_journey'] = ticket.train_journey
         context['customer'] = ticket.custom_user
         return context
+
+
+
+class MyCartView(LoginRequiredMixin, ListView):
+    model = Ticket
+    template_name = 'ticket_management/mycart.html'
+    context_object_name = 'tickets'
+
+    def get_queryset(self):
+        return Ticket.objects.filter(
+            custom_user=self.request.user,
+            booking_status=Ticket.BookingStatus.PENDING
+        )
+
+
+class RemoveTicketFromCartView(LoginRequiredMixin, View):
+    def post(self, request, ticket_id):
+        ticket = get_object_or_404(Ticket, ticket_id=ticket_id)
+        if ticket.custom_user == request.user and ticket.booking_status == Ticket.BookingStatus.PENDING:
+            ticket.delete()
+            messages.success(request, "Ticket removed from cart.")
+        else:
+            messages.error(request, "You cannot remove this ticket.")
+
+        return redirect('mycart')
+
 
 class TrainOperatorLoginView(FormView):
     template_name = 'ticket_management/train_operator_login.html'

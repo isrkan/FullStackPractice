@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'ticket_management/base.html' %}
+{% load static %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'styles/ticket_management/mycart.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>My Cart</h1>
+        {% if tickets %}
+            {% for ticket in tickets %}
+                <div class="ticket-sub-container">
+                    <div class="ticket-details">
+                        <div><p><strong>Journey Number:</strong> <span>{{ ticket.train_journey.journey_number }}</span></p></div>
+                        <div><p><strong>Origin Station:</strong> <span>{{ ticket.train_journey.origin_station.station_code }}</span></p></div>
+                        <div><p><strong>Destination Station:</strong> <span>{{ ticket.train_journey.destination_station.station_code }}</span></p></div>
+                        <div><p><strong>Date:</strong> <span>{{ ticket.train_journey.date }}</span></p></div>
+                        <div><p><strong>Departure Time (Local):</strong> <span>{{ ticket.train_journey.departure_time_local }}</span></p></div>
+                        <div><p><strong>Class:</strong> <span>{{ ticket.class_type }}</span></p></div>
+                        <div><p><strong>Seat Number:</strong> <span>{{ ticket.seat_number }}</span></p></div>
+                        <div><p><strong>Price:</strong> <span>{{ ticket.price }}</span></p></div>
+                    </div>
+                    <div class="ticket-actions">
+                        <a href="{% url 'payment' ticket.ticket_id %}" class="complete-purchase-button">Complete Purchase</a>
+                        <form action="{% url 'remove_ticket_from_cart' ticket.ticket_id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-ticket-button">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>You have no tickets in your cart.</p>
+        {% endif %}
+    </div>
+{% endblock %}
