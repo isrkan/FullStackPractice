@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
+from django.core.validators import RegexValidator, MinLengthValidator
 from django.contrib.auth.hashers import make_password, check_password
 
-# Create your models here.
 class TrainStation(models.Model):
     station_code = models.CharField(max_length=10, primary_key=True)
     station_name = models.CharField(max_length=100)
@@ -65,6 +64,7 @@ class CustomUser(AbstractUser):
         max_length=19,
         validators=[RegexValidator(regex=r'^\d{13,19}$',message="Credit Card Number must be between 13 and 19 digits")]
     )
+
 
 class Ticket(models.Model):
     class BookingStatus(models.TextChoices):
