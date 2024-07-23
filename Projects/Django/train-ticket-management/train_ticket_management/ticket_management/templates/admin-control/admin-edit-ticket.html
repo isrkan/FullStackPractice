@@ -2,19 +2,19 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Edit Ticket{% endblock %}
+    {% block title %}Edit Ticket{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+    {% endblock %}
 
-{% block content %}
-<div class="container">
-    <h1>Edit Ticket</h1>
-    <form action="#" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update Ticket</button>
-    </form>
-</div>
-{% endblock %}
+    {% block content %}
+        <div class="container">
+            <h1>Edit Ticket</h1>
+            <form action="#" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Update Ticket</button>
+            </form>
+        </div>
+    {% endblock %}

@@ -2,58 +2,58 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}My Account{% endblock %}
+    {% block title %}My Account{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/ticket_management/account.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/account.css' %}">
+    {% endblock %}
 
-{% block content %}
-<div class="container">
-    <h1>My Account</h1>
-    <!-- Personal Details Container -->
-    <div class="personal-details-container">
-        <div class="title-and-button">
-            <h2>Personal Details</h2>
-            <div class="edit-button-container">
-                <a href="{% url 'edit_customer' %}" class="edit-button">Edit Details</a>
+    {% block content %}
+        <div class="container">
+            <h1>My Account</h1>
+            <!-- Personal Details Container -->
+            <div class="personal-details-container">
+                <div class="title-and-button">
+                    <h2>Personal Details</h2>
+                    <div class="edit-button-container">
+                        <a href="{% url 'edit_customer' %}" class="edit-button">Edit Details</a>
+                    </div>
+                </div>
+                <div>
+                    <p><strong>First Name:</strong> <span>{{ customer.first_name }}</span></p>
+                    <p><strong>Last Name:</strong> <span>{{ customer.last_name }}</span></p>
+                    <p><strong>Address:</strong> <span>{{ customer.address }}</span></p>
+                    <p><strong>Phone Number:</strong> <span>{{ customer.phone_number }}</span></p>
+                    <p><strong>Credit Card Number:</strong> <span>{{ customer.credit_card_number }}</span></p>
+                    <p><strong>Username:</strong> <span>{{ customer.username }}</span></p>
+                </div>
+            </div>
+            <!-- My Tickets Container -->
+            <div class="my-tickets-container">
+                <h2>My Tickets</h2>
+                {% for ticket in tickets %}
+                <div class="ticket-sub-container">
+                    <div class="ticket-details">
+                        <div><p><strong>Ticket Number:</strong> <span>{{ ticket.ticket_id }}</span></p></div>
+                        <div><p><strong>Journey Number:</strong> <span>{{ ticket.train_journey.journey_number }}</span></p></div>
+                        <div><p><strong>From:</strong> <span>{{ ticket.train_journey.origin_station.station_code }}</span></p></div>
+                        <div><p><strong>To:</strong> <span>{{ ticket.train_journey.destination_station.station_code }}</span></p></div>
+                        <div><p><strong>Date:</strong> <span>{{ ticket.train_journey.date }}</span></p></div>
+                        <div><p><strong>Departure Time (Local):</strong> <span>{{ ticket.train_journey.departure_time_local }}</span></p></div>
+                        <div><p><strong>Class:</strong> <span>{{ ticket.class_type }}</span></p></div>
+                        <div><p><strong>Seat Number:</strong> <span>{{ ticket.seat_number }}</span></p></div>
+                        <div><p><strong>Booking Status:</strong> <span>{{ ticket.booking_status }}</span></p></div>
+                        <div><p><strong>Price:</strong> <span>{{ ticket.price }}</span></p></div>
+                    </div>
+                    <div class="ticket-actions">
+                            <a href="{% url 'edit_ticket' ticket.ticket_id %}" class="edit-button">Edit</a>
+                        <form action="{% url 'cancel_ticket' ticket.ticket_id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="cancel-ticket-button">Cancel Ticket</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
-        <div>
-            <p><strong>First Name:</strong> <span>{{ customer.first_name }}</span></p>
-            <p><strong>Last Name:</strong> <span>{{ customer.last_name }}</span></p>
-            <p><strong>Address:</strong> <span>{{ customer.address }}</span></p>
-            <p><strong>Phone Number:</strong> <span>{{ customer.phone_number }}</span></p>
-            <p><strong>Credit Card Number:</strong> <span>{{ customer.credit_card_number }}</span></p>
-            <p><strong>Username:</strong> <span>{{ customer.username }}</span></p>
-        </div>
-    </div>
-    <!-- My Tickets Container -->
-    <div class="my-tickets-container">
-        <h2>My Tickets</h2>
-        {% for ticket in tickets %}
-        <div class="ticket-sub-container">
-            <div class="ticket-details">
-                <div><p><strong>Ticket Number:</strong> <span>{{ ticket.ticket_id }}</span></p></div>
-                <div><p><strong>Journey Number:</strong> <span>{{ ticket.train_journey.journey_number }}</span></p></div>
-                <div><p><strong>From:</strong> <span>{{ ticket.train_journey.origin_station.station_code }}</span></p></div>
-                <div><p><strong>To:</strong> <span>{{ ticket.train_journey.destination_station.station_code }}</span></p></div>
-                <div><p><strong>Date:</strong> <span>{{ ticket.train_journey.date }}</span></p></div>
-                <div><p><strong>Departure Time (Local):</strong> <span>{{ ticket.train_journey.departure_time_local }}</span></p></div>
-                <div><p><strong>Class:</strong> <span>{{ ticket.class_type }}</span></p></div>
-                <div><p><strong>Seat Number:</strong> <span>{{ ticket.seat_number }}</span></p></div>
-                <div><p><strong>Booking Status:</strong> <span>{{ ticket.booking_status }}</span></p></div>
-                <div><p><strong>Price:</strong> <span>{{ ticket.price }}</span></p></div>
-            </div>
-            <div class="ticket-actions">
-                    <a href="{% url 'edit_ticket' ticket.ticket_id %}" class="edit-button">Edit</a>
-                <form action="{% url 'cancel_ticket' ticket.ticket_id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="cancel-ticket-button">Cancel Ticket</button>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endblock %}
+    {% endblock %}

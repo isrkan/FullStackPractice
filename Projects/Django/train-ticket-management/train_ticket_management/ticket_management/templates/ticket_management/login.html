@@ -2,20 +2,19 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
+    {% block title %}Login{% endblock %}
 
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'styles/ticket_management/login.css' %}">
-{% endblock %}
-
-{% block content %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
-    <p>Are you a train operator? <a href="{% url 'train_operator_login' %}">Login here</a></p>
-    <p>Are you an admin? <a href="{% url 'admin_login' %}">Login here</a></p>
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/login.css' %}">
+    {% endblock %}
+    {% block content %}
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        <p>Are you a train operator? <a href="{% url 'train_operator_login' %}">Login here</a></p>
+        <p>Are you an admin? <a href="{% url 'admin_login' %}">Login here</a></p>
+    {% endblock %}

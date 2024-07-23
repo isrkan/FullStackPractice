@@ -2,66 +2,66 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Operator Journeys{% endblock %}
+    {% block title %}Operator Journeys{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/ticket_management/operator_journeys.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/operator_journeys.css' %}">
+    {% endblock %}
 
-{% block content %}
-<div class="container">
-    <h1>Operator Journeys</h1>
+    {% block content %}
+    <div class="container">
+        <h1>Operator Journeys</h1>
 
-    <div class="search-link">
-        <a href="{% url 'add_journey' %}" class="add-flights-button">Add Journey</a>
+        <div class="search-link">
+            <a href="{% url 'add_journey' %}" class="add-flights-button">Add Journey</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Journey Number</th>
+                <th>Train Operator</th>
+                <th>Origin Station</th>
+                <th>Destination Station</th>
+                <th>Date</th>
+                <th>Departure Time (Local)</th>
+                <th>Arrival Time (Local)</th>
+                <th>Remaining Tickets</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for journey in journeys %}
+            <tr>
+                <td>{{ journey.journey_number }}</td>
+                <td>{{ journey.train_operator.operator_name }}</td>
+                <td>{{ journey.origin_station.station_code }}</td>
+                <td>{{ journey.destination_station.station_code }}</td>
+                <td>{{ journey.date }}</td>
+                <td>{{ journey.departure_time_local }}</td>
+                <td>{{ journey.arrival_time_local }}</td>
+                <td>{{ journey.remaining_tickets }}</td>
+                <td>{{ journey.journey_status }}</td>
+                <td>
+                    <a href="{% url 'edit_journey' journey.journey_id %}" class="edit-flights-button">Edit</a>
+                    <form action="{% url 'cancel_journey' journey.journey_id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="cancel-flights-button">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% endblock %}
 
-    <table>
-        <thead>
-        <tr>
-            <th>Journey Number</th>
-            <th>Train Operator</th>
-            <th>Origin Station</th>
-            <th>Destination Station</th>
-            <th>Date</th>
-            <th>Departure Time (Local)</th>
-            <th>Arrival Time (Local)</th>
-            <th>Remaining Tickets</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for journey in journeys %}
-        <tr>
-            <td>{{ journey.journey_number }}</td>
-            <td>{{ journey.train_operator.operator_name }}</td>
-            <td>{{ journey.origin_station.station_code }}</td>
-            <td>{{ journey.destination_station.station_code }}</td>
-            <td>{{ journey.date }}</td>
-            <td>{{ journey.departure_time_local }}</td>
-            <td>{{ journey.arrival_time_local }}</td>
-            <td>{{ journey.remaining_tickets }}</td>
-            <td>{{ journey.journey_status }}</td>
-            <td>
-                <a href="{% url 'edit_journey' journey.journey_id %}" class="edit-flights-button">Edit</a>
-                <form action="{% url 'cancel_journey' journey.journey_id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="cancel-flights-button">Cancel</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-    function toggleSearchForm() {
-        var form = document.getElementById('search-form');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-</script>
-{% endblock %}
+    {% block extra_scripts %}
+    <script>
+        function toggleSearchForm() {
+            var form = document.getElementById('search-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    {% endblock %}

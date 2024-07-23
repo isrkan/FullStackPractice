@@ -2,19 +2,19 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Edit Journey{% endblock %}
+    {% block title %}Edit Journey{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+    {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h1>Edit Journey</h1>
-        <form action="{% url 'edit_journey' journey.journey_id %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Update Journey</button>
-        </form>
-    </div>
-{% endblock %}
+    {% block content %}
+        <div class="container">
+            <h1>Edit Journey</h1>
+            <form action="{% url 'edit_journey' journey.journey_id %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Update Journey</button>
+            </form>
+        </div>
+    {% endblock %}

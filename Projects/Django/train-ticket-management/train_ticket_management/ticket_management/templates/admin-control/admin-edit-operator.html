@@ -2,19 +2,19 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Edit Operator{% endblock %}
+    {% block title %}Edit Operator{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+    {% endblock %}
 
-{% block content %}
-<div class="container">
-    <h1>Edit Train Operator</h1>
-    <form action="{% url 'admin_edit_operator' operator.operator_code %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update Operator</button>
-    </form>
-</div>
-{% endblock %}
+    {% block content %}
+        <div class="container">
+            <h1>Edit Train Operator</h1>
+            <form action="{% url 'admin_edit_operator' operator.operator_code %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Update Operator</button>
+            </form>
+        </div>
+    {% endblock %}

@@ -2,24 +2,24 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Payment Details{% endblock %}
+    {% block title %}Payment Details{% endblock %}
 
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+    {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h1>Payment Details</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="confirm-button">Confirm Payment</button>
-        </form>
-        {% if form.errors %}
-            <div class="error-message">
-                <p>Payment failed. Please try again.</p>
-            </div>
-        {% endif %}
-    </div>
-{% endblock %}
+    {% block content %}
+        <div class="container">
+            <h1>Payment Details</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="confirm-button">Confirm Payment</button>
+            </form>
+            {% if form.errors %}
+                <div class="error-message">
+                    <p>Payment failed. Please try again.</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}

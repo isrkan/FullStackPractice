@@ -2,19 +2,19 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Train Operator Login{% endblock %}
+    {% block title %}Train Operator Login{% endblock %}
 
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'styles/ticket_management/login.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/login.css' %}">
+    {% endblock %}
 
-{% block content %}
-    <h1>Train Operator Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <p>Are you a customer? <a href="{% url 'login' %}">Login here</a></p>
-    <p>Are you an admin? <a href="{% url 'admin_login' %}">Login here</a></p>
-{% endblock %}
+    {% block content %}
+        <h1>Train Operator Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Are you a customer? <a href="{% url 'login' %}">Login here</a></p>
+        <p>Are you an admin? <a href="{% url 'admin_login' %}">Login here</a></p>
+    {% endblock %}

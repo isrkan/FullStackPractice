@@ -2,52 +2,52 @@
 {% extends 'ticket_management/base.html' %}
 {% load static %}
 
-{% block title %}Purchase Ticket{% endblock %}
+    {% block title %}Purchase Ticket{% endblock %}
 
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
-{% endblock %}
+    {% block extra_head %}
+        <link rel="stylesheet" href="{% static 'styles/ticket_management/add-edit-journey.css' %}">
+    {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h1>Purchase Ticket</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div>
-                <h2>Journey Details</h2>
-                <p><strong>Journey Number:</strong> <span>{{ journey.journey_number }}</span></p>
-                <p><strong>Origin Station:</strong> <span>{{ journey.origin_station.station_code }} - {{ journey.origin_station.station_name }}</span></p>
-                <p><strong>Destination Station:</strong> <span>{{ journey.destination_station.station_code }} - {{ journey.destination_station.station_name }}</span></p>
-                <p><strong>Date:</strong> <span>{{ journey.date }}</span></p>
-                <p><strong>Departure Time (Local):</strong> <span>{{ journey.departure_time_local }}</span></p>
-            </div>
-            <div>
-                <h2>Customer Details</h2>
-                <p><strong>First Name:</strong> <span>{{ customer.first_name }}</span></p>
-                <p><strong>Last Name:</strong> <span>{{ customer.last_name }}</span></p>
-                <p><strong>Address:</strong> <span>{{ customer.address }}</span></p>
-            </div>
-            <div>
-                <h2>Ticket Details</h2>
-                <div class="ticket-details">
-                    <div class="form-group">
-                        <label for="class_type">Class Type:</label>
-                        {{ form.class_type }}
-                    </div>
-                    <div class="form-group">
-                        <label for="seat_number">Seat Number:</label>
-                        {{ form.seat_number }}
-                    </div>
-                    <div class="price-info">
-                        <label><strong>Price:</strong></label>
-                        <span>$500</span>
-                    </div>
-                    <input type="hidden" name="price" value="500">
-                    <input type="hidden" name="flight_id" value="{{ journey.id }}">
-                    <input type="hidden" name="booking_status" value="PENDING">
+    {% block content %}
+        <div class="container">
+            <h1>Purchase Ticket</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <h2>Journey Details</h2>
+                    <p><strong>Journey Number:</strong> <span>{{ journey.journey_number }}</span></p>
+                    <p><strong>Origin Station:</strong> <span>{{ journey.origin_station.station_code }} - {{ journey.origin_station.station_name }}</span></p>
+                    <p><strong>Destination Station:</strong> <span>{{ journey.destination_station.station_code }} - {{ journey.destination_station.station_name }}</span></p>
+                    <p><strong>Date:</strong> <span>{{ journey.date }}</span></p>
+                    <p><strong>Departure Time (Local):</strong> <span>{{ journey.departure_time_local }}</span></p>
                 </div>
-            </div>
-            <button type="submit" class="continue-button">Continue Purchase</button>
-        </form>
-    </div>
-{% endblock %}
+                <div>
+                    <h2>Customer Details</h2>
+                    <p><strong>First Name:</strong> <span>{{ customer.first_name }}</span></p>
+                    <p><strong>Last Name:</strong> <span>{{ customer.last_name }}</span></p>
+                    <p><strong>Address:</strong> <span>{{ customer.address }}</span></p>
+                </div>
+                <div>
+                    <h2>Ticket Details</h2>
+                    <div class="ticket-details">
+                        <div class="form-group">
+                            <label for="class_type">Class Type:</label>
+                            {{ form.class_type }}
+                        </div>
+                        <div class="form-group">
+                            <label for="seat_number">Seat Number:</label>
+                            {{ form.seat_number }}
+                        </div>
+                        <div class="price-info">
+                            <label><strong>Price:</strong></label>
+                            <span>$500</span>
+                        </div>
+                        <input type="hidden" name="price" value="500">
+                        <input type="hidden" name="flight_id" value="{{ journey.id }}">
+                        <input type="hidden" name="booking_status" value="PENDING">
+                    </div>
+                </div>
+                <button type="submit" class="continue-button">Continue Purchase</button>
+            </form>
+        </div>
+    {% endblock %}
