@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files
 ]
 
 ROOT_URLCONF = "train_ticket_management.urls"
@@ -85,6 +86,7 @@ DATABASES = {
         "USER": "root",
         "PASSWORD": "mysql1",
         "HOST": "localhost",
+        #"HOST": "db", # Database host (container name in Docker network)
         "PORT": "3306",
     }
 }
@@ -129,6 +131,8 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
      STATIC_DIR,
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

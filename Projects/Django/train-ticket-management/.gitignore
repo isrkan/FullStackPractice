@@ -1,0 +1,9 @@
+train_ticket_management/ticket_management/__pycache__/
+train_ticket_management/ticket_management/migrations/
+train_ticket_management/train_ticket_management/__pycache__/
+
+# Virtual environment
+venv/
+
+### PyCharm IDEA ###
+.idea
