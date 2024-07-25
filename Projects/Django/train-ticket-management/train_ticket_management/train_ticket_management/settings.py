@@ -87,6 +87,7 @@ DATABASES = {
         "PASSWORD": "mysql1",
         "HOST": "localhost",
         #"HOST": "db", # Database host (container name in Docker network)
+        #"HOST": "mysql-service",  # Kubernetes service name
         "PORT": "3306",
     }
 }

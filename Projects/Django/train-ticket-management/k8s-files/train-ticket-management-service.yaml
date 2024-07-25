@@ -1,0 +1,13 @@
+# Service configuration file for Kubernetes. This file defines how to expose the app pod within the Kubernetes cluster, allowing other pods to communicate with it.
+apiVersion: v1
+kind: Service  # Indicates that this is a service object
+metadata:
+  name: train-ticket-management-service  # Name of the service
+spec:
+  type: NodePort  # Service type to expose the service on a specific port
+  selector:
+    app: train-ticket-management  # Selector to identify the pods targeted by this service
+  ports:
+    - port: 8004  # Port exposed by the service
+      targetPort: 8000  # Port on the pod that the service should forward traffic to
+      nodePort: 30002 # Specific port on each node to expose the service (or we can let Kubernetes assign automatically)

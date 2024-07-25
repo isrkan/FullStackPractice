@@ -1,0 +1,14 @@
+# Service configuration file for the Postgres database
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP  # Service type to expose the Service within the cluster
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306

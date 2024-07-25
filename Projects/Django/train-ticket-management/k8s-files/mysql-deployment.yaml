@@ -1,0 +1,34 @@
+# Deployment for the flight-ticket-management-app DB pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:9.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: "trains"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "mysql1"
+          volumeMounts:
+            - mountPath: /var/lib/mysql  # Path to mount the volume in the container
+              name: mysql-data  # Name of the volume mount
+      volumes:
+        - name: mysql-data  # Name of the volume
+          persistentVolumeClaim:
+            claimName: mysql-pvc  # Reference to the PersistentVolumeClaim in mysql-pvc.yaml file

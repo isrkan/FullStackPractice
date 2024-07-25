@@ -1,0 +1,36 @@
+# Deployment configuration file for Kubernetes and is used to create and manage the application pods. This file is used to describe a desired state for the application that Kubernetes will maintain.
+apiVersion: apps/v1  # Specifies the API version
+kind: Deployment  # Indicates that this is a deployment object
+metadata:
+  name: train-ticket-management-deployment  # Name of the deployment
+  labels:
+    app: train-ticket-management  # Label to identify the app
+spec:
+  replicas: 2  # Number of pod replicas to run
+  selector:
+    matchLabels:
+      app: train-ticket-management  # Selector to identify the pods managed by this deployment
+  template:
+    metadata:
+      labels:
+        app: train-ticket-management  # Label for the pods
+    spec:
+      containers:
+        - name: train-ticket-management  # Name of the container
+          image: isrkan/train-ticket-management:latest  # Docker image for the container from Docker Hub
+          ports:
+            - containerPort: 8000  # Port the container listens on
+          env:  # Environment variables for the container
+            - name: DJANGO_SETTINGS_MODULE
+              value: "train_ticket_management.settings"  # Django settings module
+            - name: MYSQL_DATABASE
+              value: "trains"  # MySQL database name
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "mysql1"
+            - name: MYSQL_HOST
+              value: "mysql-service"  # Hostname of the MySQL service
+            - name: MYSQL_PORT
+              value: "3306"
+          command: ["gunicorn", "--bind", "0.0.0.0:8000", "train_ticket_management.wsgi:application"]
