@@ -195,6 +195,7 @@ public static int sum(int a, int b) {
     return a + b;
 }
 ```
+Methods can return values using the `return` statement. The return type is specified in the method declaration. Use `void` if no value is returned.
 
 ### Calling methods
 
@@ -202,16 +203,6 @@ Methods are called by their name followed by arguments in parentheses.
 
 ```java
 int result = sum(5, 10);
-```
-
-#### Returning values
-
-Methods can return values using the `return` statement. The return type is specified in the method declaration. Use `void` if no value is returned.
-
-```java
-public static String greet(String name) {
-    return "Hello, " + name;
-}
 ```
 
 #### Method overloading
