@@ -3,7 +3,6 @@
 This guide introduces the fundamental concepts of Python programming, demonstrated through several areas.
 
 ## 1. Variables and data types
-
 Python provides several built-in data types:
 
 - **int**: Stores integer values.
@@ -12,7 +11,6 @@ Python provides several built-in data types:
 - **str**: Stores sequences of characters.
 
 ### Declaring and initializing variables
-
 Variables can be assigned values directly without explicit declaration of their type.
 
 ```python
@@ -31,7 +29,6 @@ name = "John Doe"
 - **Substring**: Extracting a part of a string using slicing.
 
 ### Type casting
-
 Python allows for type casting, converting a variable from one type to another.
 
 - **Implicit casting** (widening): Automatically converting a smaller type to a larger type.
@@ -45,7 +42,6 @@ explicit_int_value = int(explicit_double_value)  # Explicit casting to int
 ```
 
 ### Math operations
-
 Python provides a `math` module for common mathematical operations like square root, power, absolute value, and generating random numbers.
 
 ```python
@@ -59,7 +55,6 @@ random_value = random.random()
 ```
 
 ### User input
-
 Python's `input()` function allows for reading input from the user.
 
 ```python
@@ -70,7 +65,6 @@ user_message = input("Enter a message: ")
 ## 2. Control flow
 
 ### Conditional statements
-
 Python uses conditional statements to execute code based on certain conditions.
 
 - **If-Else statement**: Executes code based on whether a condition is true or false.
@@ -85,7 +79,6 @@ else:
 ```
 
 ### Loops
-
 Loops allow repetitive execution of a block of code.
 
 - **While loop**: Executes as long as the condition is true.
@@ -105,7 +98,6 @@ for i in range(1, limit + 1):
 ```
 
 ### Nested loops
-
 Nested loops consist of one loop inside another.
 
 ```python
@@ -129,7 +121,6 @@ for i in range(limit):
 ```
 
 ### Exception handling
-
 Use try-except blocks to handle potential errors during program execution.
 
 ```python
@@ -142,11 +133,9 @@ finally:
 ```
 
 ## 3. Functions
-
 Functions in Python are blocks of code that perform a specific task, helping to modularize and reuse code.
 
 ### Defining functions
-
 A function is declared using the `def` keyword, followed by the function name and parameters (if any).
 
 ```python
@@ -157,7 +146,6 @@ def sum(a, b):
 Functions can return values using the `return` statement. Do not use `return` if no value is returned.
 
 ### Calling functions
-
 Functions are called by their name followed by arguments in parentheses.
 
 ```python
@@ -165,7 +153,6 @@ result = sum(5, 10)
 ```
 
 ## 4. Arrays
-
 Arrays in Python can be handled using lists or the `numpy` library for numerical operations.
 
 ### Lists
@@ -197,15 +184,12 @@ for num in numbers:
 ```
 
 #### Sorting lists
-
 ```python
 numbers.sort()
 ```
 
 ### Numpy arrays
-
 Numpy provides support for multidimensional arrays and various mathematical operations.
-
 ```python
 import numpy as np
 
@@ -214,7 +198,6 @@ element = matrix[0, 1]
 ```
 
 #### Iterating through numpy arrays
-
 ```python
 for row in matrix:
     for element in row:

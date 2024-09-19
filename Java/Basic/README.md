@@ -5,7 +5,6 @@ This guide introduces the fundamental concepts of Java programming, demonstrated
 ## 1. Variables and data types
 
 ### Primitive data types
-
 Java provides several built-in data types, known as primitive data types, which are used to store simple values.
 
 - **int**: Stores integer values.
@@ -14,11 +13,9 @@ Java provides several built-in data types, known as primitive data types, which 
 - **boolean**: Stores true or false values.
 
 ### Non-primitive data types
-
 Non-primitive data types include classes, arrays, and interfaces. The most commonly used non-primitive data type is the **String**, which represents a sequence of characters.
 
 ### Declaring and initializing variables
-
 Variables must be declared with a data type before they can be used. Initialization assigns a value to the variable.
 
 ```java
@@ -30,19 +27,15 @@ String name = "John Doe";
 ```
 
 ### String operations
-
 - **Concatenation**: Joining two strings using the `+` operator.
 - **Length**: Getting the length of a string using `.length()`.
 - **Substring**: Extracting a part of a string using `.substring()`.
 
 ### Constants
-
 Constants are variables whose values cannot be changed. They are declared using the `final` keyword (e.g., `final double PI = 3.14159`).
 
 ### Type casting
-
 Java allows for type casting, converting a variable from one type to another.
-
 - **Implicit casting** (Widening): Automatically converting a smaller type to a larger type.
 - **Explicit casting** (Narrowing): Manually converting a larger type to a smaller type.
 
@@ -52,7 +45,6 @@ int intValue = (int) 15.75; // Explicit casting
 ```
 
 ### Math operations
-
 Java provides a **Math** class for common mathematical operations like square root, power, absolute value, and generating random numbers.
 
 ```java
@@ -63,7 +55,6 @@ double randomValue = Math.random();
 ```
 
 ### User input
-
 Java's `Scanner` class allows for reading input from the user.
 
 ```java
@@ -77,7 +68,6 @@ scanner.close();
 ## 2. Control flow
 
 ### Conditional statements
-
 Java uses conditional statements to execute code based on certain conditions.
 
 - **If-Else statement**: Executes code based on whether a condition is true or false.
@@ -106,7 +96,6 @@ switch (variable) {
 ```
 
 ### Loops
-
 Loops allow repetitive execution of a block of code.
 
 - **While loop**: Executes as long as the condition is true.
@@ -138,7 +127,6 @@ for (int j = 1; j <= limit; j++) {
 ```
 
 ### Nested loops
-
 Nested loops consist of one loop inside another, useful for tasks like printing patterns.
 
 ```java
@@ -168,7 +156,6 @@ for (int i = 0; i < limit; i++) {
 ```
 
 ### Exception handling
-
 Use try-catch blocks to handle potential errors during program execution.
 
 ```java
@@ -182,11 +169,9 @@ try {
 ```
 
 ## 3. Methods
-
 Methods in Java are blocks of code that perform a specific task, helping to modularize and reuse code.
 
 ### Defining methods
-
 A method is declared with a return type, method name, and parameters (if any).
 
 ```java
@@ -198,7 +183,6 @@ public static int sum(int a, int b) {
 Methods can return values using the `return` statement. The return type is specified in the method declaration. Use `void` if no value is returned.
 
 ### Calling methods
-
 Methods are called by their name followed by arguments in parentheses.
 
 ```java
@@ -206,7 +190,6 @@ int result = sum(5, 10);
 ```
 
 #### Method overloading
-
 Java supports method overloading, allowing multiple methods with the same name but different parameter lists (overloading).
 
 ```java
@@ -220,11 +203,9 @@ public static double multiply(double a, double b) {
 ```
 
 ## 4. Arrays
-
 Arrays in Java are used to store multiple values of the same type in a single variable.
 
 #### Declaring and initializing arrays
-
 Declare an array by specifying the type followed by square brackets.
 
 ```java
@@ -232,7 +213,6 @@ int[] numbers = {1, 2, 3, 4, 5};
 ```
 
 #### Accessing and modifying elements
-
 Access elements using their index, starting from 0.
 
 ```java
@@ -241,7 +221,6 @@ numbers[2] = 10;
 ```
 
 #### Array length
-
 The length of an array can be determined using the `.length` property.
 
 ```java
@@ -249,7 +228,6 @@ int arrayLength = numbers.length;
 ```
 
 #### Iterating through arrays
-
 Use loops to iterate through array elements.
 
 ```java
@@ -263,7 +241,6 @@ for (int num : numbers) {
 ```
 
 #### Sorting arrays
-
 Sort arrays using the `java.util.Arrays.sort()` method.
 
 ```java
@@ -271,21 +248,17 @@ java.util.Arrays.sort(numbers);
 ```
 
 #### Multidimensional arrays
-
 Java supports multidimensional arrays, allowing arrays of arrays.
-
 ```java
 int[][] matrix = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
 ```
 
 Access elements in a multidimensional array using multiple indices.
-
 ```java
 int element = matrix[0][1];
 ```
 
 Iterate through multidimensional arrays using nested loops.
-
 ```java
 for (int row = 0; row < matrix.length; row++) {
     for (int col = 0; col < matrix[row].length; col++) {
