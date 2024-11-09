@@ -22,9 +22,9 @@ Design patterns fall into three primary categories:
    - **Examples**: Observer, strategy, command, chain of responsibility, state, template method, visitor, and memento patterns.
 
 Each of these types addresses a specific aspect of software design, from object creation to data sharing, structure, and behavior, providing a balanced approach to developing robust and scalable applications. However, it’s essential to understand that using a design pattern also comes with trade-offs. For example:
-    - **Complexity vs. simplicity**: Patterns can add complexity to the code, especially for simpler problems. It’s essential to evaluate whether the added complexity of a pattern is justified by the benefits it provides.
-    - **Performance overheads**: Some patterns, like Observer, might introduce performance overheads, especially in applications that require real-time processing or low latency.
-    - **Memory usage**: Patterns like Singleton and Memento can affect memory usage and should be applied thoughtfully.
+- **Complexity vs. simplicity**: Patterns can add complexity to the code, especially for simpler problems. It’s essential to evaluate whether the added complexity of a pattern is justified by the benefits it provides.
+- **Performance overheads**: Some patterns, like Observer, might introduce performance overheads, especially in applications that require real-time processing or low latency.
+- **Memory usage**: Patterns like Singleton and Memento can affect memory usage and should be applied thoughtfully.
 
 When choosing a design pattern, carefully assess its intent, benefits, and possible trade-offs.
 
