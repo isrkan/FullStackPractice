@@ -224,7 +224,7 @@ Spring Boot builds on top of Spring MVC but adds automation and embedded server 
 - **Spring MVC** doesn’t come with an embedded server. Typically, we package our application as a `.war` file and deploy it to an external server like Apache Tomcat or Jetty. This can mean more setup when we want to deploy or test locally, and we need to make sure our application server is properly configured.
 - **Spring Boot** includes embedded servers (Tomcat, Jetty, or Undertow) by default. This allows us to run the application as a standalone JAR file with a simple `java -jar` command, making it much easier and faster to test locally and deploy without worrying about configuring an external server.
 
-### **When to Use Each:**
+### **When to use each:**
 - **Spring MVC** is ideal when we:
   - Need fine-grained control over each configuration detail.
   - Are integrating into a legacy project or working with complex architectures.
@@ -235,7 +235,7 @@ Spring Boot builds on top of Spring MVC but adds automation and embedded server 
   - Need an embedded server for easy testing and deployment.
   - Require a production-ready application with built-in tools for monitoring and management.
 
-### Summary Table
+### Summary table
 
 | Feature                  | **Spring MVC**                          | **Spring Boot**                   |
 |--------------------------|-----------------------------------------|-----------------------------------|
