@@ -16,23 +16,24 @@ This folder contains practice exercises and examples covering the basics of fron
 This folder is dedicated to practicing Java programming and related backend development concepts. Topics include:
 - Basics
 - Data structures
-- Design patterns
 - Exception handling
 - Functional programming
 - Object-oriented programming (OOP)
-- Spring core (and Spring Boot)
+- Design patterns
 - Threads
 - Unit testing
+- Spring core (and Spring Boot)
 
 ### 3. Python
 This folder focuses on Python programming and related backend development concepts. Topics include:
 - Basics
 - Data structures
-- Design patterns
 - Exception handling
 - Modular programming
 - Object-oriented programming (OOP)
+- Design patterns
 - Threads
+- Asynchronous programming
 - Unit testing
 - Web frameworks (Django and Flask)
 
