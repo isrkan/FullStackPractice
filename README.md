@@ -34,6 +34,7 @@ This folder focuses on Python programming and related backend development concep
 - Design patterns
 - Threads
 - Asynchronous programming
+- Data validation
 - Unit testing
 - Web frameworks (Django and Flask)
 
